@@ -163,7 +163,7 @@ public class SuperPacmanPlayer extends Player {
         public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
             @Override
             public void interactWith(Door door) {
-
+                setIsPassingADoor(door);
             }
         }
 }

@@ -18,7 +18,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
         int width = getWidth();
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if(getCell(x,y).equals(WALLTYPE)){
+                if(getCell(x,y).equals(SuperPacmanCellType.WALL)){ //problème, il compare une cellule avec un type, comment prendre le type de la cellule ?
                     area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),getNeighborhood()));
                 }
             }
@@ -28,7 +28,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
         //Il faut iterer sur les cellules je pense et si la cellule est un mur alors il faut appeler cette fonction avec comme params la position du mur dans l'image behavior
     }
     public boolean[][] getNeighborhood(){ //retourne voisinage en 3x3, true si la case contient un mur, faux sinon
-
+        boolean[][] neighborhood = new boolean[3][3];
+        for (int i = 0; i < neighborhood.length; ++ i){
+            for (int j = 0; j < neighborhood[i].length; ++ j){
+                neighborhood[i][j] = true;
+            }
+        }
+        return neighborhood;
     }
     public enum SuperPacmanCellType{
         NONE(0),                    // never used as real content
@@ -80,12 +86,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
          * Default Tuto2Cell Constructor
          * @param x (int): x coordinate of the cell
          * @param y (int): y coordinate of the cell
-         * @param type (EnigmeCellType), not null
+         * @param cellType (EnigmeCellType), not null
          */
-        public  SuperPacmanCell(int x, int y, SuperPacmanBehavior.SuperPacmanCellType type){
+        public  SuperPacmanCell(int x, int y, SuperPacmanBehavior.SuperPacmanCellType cellType){
             super(x, y);
-            this.type = type;
+            type = cellType;
         }
+
        /* public boolean isDoor() {
             return type == SuperPacmanBehavior.SuperPacmanCellType.DOOR;
         }*/

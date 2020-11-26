@@ -37,10 +37,10 @@ public class Play {
         // Create a demo game :
 		// (it is expected that at the beginning, the provided file does not compile)
        
-        //final Game game = new SuperPacman();
+        final Game game = new SuperPacman();
 
 		// Use Swing display
-		final AreaGame game = new Tuto2();
+
 		//final AreaGame game = new Tuto1();
 
 		final Window window = new SwingWindow(game.getTitle(), fileSystem, 550, 550);
