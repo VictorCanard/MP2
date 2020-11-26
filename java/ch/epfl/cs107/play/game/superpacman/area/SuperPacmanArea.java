@@ -17,4 +17,5 @@ public abstract class SuperPacmanArea extends Area {
 
     abstract public DiscreteCoordinates getSpawnPosition();
 
+
 }
