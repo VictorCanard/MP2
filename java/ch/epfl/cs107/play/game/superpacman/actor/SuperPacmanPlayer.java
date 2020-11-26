@@ -1,5 +1,6 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
+import ch.epfl.cs107.play.game.actor.Graphics;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Animation;
@@ -8,10 +9,12 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
+import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.tutosSolution.area.Tuto2Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
@@ -23,32 +26,31 @@ import java.util.List;
 
 public class SuperPacmanPlayer extends Player {
     private int MOVING_SPEED = 6;
-    private Sprite sprite;
     private float hp = 0;
     private TextGraphics message;
     private boolean isPassingADoor;
     private Orientation desiredOrientation;
-
-    public enum Animation {
-        LEFT_ANIMATION,
-        RIGHT_ANIMATION,
-        UP_ANIMATION,
-        DOWN_ANIMATION;
-    }
+    private Animation[] animations;
+    private Sprite[][] sprites ;
+    private Animation currentAnimation;
 
     /**
      * Default Player constructor
      *
      * @param area        (Area): Owner Area, not null
      */
+
     public SuperPacmanPlayer(SuperPacmanArea area) {
         super(area, Orientation.RIGHT, area.getSpawnPosition());
-        sprite = new Sprite("yellowDot",1.f,1.f,this);
+
+        sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 2, this , 16, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
+
+        animations = Animation.createAnimations(MOVING_SPEED/2, sprites);
+        currentAnimation = animations[0]; //Initializes the first animation to the upward direction
 
         message = new TextGraphics(Integer.toString((int)hp), 0.4f, Color.BLUE);
         message.setParent(this);
         message.setAnchor(new Vector(-0.3f, 0.1f));
-
 
         resetMotion();
     }
@@ -61,6 +63,7 @@ public class SuperPacmanPlayer extends Player {
         if (hp < 0) {
             hp = 0.f;
         }
+
         Keyboard keyboard= getOwnerArea().getKeyboard();
 
         moveOrientate(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
@@ -86,10 +89,18 @@ public class SuperPacmanPlayer extends Player {
             desiredOrientation = orientation;
         }
 
-        if(isDisplacementOccurs() && getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
-            orientate(orientation);
-            move(MOVING_SPEED);
+        if(isDisplacementOccurs()){
+            if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
+                orientate(orientation);
+                currentAnimation = animations[orientation.ordinal()];
+                move(MOVING_SPEED);
+            }
         }
+        else{
+           currentAnimation.reset();
+        }
+
+
 
     }
     /**
@@ -110,7 +121,7 @@ public class SuperPacmanPlayer extends Player {
 
     @Override
     public void draw(Canvas canvas) {
-        sprite.draw(canvas);
+        currentAnimation.draw(canvas);
         message.draw(canvas);
     }
 
