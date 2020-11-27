@@ -20,14 +20,14 @@ public class SuperPacmanBehavior extends AreaBehavior {
         int width = getWidth();
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(height -1 -y, x));
-                if(type.equals(SuperPacmanCellType.WALL)){ //problème, pas d'accès à WALL, pk ?
+                //SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(height -1 -y, x));
+                if(getType(getCell(x,y))== (SuperPacmanCellType.WALL)){ //problème, pas d'accès à WALL, pk ?
                     //cells near the position x, y (true = a wall, false = not a wall) (default : false)
                     boolean[][] neighborhood = new boolean[3][3];
-                    for(int i = -1; i <= 1; ++i) {
-                        for(int j = -1; j <= 1; ++j) {
-                            if (SuperPacmanCellType.toType(getRGB(height-1-y+j, x+i)).equals(SuperPacmanCellType.WALL)) {
-                                neighborhood[i+1][j+1] = true;
+                    for(int i = 0; i < 3; ++i) {
+                        for(int j = 0; j < 3; ++j) {
+                            if (getType(getCell(i,j)) == (SuperPacmanCellType.WALL)) {
+                                neighborhood[i][j] = true;
                             }
                         }
                     }
@@ -37,6 +37,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
         }
 
     }
+
+    protected SuperPacmanCellType getType (Cell cell){
+        return ((SuperPacmanCell)getCell(getWidth(),getHeight())).getCellType();
+
+    }
+
+
 
     public enum SuperPacmanCellType{
         NONE(0),                    // never used as real content
@@ -101,9 +108,14 @@ public class SuperPacmanBehavior extends AreaBehavior {
             type = cellType;
         }
 
+        public SuperPacmanCellType getCellType() {
+            return type;
+        }
+
        /* public boolean isDoor() {
             return type == SuperPacmanBehavior.SuperPacmanCellType.DOOR;
         }*/
+
 
         @Override
         protected boolean canLeave(Interactable entity) {
