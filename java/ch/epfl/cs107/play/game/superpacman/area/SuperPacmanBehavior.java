@@ -6,9 +6,11 @@ import ch.epfl.cs107.play.game.areagame.Cell;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.actor.Wall;
-import ch.epfl.cs107.play.game.tutosSolution.Tuto2Behavior;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
+
+
+import java.util.Arrays;
 
 public class SuperPacmanBehavior extends AreaBehavior {
 
@@ -18,8 +20,16 @@ public class SuperPacmanBehavior extends AreaBehavior {
         int width = getWidth();
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if(getCell(x,y).equals(SuperPacmanCellType.WALL)){ //problème, il compare une cellule avec un type, comment prendre le type de la cellule ?
-                    area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),getNeighborhood()));
+                if(getRGB(x,y) == (SuperPacmanCellType.WALL)){ //problème, pas d'accès à WALL, pk ?
+                    boolean[][] neighborhood = new boolean[3][3];
+                    for(int i = -1; i <= 1; ++i) {
+                        for(int j = -1; j <= 1; ++j) {
+                            if (SuperPacmanCellType.toType(getRGB(height-1-y+j, x+i)).equals(SuperPacmanCellType.WALL)) {
+                                neighborhood[i+1][j+1] = true;
+                            }
+                        }
+                    }
+                    area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),neighborhood);
                 }
             }
         }
@@ -27,15 +37,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
         //Il faut iterer sur les cellules je pense et si la cellule est un mur alors il faut appeler cette fonction avec comme params la position du mur dans l'image behavior
     }
-    public boolean[][] getNeighborhood(){ //retourne voisinage en 3x3, true si la case contient un mur, faux sinon
-        boolean[][] neighborhood = new boolean[3][3];
-        for (int i = 0; i < neighborhood.length; ++ i){
-            for (int j = 0; j < neighborhood[i].length; ++ j){
-                neighborhood[i][j] = true;
-            }
-        }
-        return neighborhood;
-    }
+
     public enum SuperPacmanCellType{
         NONE(0),                    // never used as real content
         WALL(-16777216),            //black
@@ -53,8 +55,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
             this.type = type;
         }
 
-        public static SuperPacmanBehavior.SuperPacmanCellType toType(int type){
-            for(SuperPacmanBehavior.SuperPacmanCellType ict : SuperPacmanBehavior.SuperPacmanCellType.values()){
+        public static SuperPacmanCellType toType(int type){
+            for(SuperPacmanCellType ict : SuperPacmanCellType.values()){
                 if(ict.type == type)
                     return ict;
             }
@@ -63,13 +65,19 @@ public class SuperPacmanBehavior extends AreaBehavior {
             return NONE;
         }
     }
+
+    /**
+     * Default SuperPacmanBehavior Constructor
+     * @param window (Window), not null
+     * @param name (String): Name of the Behavior, not null
+     */
     public SuperPacmanBehavior(Window window, String name){
         super(window, name);
         int height = getHeight();
         int width = getWidth();
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width ; x++) {
-                SuperPacmanBehavior.SuperPacmanCellType color = SuperPacmanBehavior.SuperPacmanCellType.toType(getRGB(height-1-y, x));
+                SuperPacmanCellType color = SuperPacmanCellType.toType(getRGB(height-1-y, x));
                 setCell(x,y, new SuperPacmanCell(x,y,color));
             }
         }

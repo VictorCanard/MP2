@@ -3,10 +3,7 @@ package ch.epfl.cs107.play.game.superpacman.actor;
 import ch.epfl.cs107.play.game.actor.Graphics;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.actor.Animation;
-import ch.epfl.cs107.play.game.areagame.actor.Interactable;
-import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
@@ -26,7 +23,7 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
-public class SuperPacmanPlayer extends Player {
+public class SuperPacmanPlayer extends Player implements Interactable, Interactor {
     private int MOVING_SPEED = 6;
     private float hp = 0;
     private TextGraphics message;
