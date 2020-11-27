@@ -25,6 +25,9 @@ import java.util.List;
 
 public class SuperPacmanPlayer extends Player implements Interactable, Interactor {
     private int MOVING_SPEED = 6;
+    private int MAX_HP = 5;
+    private int DEFAULT_HP = 3;
+    public static int score = 0;
     private float hp = 0;
     private TextGraphics message;
     private boolean isPassingADoor;
@@ -32,6 +35,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private Animation[] animations;
     private Sprite[][] sprites ;
     private Animation currentAnimation;
+    private SuperPacmanPlayerStatusGUI statusGUI;
 
 
     /**
@@ -43,7 +47,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     public SuperPacmanPlayer(SuperPacmanArea area, DiscreteCoordinates startingPos) {
         super(area, Orientation.RIGHT, startingPos);
 
-
+        statusGUI = new SuperPacmanPlayerStatusGUI(DEFAULT_HP,MAX_HP);
 
         sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 2, this , 16, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
 
@@ -53,6 +57,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         message = new TextGraphics(Integer.toString((int)hp), 0.4f, Color.BLUE);
         message.setParent(this);
         message.setAnchor(new Vector(-0.3f, 0.1f));
+
 
         resetMotion();
     }
