@@ -20,7 +20,9 @@ public class SuperPacmanBehavior extends AreaBehavior {
         int width = getWidth();
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if(getRGB(x,y) == (SuperPacmanCellType.WALL)){ //problème, pas d'accès à WALL, pk ?
+                SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(height -1 -y, x));
+                if(type.equals(SuperPacmanCellType.WALL)){ //problème, pas d'accès à WALL, pk ?
+                    //cells near the position x, y (true = a wall, false = not a wall) (default : false)
                     boolean[][] neighborhood = new boolean[3][3];
                     for(int i = -1; i <= 1; ++i) {
                         for(int j = -1; j <= 1; ++j) {
@@ -29,13 +31,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
                             }
                         }
                     }
-                    area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),neighborhood);
+                    area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),neighborhood));
                 }
             }
         }
 
-
-        //Il faut iterer sur les cellules je pense et si la cellule est un mur alors il faut appeler cette fonction avec comme params la position du mur dans l'image behavior
     }
 
     public enum SuperPacmanCellType{
