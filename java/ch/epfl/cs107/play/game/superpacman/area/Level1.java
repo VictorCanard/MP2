@@ -13,10 +13,6 @@ public class Level1 extends SuperPacmanArea{
         return "superpacman/Level1";
     }
 
-    @Override
-    public DiscreteCoordinates getSpawnPosition() {
-        return PLAYER_SPAWN_POSITION;
-    }
 
     protected void createArea() {
         DiscreteCoordinates pos = Level2.PLAYER_SPAWN_POSTION;

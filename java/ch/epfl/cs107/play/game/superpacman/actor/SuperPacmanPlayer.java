@@ -33,14 +33,17 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private Sprite[][] sprites ;
     private Animation currentAnimation;
 
+
     /**
      * Default Player constructor
      *
      * @param area        (Area): Owner Area, not null
      */
 
-    public SuperPacmanPlayer(SuperPacmanArea area) {
-        super(area, Orientation.RIGHT, area.getSpawnPosition());
+    public SuperPacmanPlayer(SuperPacmanArea area, DiscreteCoordinates startingPos) {
+        super(area, Orientation.RIGHT, startingPos);
+
+
 
         sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 2, this , 16, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
 

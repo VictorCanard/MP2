@@ -21,7 +21,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 //SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(height -1 -y, x));
-                if(getType(getCell(x,y))== (SuperPacmanCellType.WALL)){ //problème, pas d'accès à WALL, pk ?
+                if(getType(getCell(x,y))== (SuperPacmanCellType.WALL)){
                     //cells near the position x, y (true = a wall, false = not a wall) (default : false)
                     boolean[][] neighborhood = new boolean[3][3];
                     for(int i = 0; i < 3; ++i) {
