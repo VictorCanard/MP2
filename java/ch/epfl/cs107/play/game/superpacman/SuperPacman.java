@@ -4,10 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.rpg.RPG;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
-import ch.epfl.cs107.play.game.superpacman.area.Level0;
-import ch.epfl.cs107.play.game.superpacman.area.Level1;
-import ch.epfl.cs107.play.game.superpacman.area.Level2;
-import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
+import ch.epfl.cs107.play.game.superpacman.area.*;
 import ch.epfl.cs107.play.game.tutosSolution.actor.GhostPlayer;
 import ch.epfl.cs107.play.game.tutosSolution.area.tuto2.Ferme;
 import ch.epfl.cs107.play.game.tutosSolution.area.tuto2.Village;
@@ -18,9 +15,14 @@ import ch.epfl.cs107.play.window.Window;
 public class SuperPacman extends RPG {
     private SuperPacmanPlayer player;
     private int areaIndex;
-    private final String[] areas = {"superpacman/Level0", "superpacman/Level1", "superpacman/Level2"};
+    private final String[] areaNames = {"superpacman/Level0", "superpacman/Level1", "superpacman/Level2"};
     private final DiscreteCoordinates[] startingPositions = {Level0.PLAYER_SPAWN_POSTION,
             Level1.PLAYER_SPAWN_POSTION, Level2.PLAYER_SPAWN_POSTION};
+
+    private SuperPacmanArea[] areas = new SuperPacmanArea[areaNames.length];
+    private SuperPacmanBehavior[] behaviors = new SuperPacmanBehavior[areas.length];
+
+
 
     @Override
     public String getTitle() {
@@ -33,10 +35,14 @@ public class SuperPacman extends RPG {
     }
 
     private void createAreas(){
-
         addArea(new Level0());
         addArea(new Level1());
         addArea(new Level2());
+
+        for(int i=0;i<areas.length;i++){
+            behaviors[i] = new SuperPacmanBehavior(getWindow(),areaNames[i]);
+            //areas[i].registerActors();
+        }
 
     }
     @Override
@@ -46,8 +52,12 @@ public class SuperPacman extends RPG {
 
             createAreas();
             areaIndex = 0;
-            SuperPacmanArea area = (SuperPacmanArea) setCurrentArea(areas[areaIndex], true);
-            player = new SuperPacmanPlayer(area,startingPositions[0]);
+            areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
+            areas[areaIndex].setBehaviour(behaviors[areaIndex]);
+            areas[areaIndex].registerActors();
+            player = new SuperPacmanPlayer(areas[areaIndex],startingPositions[areaIndex]);
+
+
             initPlayer(player);
             return true;
         }

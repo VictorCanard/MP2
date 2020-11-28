@@ -4,7 +4,9 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public abstract class SuperPacmanArea extends Area {
-    DiscreteCoordinates PLAYER_SPAWN_POSITION;
+    private DiscreteCoordinates PLAYER_SPAWN_POSITION;
+    private SuperPacmanBehavior behaviour;
+
     @Override
     public float getCameraScaleFactor() {
         return 15.f;
@@ -15,7 +17,15 @@ public abstract class SuperPacmanArea extends Area {
         return null;
     }
 
-    //abstract public DiscreteCoordinates getSpawnPosition();
+    public void setBehaviour(SuperPacmanBehavior behaviour){
+        this.behaviour  =behaviour;
+        super.setBehavior(behaviour);
+    }
+    public void registerActors(){
+        behaviour.registerActors(this);
+    }
+
+
 
 
 }

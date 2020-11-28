@@ -39,7 +39,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
 
     protected SuperPacmanCellType getType (Cell cell){
-        return ((SuperPacmanCell)getCell(getWidth(),getHeight())).getCellType();
+        return ((SuperPacmanCell)getCell(getWidth()-1,getHeight()-1)).getCellType(); //J'ai ajoute des -1 ici car ArrayOutOfBounds exception
 
     }
 
@@ -88,6 +88,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
                 setCell(x,y, new SuperPacmanCell(x,y,color));
             }
         }
+
 
 
     }

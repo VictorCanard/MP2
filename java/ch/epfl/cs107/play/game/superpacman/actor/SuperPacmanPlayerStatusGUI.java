@@ -43,7 +43,7 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
             life.draw(canvas);
         }
 
-        scoreGraphics = new TextGraphics("SCORE : "+SuperPacmanPlayer.score,15.f, Color.YELLOW, Color.BLACK,5f,false,false,anchor);
+        scoreGraphics = new TextGraphics("SCORE : "+SuperPacmanPlayer.score,15.f, Color.YELLOW, Color.BLACK,5f,false,false,anchor.add(new Vector(MAX_HP*64, height - 1.375f)));
         scoreGraphics.draw(canvas);
 
 
