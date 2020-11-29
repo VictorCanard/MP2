@@ -47,12 +47,16 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     public SuperPacmanPlayer(SuperPacmanArea area, DiscreteCoordinates startingPos) {
         super(area, Orientation.RIGHT, startingPos);
 
+        setOwnerArea(area);
+
         statusGUI = new SuperPacmanPlayerStatusGUI(DEFAULT_HP,MAX_HP);
 
-        sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 1, this , 32, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
+        sprites = RPGSprite.extractSprites("zelda/player", 4, 1, 2, this , 16, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
+        //Changer avec PACMAN
 
         animations = Animation.createAnimations(MOVING_SPEED/2, sprites);
         currentAnimation = animations[0];//Initializes the first animation to the upward direction
+        desiredOrientation = Orientation.UP;
 
         message = new TextGraphics(Integer.toString((int)hp), 0.4f, Color.BLUE);
         message.setParent(this);
@@ -96,16 +100,14 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             desiredOrientation = orientation;
         }
 
-        if(isDisplacementOccurs()){
+        if(!isDisplacementOccurs()){
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
-                orientate(orientation);
-                currentAnimation = animations[orientation.ordinal()];
+                orientate(desiredOrientation);
+                currentAnimation = animations[desiredOrientation.ordinal()];
                 move(MOVING_SPEED);
             }
         }
-        else{
-           currentAnimation.reset();
-        }
+
 
 
 
