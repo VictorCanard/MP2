@@ -181,5 +181,17 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             public void interactWith(Door door) {
                 setIsPassingADoor(door);
             }
+
+            public void interactWith(Bonus coin) {
+
+            }
+
+            public void interactWith(Cherry cherry){
+                score += 200;
+            }
+
+            public void interactWith(Diamond diamond){
+                score += 10;
+            }
         }
 }
