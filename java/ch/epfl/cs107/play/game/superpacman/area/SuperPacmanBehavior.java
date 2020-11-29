@@ -18,20 +18,23 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
         int height = getHeight();
         int width = getWidth();
+
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 //SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(height -1 -y, x));
                 if(getType(getCell(x,y))== (SuperPacmanCellType.WALL)){
                     //cells near the position x, y (true = a wall, false = not a wall) (default : false)
                     boolean[][] neighborhood = new boolean[3][3];
+                    neighborhood[1][1] = true; //Center of the matrix where we will place a wall
                     for(int i = 0; i < 3; ++i) {
+
                         for(int j = 0; j < 3; ++j) {
-                            if (getType(getCell(i,j)) == (SuperPacmanCellType.WALL)) {
+                            if (getType(getCell(i,j)).equals(SuperPacmanCellType.WALL)) {
                                 neighborhood[i][j] = true;
                             }
                         }
                     }
-                    area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),neighborhood));
+                    area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),neighborhood)); //Repere different donc le y est inverse
                 }
             }
         }
@@ -39,7 +42,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
 
     protected SuperPacmanCellType getType (Cell cell){
-        return ((SuperPacmanCell)getCell(getWidth()-1,getHeight()-1)).getCellType(); //J'ai ajoute des -1 ici car ArrayOutOfBounds exception
+        return ((SuperPacmanCell)cell).getCellType(); //J'ai ajoute des -1 ici car ArrayOutOfBounds exception
 
     }
 
@@ -125,7 +128,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
-            return !entity.takeCellSpace();
+
+            return !this.hasNonTraversableContent();
         }
 
 

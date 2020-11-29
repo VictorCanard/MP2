@@ -9,7 +9,7 @@ public abstract class SuperPacmanArea extends Area {
 
     @Override
     public float getCameraScaleFactor() {
-        return 15.f;
+        return 30.f;
     }
 
     @Override
