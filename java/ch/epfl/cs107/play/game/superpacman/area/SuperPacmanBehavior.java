@@ -13,6 +13,7 @@ import ch.epfl.cs107.play.window.Window;
 import java.util.Arrays;
 
 public class SuperPacmanBehavior extends AreaBehavior {
+    private boolean[][] neighborhood;
 
     protected void registerActors (Area area){
 
@@ -21,26 +22,37 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                //SuperPacmanCellType type = SuperPacmanCellType.toType(getRGB(height -1 -y, x));
-                if(getType(getCell(x,y))== (SuperPacmanCellType.WALL)){
-                    //cells near the position x, y (true = a wall, false = not a wall) (default : false)
-                    boolean[][] neighborhood = new boolean[3][3];
-                    neighborhood[1][1] = true; //Center of the matrix where we will place a wall
-                    for(int i = 0; i < 3; ++i) {
 
-                        for(int j = 0; j < 3; ++j) {
-                            if (getType(getCell(i,j)).equals(SuperPacmanCellType.WALL)) {
-                                neighborhood[i][j] = true;
-                            }
-                        }
-                    }
+                if(getType(getCell(x,y))== (SuperPacmanCellType.WALL)){ //cells near the position x, y (true = a wall, false = not a wall) (default : false)
+
+                    neighborhood = getNeighborhood(x,y);
                     area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),neighborhood)); //Repere different donc le y est inverse
                 }
             }
         }
 
     }
+    protected boolean[][] getNeighborhood(int x, int y){
+        neighborhood = new boolean[3][3];
 
+        neighborhood[1][1] = true; //Center of the matrix where we will place a wall
+
+         //Pieces where we can check in a 3x3 region
+                for (int i = -1; i < 2; ++i) {
+                    for (int j = -1; j < 2; ++j) {
+
+                        if(!(i+x<0 || i+x>=getWidth() || j+y<0 || j+y>=getHeight())){
+                            if (getType(getCell(i + x, j + y)).equals(SuperPacmanCellType.WALL)) {
+                                neighborhood[i + 1][1-j] = true;
+                            }
+                        }
+
+                    }
+                }
+
+
+        return neighborhood;
+    }
     protected SuperPacmanCellType getType (Cell cell){
         return ((SuperPacmanCell)cell).getCellType(); //J'ai ajoute des -1 ici car ArrayOutOfBounds exception
 

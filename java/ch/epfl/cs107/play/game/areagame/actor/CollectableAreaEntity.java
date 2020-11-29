@@ -15,5 +15,6 @@ public abstract class CollectableAreaEntity extends AreaEntity {
         super(area, orientation, position);
     }
 
+
     
 }

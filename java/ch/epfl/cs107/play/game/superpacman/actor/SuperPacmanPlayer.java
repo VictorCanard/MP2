@@ -49,7 +49,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         statusGUI = new SuperPacmanPlayerStatusGUI(DEFAULT_HP,MAX_HP);
 
-        sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 1, this , 16, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
+        sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 1, this , 32, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
 
         animations = Animation.createAnimations(MOVING_SPEED/2, sprites);
         currentAnimation = animations[0];//Initializes the first animation to the upward direction
@@ -179,6 +179,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
             @Override
             public void interactWith(Door door) {
+
                 setIsPassingADoor(door);
             }
 
@@ -187,10 +188,12 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             }
 
             public void interactWith(Cherry cherry){
+
                 score += 200;
             }
 
             public void interactWith(Diamond diamond){
+
                 score += 10;
             }
         }
