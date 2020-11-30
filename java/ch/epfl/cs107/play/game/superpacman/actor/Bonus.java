@@ -9,6 +9,7 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
@@ -25,7 +26,7 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
      */
     public Bonus(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-        sprite = new RPGSprite("superpacman/coin",1,1,this);
+        sprite = new RPGSprite("superpacman/coin",1,1,this, new RegionOfInterest(1,1,12,12));
     }
 
     @Override
@@ -57,5 +58,9 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         v.interactWith(this);
+    }
+
+    public int addScore(){
+        return 0;
     }
 }

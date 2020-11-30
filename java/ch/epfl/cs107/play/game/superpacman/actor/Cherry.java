@@ -58,4 +58,8 @@ public class Cherry extends CollectableAreaEntity implements Interactable {
     public void acceptInteraction(AreaInteractionVisitor v) {
         v.interactWith(this);
     }
+
+    public int addScore(){
+        return 200;
+    }
 }

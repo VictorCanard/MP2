@@ -4,7 +4,11 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.Cell;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
+import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.superpacman.actor.Bonus;
+import ch.epfl.cs107.play.game.superpacman.actor.Cherry;
+import ch.epfl.cs107.play.game.superpacman.actor.Diamond;
 import ch.epfl.cs107.play.game.superpacman.actor.Wall;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -22,12 +26,23 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-
-                if(getType(getCell(x,y))== (SuperPacmanCellType.WALL)){ //cells near the position x, y (true = a wall, false = not a wall) (default : false)
-
-                    neighborhood = getNeighborhood(x,y);
-                    area.registerActor(new Wall(area,new DiscreteCoordinates(x,y),neighborhood)); //Repere different donc le y est inverse
+                DiscreteCoordinates position = new DiscreteCoordinates(x,y);
+                switch (getType(getCell(x,y))){
+                    case WALL:
+                        neighborhood = getNeighborhood(x,y);
+                        area.registerActor(new Wall(area,position,neighborhood)); //Repere different donc le y est inverse
+                        break;
+                    case FREE_WITH_CHERRY:
+                        area.registerActor(new Cherry(area, Orientation.UP, position));
+                        break;
+                    case FREE_WITH_DIAMOND:
+                        area.registerActor(new Diamond(area, Orientation.UP, position));
+                        break;
+                    case FREE_WITH_BONUS:
+                        area.registerActor(new Bonus(area,Orientation.UP, position));
                 }
+
+
             }
         }
 

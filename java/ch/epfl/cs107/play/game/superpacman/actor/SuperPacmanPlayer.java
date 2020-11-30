@@ -185,18 +185,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
                 setIsPassingADoor(door);
             }
 
-            public void interactWith(Bonus coin) {
-
-            }
-
-            public void interactWith(Cherry cherry){
-
-                score += 200;
-            }
-
-            public void interactWith(Diamond diamond){
-
-                score += 10;
+            public void interactWith(CollectableAreaEntity entity){
+                entity.unregisterEntity();
+                score += entity.addScore();
             }
         }
 }

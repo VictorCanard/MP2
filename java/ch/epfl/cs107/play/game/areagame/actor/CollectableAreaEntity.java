@@ -15,6 +15,10 @@ public abstract class CollectableAreaEntity extends AreaEntity {
         super(area, orientation, position);
     }
 
+    public void unregisterEntity(){
+        getOwnerArea().unregisterActor(this);
+    }
 
-    
+    public abstract int addScore();
+
 }
