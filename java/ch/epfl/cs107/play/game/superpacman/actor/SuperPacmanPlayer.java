@@ -181,7 +181,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
             @Override
             public void interactWith(Door door) {
-
                 setIsPassingADoor(door);
             }
 
