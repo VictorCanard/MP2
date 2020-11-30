@@ -28,6 +28,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private int MAX_HP = 5;
     private int DEFAULT_HP = 3;
     public static int score = 0;
+    private final int ANIMATION_DURATION = 4;
     private float hp = 0;
     private TextGraphics message;
     private boolean isPassingADoor;
@@ -51,11 +52,11 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         statusGUI = new SuperPacmanPlayerStatusGUI(DEFAULT_HP,MAX_HP);
 
-        sprites = RPGSprite.extractSprites("zelda/player", 4, 1, 2, this , 16, 32, new Orientation[] {Orientation.DOWN , Orientation.RIGHT , Orientation.UP, Orientation.LEFT});
-        //Changer avec PACMAN
+        sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 1, this , 64, 64, new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
 
-        animations = Animation.createAnimations(MOVING_SPEED/2, sprites);
-        currentAnimation = animations[0];//Initializes the first animation to the upward direction
+
+        animations = Animation.createAnimations(ANIMATION_DURATION/4, sprites);
+        currentAnimation = animations[1];//Initializes the first animation to the upward direction
         desiredOrientation = Orientation.UP;
 
         message = new TextGraphics(Integer.toString((int)hp), 0.4f, Color.BLUE);
@@ -82,6 +83,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         moveOrientate(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         moveOrientate(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
 
+        currentAnimation.update(deltaTime);
         super.update(deltaTime);
 
         /*
@@ -104,8 +106,12 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
                 orientate(desiredOrientation);
                 currentAnimation = animations[desiredOrientation.ordinal()];
+
                 move(MOVING_SPEED);
             }
+        }
+        else{
+            currentAnimation.reset();
         }
 
 
