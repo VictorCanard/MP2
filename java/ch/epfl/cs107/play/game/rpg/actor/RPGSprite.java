@@ -141,6 +141,7 @@ public class RPGSprite extends Sprite {
 			sprites[order[1].ordinal()][i]  = new RPGSprite(name, width, height, parent, new RegionOfInterest(i*regionWidth, regionHeight*j++, regionWidth, regionHeight));
 			sprites[order[2].ordinal()][i]  = new RPGSprite(name, width, height, parent, new RegionOfInterest(i*regionWidth, regionHeight*j++, regionWidth, regionHeight));
 			sprites[order[3].ordinal()][i]  = new RPGSprite(name, width, height, parent, new RegionOfInterest(i*regionWidth, regionHeight*j, regionWidth, regionHeight));
+
 		}
 		return sprites;
 	}
