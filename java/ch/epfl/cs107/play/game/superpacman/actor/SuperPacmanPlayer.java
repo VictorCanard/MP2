@@ -113,6 +113,21 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             desiredOrientation = orientation;
         }
 
+        if(!isDisplacementOccurs()){
+            if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
+                orientate(desiredOrientation);
+                currentAnimation = animations[desiredOrientation.ordinal()];
+
+                move(MOVING_SPEED);
+            }
+        }
+        else{
+            currentAnimation.reset();
+        }
+
+
+
+
     }
     /**
      * Indicate the player just passed a door
