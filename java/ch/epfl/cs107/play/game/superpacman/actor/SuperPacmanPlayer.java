@@ -35,6 +35,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private Sprite[][] sprites ;
     private Animation currentAnimation;
     private SuperPacmanPlayerStatusGUI statusGUI;
+    private SuperPacmanPlayerHandler playerHandler;
 
 
     /**
@@ -47,6 +48,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         super(area, Orientation.RIGHT, startingPos);
 
         setOwnerArea(area);
+
+        playerHandler = new SuperPacmanPlayerHandler();
 
         statusGUI = new SuperPacmanPlayerStatusGUI(DEFAULT_HP,MAX_HP);
 
@@ -72,6 +75,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         updateDesiredOrientation(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
 
         currentAnimation.update(deltaTime);
+
+
         super.update(deltaTime);
 
         /*
@@ -175,15 +180,15 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     public void acceptInteraction(AreaInteractionVisitor v) {
         ((SuperPacmanInteractionVisitor)v).interactWith(this); }
 
-        public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
-            @Override
-            public void interactWith(Door door) {
-                setIsPassingADoor(door);
-            }
-
-            public void interactWith(AutomaticallyCollectableAreaEntity entity){
-                entity.collect();
-                score += entity.addScore();
-            }
+    public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
+        @Override
+        public void interactWith(Door door) {
+            setIsPassingADoor(door);
         }
+
+        public void interactWith(AutomaticallyCollectableAreaEntity entity){
+            entity.collect();
+            score += entity.addScore();
+        }
+    }
 }

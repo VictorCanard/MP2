@@ -51,7 +51,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
                 Key key1 = new Key(area,Orientation.UP,new DiscreteCoordinates(3,4));
                 Logic key1Logic = Logic.FALSE;
                 area.registerActor(key1);
-                if (key1.isCollected()){ key1Logic = Logic.TRUE;}
+
+                if (key1.isCollected()){
+                    key1Logic = Logic.TRUE;
+                }
+
                 area.registerActor(new Gate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key1Logic));
                 area.registerActor(new Gate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key1Logic));
                 break;
@@ -86,7 +90,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
         return neighborhood;
     }
     protected SuperPacmanCellType getType (Cell cell){
-        return ((SuperPacmanCell)cell).getCellType(); //J'ai ajoute des -1 ici car ArrayOutOfBounds exception
+        return ((SuperPacmanCell)cell).getCellType();
 
     }
 
