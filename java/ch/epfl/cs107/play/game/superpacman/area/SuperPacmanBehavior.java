@@ -6,10 +6,7 @@ import ch.epfl.cs107.play.game.areagame.Cell;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.game.superpacman.actor.Bonus;
-import ch.epfl.cs107.play.game.superpacman.actor.Cherry;
-import ch.epfl.cs107.play.game.superpacman.actor.Diamond;
-import ch.epfl.cs107.play.game.superpacman.actor.Wall;
+import ch.epfl.cs107.play.game.superpacman.actor.*;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
@@ -21,12 +18,14 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
     protected void registerActors (Area area){
 
+
         int height = getHeight();
         int width = getWidth();
 
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 DiscreteCoordinates position = new DiscreteCoordinates(x,y);
+
                 switch (getType(getCell(x,y))){
                     case WALL:
                         neighborhood = getNeighborhood(x,y);
@@ -44,6 +43,18 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
 
             }
+        }
+
+        switch (area.getTitle()){ //positionement des clés
+            case "superpacman/Level0":
+                area.registerActor(new Key(area,Orientation.UP,new DiscreteCoordinates(3,4)));
+                break;
+            case "superpacman/Level1":
+                //area.registerActor(new Key(area,Orientation.UP, new DiscreteCoordinates()))
+                break;
+            case "superpacman/Level2":
+                //area.registerActor(new Key(area,Orientation.UP, new DiscreteCoordinates()))
+
         }
 
     }

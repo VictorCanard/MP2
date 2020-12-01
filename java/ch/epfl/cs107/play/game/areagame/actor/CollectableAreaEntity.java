@@ -15,24 +15,8 @@ public abstract class CollectableAreaEntity extends AreaEntity {
         super(area, orientation, position);
     }
 
-    public void unregisterEntity(){
-        getOwnerArea().unregisterActor(this);
-    }
-
     public abstract int addScore();
 
 }
 
-abstract class AutomaticallyCollectableEntity extends AreaEntity {
 
-    /**
-     * Default AreaEntity constructor
-     *
-     * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
-     * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
-     */
-    public AutomaticallyCollectableEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
-        super(area, orientation, position);
-    }
-}

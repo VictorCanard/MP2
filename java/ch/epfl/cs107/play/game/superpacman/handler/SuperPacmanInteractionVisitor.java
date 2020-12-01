@@ -9,7 +9,5 @@ public interface SuperPacmanInteractionVisitor extends RPGInteractionVisitor {
 
     default void interactWith(SuperPacmanPlayer superPacmanPlayer) {}
 
-    default void interactWith(CollectableAreaEntity entity){
-        entity.unregisterEntity();
-    }
+
 }

@@ -60,6 +60,7 @@ public class Diamond extends CollectableAreaEntity implements Interactable {
         v.interactWith(this);
     }
 
+    @Override
     public int addScore(){
         return 10;
     }

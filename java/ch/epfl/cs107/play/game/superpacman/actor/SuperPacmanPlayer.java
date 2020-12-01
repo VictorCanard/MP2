@@ -77,10 +77,18 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         Keyboard keyboard= getOwnerArea().getKeyboard();
 
-        moveOrientate(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
-        moveOrientate(Orientation.UP, keyboard.get(Keyboard.UP));
-        moveOrientate(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
-        moveOrientate(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+        updateDesiredOrientation(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
+        updateDesiredOrientation(Orientation.UP, keyboard.get(Keyboard.UP));
+        updateDesiredOrientation(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
+        updateDesiredOrientation(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+
+        if(!isDisplacementOccurs()){
+            if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
+                orientate(desiredOrientation);
+                currentAnimation = animations[desiredOrientation.ordinal()];
+                move(MOVING_SPEED);
+            }
+        }
 
         super.update(deltaTime);
 
@@ -94,22 +102,11 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         */
 
     }
-    private void moveOrientate(Orientation orientation, Button b){
+    private void updateDesiredOrientation(Orientation orientation, Button b){
 
         if(b.isDown()) {
             desiredOrientation = orientation;
         }
-
-        if(!isDisplacementOccurs()){
-            if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
-                orientate(desiredOrientation);
-                currentAnimation = animations[desiredOrientation.ordinal()];
-                move(MOVING_SPEED);
-            }
-        }
-
-
-
 
     }
     /**
@@ -184,8 +181,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
                 setIsPassingADoor(door);
             }
 
-            public void interactWith(CollectableAreaEntity entity){
-                entity.unregisterEntity();
+            public void interactWith(AutomaticallyCollectableAreaEntity entity){
+                entity.collect();
                 score += entity.addScore();
             }
         }

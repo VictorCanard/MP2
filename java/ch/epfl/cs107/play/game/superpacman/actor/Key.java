@@ -1,24 +1,18 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
-import ch.epfl.cs107.play.game.areagame.actor.Interactable;
-import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
-import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.RegionOfInterest;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Bonus extends CollectableAreaEntity implements Interactable {
-    Sprite[] sprites;
+public class Key extends AutomaticallyCollectableAreaEntity implements Interactable {
     Sprite sprite;
+
     /**
      * Default CollectableAreaEntity constructor
      *
@@ -26,20 +20,15 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public Bonus(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public Key(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-
-        sprites = RPGSprite.extractSprites("superpacman/coin", 4, 1, 1, this, 16, 16);
-        for (Sprite coin : sprites){
-            sprite = coin;
-        }
-            //sprite = new RPGSprite("superpacman/coin",1,1,this, new RegionOfInterest(1,1,29,14));
-            //sprite = new RPGSprite("superpacman/coin",1,1,this, new RegionOfInterest(1,1,44,14));
-            //sprite = new RPGSprite("superpacman/coin",1,1,this, new RegionOfInterest(1,1,59,14));
-
+        sprite = new RPGSprite("superpacman/key",1,1,this);
     }
 
-
+    @Override
+    public int addScore() {
+        return 0;
+    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -51,8 +40,6 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
-
-
 
     @Override
     public boolean takeCellSpace() {
@@ -72,9 +59,5 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         v.interactWith(this);
-    }
-
-    public int addScore(){
-        return 0;
     }
 }
