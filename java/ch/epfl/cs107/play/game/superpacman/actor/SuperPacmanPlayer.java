@@ -29,8 +29,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private int DEFAULT_HP = 3;
     public static int score = 0;
     private final int ANIMATION_DURATION = 4;
-    private float hp = 0;
-    private TextGraphics message;
     private boolean isPassingADoor;
     private Orientation desiredOrientation;
     private Animation[] animations;
@@ -59,22 +57,12 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         currentAnimation = animations[1];//Initializes the first animation to the upward direction
         desiredOrientation = Orientation.UP;
 
-        message = new TextGraphics(Integer.toString((int)hp), 0.4f, Color.BLUE);
-        message.setParent(this);
-        message.setAnchor(new Vector(-0.3f, 0.1f));
 
 
         resetMotion();
     }
 
     public void update(float deltaTime) {
-        if (hp > 0) {
-            hp -=deltaTime;
-            message.setText(Integer.toString((int)hp));
-        }
-        if (hp < 0) {
-            hp = 0.f;
-        }
 
         Keyboard keyboard= getOwnerArea().getKeyboard();
 
@@ -82,17 +70,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         updateDesiredOrientation(Orientation.UP, keyboard.get(Keyboard.UP));
         updateDesiredOrientation(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         updateDesiredOrientation(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-
-        if(!isDisplacementOccurs()){
-            if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
-                orientate(desiredOrientation);
-                currentAnimation = animations[desiredOrientation.ordinal()];
-                move(MOVING_SPEED);
-            }
-        }
-        else{
-            currentAnimation.reset();
-        }
 
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
@@ -115,14 +92,16 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         if(!isDisplacementOccurs()){
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
-                orientate(desiredOrientation);
-                currentAnimation = animations[desiredOrientation.ordinal()];
 
+                orientate(desiredOrientation);
                 move(MOVING_SPEED);
+                currentAnimation.reset();
+
             }
         }
         else{
-            currentAnimation.reset();
+            currentAnimation = animations[desiredOrientation.ordinal()];
+
         }
 
 
@@ -148,7 +127,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     @Override
     public void draw(Canvas canvas) {
         currentAnimation.draw(canvas);
-        message.draw(canvas);
+        statusGUI.draw(canvas);
+
     }
 
     @Override
