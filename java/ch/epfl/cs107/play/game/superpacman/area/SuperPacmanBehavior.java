@@ -8,6 +8,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.actor.*;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Window;
 
 
@@ -45,9 +46,14 @@ public class SuperPacmanBehavior extends AreaBehavior {
             }
         }
 
-        switch (area.getTitle()){ //positionement des clés
+        switch (area.getTitle()){ //positionement des clés et des gates
             case "superpacman/Level0":
-                area.registerActor(new Key(area,Orientation.UP,new DiscreteCoordinates(3,4)));
+                Key key1 = new Key(area,Orientation.UP,new DiscreteCoordinates(3,4));
+                Logic key1Logic = Logic.FALSE;
+                area.registerActor(key1);
+                if (key1.isCollected()){ key1Logic = Logic.TRUE;}
+                area.registerActor(new Gate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key1Logic));
+                area.registerActor(new Gate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key1Logic));
                 break;
             case "superpacman/Level1":
                 //area.registerActor(new Key(area,Orientation.UP, new DiscreteCoordinates()))

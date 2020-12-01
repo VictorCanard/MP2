@@ -1,10 +1,7 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
-import ch.epfl.cs107.play.game.areagame.actor.Interactable;
-import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
@@ -17,8 +14,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Bonus extends CollectableAreaEntity implements Interactable {
+    private final int ANIMATION_DURATION = 4;
+    private Animation animations;
     Sprite[] sprites;
-    Sprite sprite;
     /**
      * Default CollectableAreaEntity constructor
      *
@@ -30,12 +28,7 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
         super(area, orientation, position);
 
         sprites = RPGSprite.extractSprites("superpacman/coin", 4, 1, 1, this, 16, 16);
-        for (Sprite coin : sprites){
-            sprite = coin;
-        }
-            //sprite = new RPGSprite("superpacman/coin",1,1,this, new RegionOfInterest(1,1,29,14));
-            //sprite = new RPGSprite("superpacman/coin",1,1,this, new RegionOfInterest(1,1,44,14));
-            //sprite = new RPGSprite("superpacman/coin",1,1,this, new RegionOfInterest(1,1,59,14));
+        animations = new Animation(ANIMATION_DURATION, sprites);
 
     }
 
@@ -43,8 +36,8 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
 
     @Override
     public void draw(Canvas canvas) {
-        if(sprite != null)
-            sprite.draw(canvas);
+        if(animations != null)
+            animations.draw(canvas);
     }
 
     @Override
