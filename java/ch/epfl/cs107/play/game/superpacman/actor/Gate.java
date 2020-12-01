@@ -29,7 +29,6 @@ public class Gate extends AreaEntity {
     public Gate(Area area, Orientation orientation, DiscreteCoordinates position, Logic signal) {
         super(area, orientation, position);
         this.signal = signal;
-        sprites = RPGSprite.extractSprites("superpacman/gate", 2, 1, 1, this, 64, 64);
         if (orientation == Orientation.UP || orientation == Orientation.DOWN){
             sprite = new RPGSprite("superpacman/gate",1,1,this, new RegionOfInterest(0,0,64,64));
         }
@@ -51,7 +50,8 @@ public class Gate extends AreaEntity {
 
     @Override
     public boolean takeCellSpace() {
-        return signal.isOff();
+        //eturn signal.isOff();
+        return false; //En attendant de trouver une méthode correcte
     }
 
     @Override

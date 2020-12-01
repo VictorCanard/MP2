@@ -37,6 +37,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private Sprite[][] sprites ;
     private Animation currentAnimation;
     private SuperPacmanPlayerStatusGUI statusGUI;
+    private SuperPacmanPlayerHandler handler;
 
 
     /**
@@ -173,7 +174,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     @Override
     public void interactWith(Interactable other) {
-
+        //other.acceptInteraction(handler);
     }
 
     @Override
@@ -193,7 +194,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        ((SuperPacmanInteractionVisitor)v).interactWith(this); }
+            ((SuperPacmanInteractionVisitor) v).interactWith(this);
+    }
+
 
         public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
             @Override
