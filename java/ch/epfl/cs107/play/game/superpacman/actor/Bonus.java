@@ -28,11 +28,14 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
         super(area, orientation, position);
 
         sprites = RPGSprite.extractSprites("superpacman/coin", 4, 1, 1, this, 16, 16);
-        animations = new Animation(ANIMATION_DURATION, sprites);
-
+        animations = new Animation(ANIMATION_DURATION, sprites, true);
     }
 
-
+    @Override
+    public void update(float deltaTime) {
+        animations.update(deltaTime);
+        super.update(deltaTime);
+    }
 
     @Override
     public void draw(Canvas canvas) {

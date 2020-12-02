@@ -17,6 +17,7 @@ import java.util.Arrays;
 public class SuperPacmanBehavior extends AreaBehavior {
     private boolean[][] neighborhood;
 
+
     protected void registerActors (Area area){
 
 
@@ -48,26 +49,51 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
         switch (area.getTitle()){ //positionement des clés et des gates
             case "superpacman/Level0":
-                Key key1 = new Key(area,Orientation.UP,new DiscreteCoordinates(3,4));
-                Logic key1Logic = Logic.FALSE;
-                area.registerActor(key1);
-
-                if (key1.isCollected()){
-                    key1Logic = Logic.TRUE;
-                }
-
-                area.registerActor(new Gate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key1Logic));
-                area.registerActor(new Gate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key1Logic));
+                Key key = new Key(area,Orientation.UP,new DiscreteCoordinates(3,4));
+                area.registerActor(key);
+                area.registerActor(new Gate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key.getSignal()));
+                area.registerActor(new Gate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key.getSignal()));
                 break;
             case "superpacman/Level1":
-                //area.registerActor(new Key(area,Orientation.UP, new DiscreteCoordinates()))
+                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3),diamond1));
+                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3),diamond1));
                 break;
             case "superpacman/Level2":
-                //area.registerActor(new Key(area,Orientation.UP, new DiscreteCoordinates()))
+                Key key1 = new Key(area,Orientation.UP, new DiscreteCoordinates(3,16));
+                Key key2 = new Key(area,Orientation.UP, new DiscreteCoordinates(3,16));
+                Key key3 = new Key(area,Orientation.UP, new DiscreteCoordinates(2,8));
+                Key key4 = new Key(area,Orientation.UP, new DiscreteCoordinates(27,8));
+
+                area.registerActor(key1);
+                area.registerActor(key2);
+                area.registerActor(key3);
+                area.registerActor(key4);
+
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,14), key1.getSignal()));
+                area.registerActor(new Gate(area, Orientation.DOWN, new DiscreteCoordinates(5,12), key1.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,10), key1.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,8), key1.getSignal()));
+
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,14), key2.getSignal()));
+                area.registerActor(new Gate(area, Orientation.DOWN, new DiscreteCoordinates(24,12), key2.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,10), key2.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,8), key2.getSignal()));
+
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(10,2), key3.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(19,2), key3.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(12,8), key3.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(17,8), key3.getSignal()));
+
+                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3),diamond2));
+                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3),diamond2));
+                break;
 
         }
 
     }
+
+
+
     protected boolean[][] getNeighborhood(int x, int y){
         neighborhood = new boolean[3][3];
 
@@ -90,7 +116,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
         return neighborhood;
     }
     protected SuperPacmanCellType getType (Cell cell){
-        return ((SuperPacmanCell)cell).getCellType();
+        return ((SuperPacmanCell)cell).getCellType(); //J'ai ajoute des -1 ici car ArrayOutOfBounds exception
 
     }
 

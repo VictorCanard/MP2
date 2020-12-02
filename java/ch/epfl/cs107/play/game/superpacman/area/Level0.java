@@ -5,9 +5,10 @@ import ch.epfl.cs107.play.game.areagame.actor.Foreground;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
-public class Level0 extends SuperPacmanArea{
+public class Level0 extends SuperPacmanArea {
     public static final DiscreteCoordinates PLAYER_SPAWN_POSTION = new DiscreteCoordinates(10,1);
     public String getTitle() {
         return "superpacman/Level0";
@@ -21,5 +22,7 @@ public class Level0 extends SuperPacmanArea{
                 new DiscreteCoordinates(5,9), new DiscreteCoordinates(6,9) ));
 
     }
+
+
 
 }
