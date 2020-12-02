@@ -29,12 +29,14 @@ public abstract class SuperPacmanArea extends Area {
     @Override
     public void update(float deltaTime) {
 
-        for(Interactor interactor : ){ //Ebauche de la facon de gerer les interactions
+        /*for(Interactor interactor : ){ //Ebauche de la facon de gerer les interactions
 
             if(interactor.wantsCellInteraction()){
                 behaviour.cellInteractionOf(interactor);
+
             }
-        }
+        }*/
         super.update(deltaTime);
     }
+
 }

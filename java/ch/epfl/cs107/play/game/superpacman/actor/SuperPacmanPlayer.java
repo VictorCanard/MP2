@@ -74,9 +74,26 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         updateDesiredOrientation(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         updateDesiredOrientation(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
 
+
+
+        if(!isDisplacementOccurs()){
+            if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
+
+                orientate(desiredOrientation);
+                move(MOVING_SPEED);
+
+                currentAnimation.reset();
+
+                //area.(getFieldOfViewCells());
+
+            }
+        }
+        else{
+            currentAnimation = animations[desiredOrientation.ordinal()];
+
+        }
+
         currentAnimation.update(deltaTime);
-
-
         super.update(deltaTime);
 
         /*
@@ -89,28 +106,14 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         */
 
     }
+    public int getScore(){
+        return score;
+    }
     private void updateDesiredOrientation(Orientation orientation, Button b){
 
         if(b.isDown()) {
             desiredOrientation = orientation;
         }
-
-        if(!isDisplacementOccurs()){
-            if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
-
-                orientate(desiredOrientation);
-                move(MOVING_SPEED);
-                currentAnimation.reset();
-
-            }
-        }
-        else{
-            currentAnimation = animations[desiredOrientation.ordinal()];
-
-        }
-
-
-
 
     }
     /**
@@ -158,6 +161,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     @Override
     public void interactWith(Interactable other) {
+        other.acceptInteraction(playerHandler);
 
     }
 

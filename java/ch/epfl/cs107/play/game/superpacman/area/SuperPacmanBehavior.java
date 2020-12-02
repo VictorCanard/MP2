@@ -204,6 +204,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
         protected boolean canEnter(Interactable entity) {
 
             return !this.hasNonTraversableContent();
+
         }
 
 

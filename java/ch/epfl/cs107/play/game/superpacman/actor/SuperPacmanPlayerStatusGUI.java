@@ -10,6 +10,8 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.awt.*;
 
+import static ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer.score;
+
 class SuperPacmanPlayerStatusGUI implements Graphics {
     private int STARTING_HP;
     private  int MAX_HP;
@@ -46,7 +48,7 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
             life[i].draw(canvas);
         }
 
-        scoreGraphics = new TextGraphics("SCORE : "+SuperPacmanPlayer.score,1f, Color.YELLOW, Color.BLUE,0.07f,false,false,anchor.add(new Vector(6, height - 1.375f)));
+        scoreGraphics = new TextGraphics("SCORE : "+score,1f, Color.YELLOW, Color.BLUE,0.07f,false,false,anchor.add(new Vector(6, height - 1.375f)));
         scoreGraphics.draw(canvas);
 
 
