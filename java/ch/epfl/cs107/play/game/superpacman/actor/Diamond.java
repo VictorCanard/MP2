@@ -57,7 +57,8 @@ public class Diamond extends CollectableAreaEntity implements Interactable {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-            v.interactWith(this);
+        ((SuperPacmanInteractionVisitor)v).interactWith(this);
+
     }
 
     @Override

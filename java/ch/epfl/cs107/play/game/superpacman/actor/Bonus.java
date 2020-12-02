@@ -67,7 +67,7 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        v.interactWith(this);
+        ((SuperPacmanInteractionVisitor)v).interactWith(this);
     }
 
     public int addScore(){

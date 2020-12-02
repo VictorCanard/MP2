@@ -51,7 +51,7 @@ public class SuperPacman extends RPG {
         if (super.begin(window, fileSystem)) {
 
             createAreas();
-            areaIndex = 1;
+            areaIndex = 0;
             areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
             areas[areaIndex].setBehaviour(behaviors[areaIndex]);
             areas[areaIndex].registerActors();
