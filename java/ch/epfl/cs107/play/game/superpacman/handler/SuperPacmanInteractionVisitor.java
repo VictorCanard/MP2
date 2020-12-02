@@ -1,5 +1,6 @@
 package ch.epfl.cs107.play.game.superpacman.handler;
 
+import ch.epfl.cs107.play.game.areagame.actor.AutomaticallyCollectableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.rpg.handler.RPGInteractionVisitor;
@@ -10,13 +11,16 @@ public interface SuperPacmanInteractionVisitor extends RPGInteractionVisitor {
 
     default void interactWith(SuperPacmanPlayer superPacmanPlayer) {}
 
-    default void interactWith(CollectableAreaEntity collectableAreaEntity){}
+    default void interactWith(AutomaticallyCollectableAreaEntity automaticallyCollectableAreaEntitycollectableAreaEntity){
 
-    default void interactWith(Cherry cherry){}
+    }
 
-    default void interactWith(Diamond diamond){}
+    default void interactWith(CollectableAreaEntity collectableAreaEntity){
 
-    default void interactWith(Key key){}
+    }
+
+
+
 
 
 

@@ -4,7 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public abstract class AutomaticallyCollectableAreaEntity extends CollectableAreaEntity {
-    boolean isCollected = false;
+    private boolean isCollected = false;
     /**
          * Default AreaEntity constructor
          *

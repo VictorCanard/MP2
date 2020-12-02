@@ -13,7 +13,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-public class Bonus extends CollectableAreaEntity implements Interactable {
+public class Bonus extends AutomaticallyCollectableAreaEntity implements Interactable {
     private final int ANIMATION_DURATION = 4;
     private Animation animations;
     Sprite[] sprites;

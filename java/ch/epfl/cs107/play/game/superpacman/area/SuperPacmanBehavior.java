@@ -31,7 +31,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
                 switch (getType(getCell(x,y))){
                     case WALL:
                         neighborhood = getNeighborhood(x,y);
-                        area.registerActor(new Wall(area,position,neighborhood)); //Repere different donc le y est inverse
+                        area.registerActor(new Wall(area,position,neighborhood));
                         break;
                     case FREE_WITH_CHERRY:
                         area.registerActor(new Cherry(area, Orientation.UP, position));

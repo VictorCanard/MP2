@@ -84,8 +84,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
                 currentAnimation.reset();
 
-                //area.(getFieldOfViewCells());
-
             }
         }
         else{
@@ -194,5 +192,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             entity.collect();
             score += entity.addScore();
         }
+
     }
 }
