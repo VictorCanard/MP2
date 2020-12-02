@@ -174,7 +174,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     @Override
     public void interactWith(Interactable other) {
-        //other.acceptInteraction(handler);
+        //other.acceptInteraction(handler); //provoque une erreur, en cours de résolution
     }
 
     @Override

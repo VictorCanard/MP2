@@ -38,6 +38,11 @@ public class Gate extends AreaEntity {
     }
 
     @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+    }
+
+    @Override
     public void draw(Canvas canvas) {
         if(sprite != null)
             sprite.draw(canvas);
@@ -50,8 +55,8 @@ public class Gate extends AreaEntity {
 
     @Override
     public boolean takeCellSpace() {
-        //eturn signal.isOff();
-        return false; //En attendant de trouver une méthode correcte
+        //return signal.isOff();
+        return false; //en attendant que la collecte d'objet marche
     }
 
     @Override
