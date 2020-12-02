@@ -33,7 +33,6 @@ public class Bonus extends CollectableAreaEntity implements Interactable {
 
     @Override
     public void update(float deltaTime) {
-        animations.reset();
         animations.update(deltaTime);
         super.update(deltaTime);
     }
