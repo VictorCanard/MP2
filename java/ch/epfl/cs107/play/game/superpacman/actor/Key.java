@@ -4,6 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.signal.logic.Logic;
@@ -12,7 +13,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-public class Key extends AutomaticallyCollectableAreaEntity implements Interactable, Signal {
+public class Key extends AutomaticallyCollectableAreaEntity implements Interactable {
     Sprite sprite;
     Logic signal;
 
@@ -76,11 +77,8 @@ public class Key extends AutomaticallyCollectableAreaEntity implements Interacta
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        v.interactWith(this);
+        ((SuperPacmanInteractionVisitor)v).interactWith(this);
     }
 
-    @Override
-    public float getIntensity(float t) {
-        return 0;
-    }
+
 }
