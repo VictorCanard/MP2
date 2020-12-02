@@ -91,6 +91,9 @@ public class SuperPacmanBehavior extends AreaBehavior {
         }
 
     }
+
+
+
     protected boolean[][] getNeighborhood(int x, int y){
         neighborhood = new boolean[3][3];
 
