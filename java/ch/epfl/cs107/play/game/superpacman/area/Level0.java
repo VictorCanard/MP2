@@ -13,6 +13,7 @@ public class Level0 extends SuperPacmanArea {
     public String getTitle() {
         return "superpacman/Level0";
     }
+    
 
 
 
@@ -24,5 +25,8 @@ public class Level0 extends SuperPacmanArea {
     }
 
 
-
+    @Override
+    public boolean isOn() {
+        return true;
+    }
 }

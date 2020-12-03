@@ -22,7 +22,7 @@ public abstract class AutomaticallyCollectableAreaEntity extends CollectableArea
     public void collect(){
        getOwnerArea().unregisterActor(this);
        isCollected = true;
-        System.out.println(isCollected);
+
     }
 
     public boolean isCollected(){

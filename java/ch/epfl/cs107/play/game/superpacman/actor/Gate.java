@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Gate extends AreaEntity {
-    private Logic signal;
+    private Key key;
     private Sprite sprite;
 
     /**
@@ -27,9 +27,10 @@ public class Gate extends AreaEntity {
      * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
-    public Gate(Area area, Orientation orientation, DiscreteCoordinates position, Logic signal) {
+    public Gate(Area area, Orientation orientation, DiscreteCoordinates position, Key key) {
         super(area, orientation, position);
-        this.signal = signal;
+
+        this.key = key;
         if (orientation == Orientation.UP || orientation == Orientation.DOWN){
             sprite = new RPGSprite("superpacman/gate",1,1,this, new RegionOfInterest(0,0,64,64));
         }
@@ -40,7 +41,11 @@ public class Gate extends AreaEntity {
 
     @Override
     public void update(float deltaTime) {
-        takeCellSpace();
+        if(key.getSignal().isOn()){
+            getOwnerArea().unregisterActor(this);
+            System.out.println("HEY");
+        }
+
         super.update(deltaTime);
     }
 
@@ -57,7 +62,7 @@ public class Gate extends AreaEntity {
 
     @Override
     public boolean takeCellSpace() {
-        return signal.isOff();
+        return key.getSignal().isOff();
         //return false; //en attendant que la collecte d'objet marche
     }
 

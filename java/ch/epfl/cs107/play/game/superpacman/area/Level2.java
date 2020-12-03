@@ -20,4 +20,8 @@ public class Level2 extends SuperPacmanArea {
 
     }
 
+    @Override
+    public boolean isOn() {
+        return false;
+    }
 }

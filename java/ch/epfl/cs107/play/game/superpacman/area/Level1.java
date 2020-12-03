@@ -13,6 +13,7 @@ public class Level1 extends SuperPacmanArea {
     public String getTitle() {
         return "superpacman/Level1";
     }
+    public final int NUMBER_OF_DIAMONDS = 10;
 
 
     protected void createArea() {
@@ -24,4 +25,8 @@ public class Level1 extends SuperPacmanArea {
     }
 
 
+    @Override
+    public boolean isOn() {
+        return false;
+    }
 }

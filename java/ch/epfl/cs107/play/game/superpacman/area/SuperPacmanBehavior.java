@@ -50,9 +50,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
         switch (area.getTitle()){ //positionement des clés et des gates
             case "superpacman/Level0":
                 Key key = new Key(area,Orientation.UP,new DiscreteCoordinates(3,4));
+
                 area.registerActor(key);
-                area.registerActor(new Gate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key.getSignal()));
-                area.registerActor(new Gate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key.getSignal()));
+
+                area.registerActor(new Gate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key));
+                area.registerActor(new Gate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key));
                 break;
             case "superpacman/Level1":
                 //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3),diamond1));
@@ -69,11 +71,12 @@ public class SuperPacmanBehavior extends AreaBehavior {
                 area.registerActor(key3);
                 area.registerActor(key4);
 
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,14), key1.getSignal()));
-                area.registerActor(new Gate(area, Orientation.DOWN, new DiscreteCoordinates(5,12), key1.getSignal()));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,10), key1.getSignal()));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,8), key1.getSignal()));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,14), key1));
+                area.registerActor(new Gate(area, Orientation.DOWN, new DiscreteCoordinates(5,12), key1));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,10), key1));
+                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,8), key1));
 
+                /*
                 area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,14), key2.getSignal()));
                 area.registerActor(new Gate(area, Orientation.DOWN, new DiscreteCoordinates(24,12), key2.getSignal()));
                 area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,10), key2.getSignal()));
@@ -88,6 +91,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
                 //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3),diamond2));
                 break;
 
+
+                 */
         }
 
     }

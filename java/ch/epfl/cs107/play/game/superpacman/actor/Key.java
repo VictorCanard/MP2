@@ -77,6 +77,7 @@ public class Key extends AutomaticallyCollectableAreaEntity implements Interacta
     @Override
     public void collect() {
         signal = Logic.TRUE;
+
         super.collect();
     }
 

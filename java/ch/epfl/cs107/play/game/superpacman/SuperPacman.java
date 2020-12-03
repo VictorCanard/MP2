@@ -41,7 +41,7 @@ public class SuperPacman extends RPG {
 
         for(int i=0;i<areas.length;i++){
             behaviors[i] = new SuperPacmanBehavior(getWindow(),areaNames[i]);
-            //areas[i].registerActors();
+
         }
 
     }
