@@ -13,9 +13,9 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-public class Key extends AutomaticallyCollectableAreaEntity implements Interactable {
-    Sprite sprite;
-    Logic signal;
+public class Key extends AutomaticallyCollectableAreaEntity implements Interactable, Logic {
+    private Sprite sprite;
+    private Logic signal = Logic.FALSE;
 
     /**
      * Default CollectableAreaEntity constructor
@@ -31,12 +31,6 @@ public class Key extends AutomaticallyCollectableAreaEntity implements Interacta
 
     @Override
     public void update(float deltaTime) {
-        /*if (this.isCollected()){
-            signal.isOn();
-        }
-        else {
-            signal.isOff();
-        }*/
         super.update(deltaTime);
     }
 
@@ -80,5 +74,24 @@ public class Key extends AutomaticallyCollectableAreaEntity implements Interacta
         ((SuperPacmanInteractionVisitor)v).interactWith(this);
     }
 
+    @Override
+    public void collect() {
+        signal = Logic.TRUE;
+        super.collect();
+    }
 
+    @Override
+    public boolean isOn() {
+        return signal == Logic.TRUE;
+    }
+
+    @Override
+    public boolean isOff() {
+        return signal == Logic.FALSE;
+    }
+
+    @Override
+    public float getIntensity() {
+        return 0;
+    }
 }

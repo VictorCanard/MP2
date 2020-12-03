@@ -1,9 +1,11 @@
 package ch.epfl.cs107.play.game.areagame.actor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public abstract class AutomaticallyCollectableAreaEntity extends CollectableAreaEntity {
+public abstract class AutomaticallyCollectableAreaEntity extends CollectableAreaEntity implements Interactable {
     private boolean isCollected = false;
     /**
          * Default AreaEntity constructor
@@ -28,4 +30,8 @@ public abstract class AutomaticallyCollectableAreaEntity extends CollectableArea
         return isCollected;
     }
 
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v) {
+        ((SuperPacmanInteractionVisitor)v).interactWith(this);
+    }
 }

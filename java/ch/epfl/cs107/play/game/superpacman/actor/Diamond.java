@@ -12,8 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Diamond extends AutomaticallyCollectableAreaEntity implements Interactable {
+    private Sprite sprite;
 
-    Sprite sprite;
     /**
      * Default CollectableAreaEntity constructor
      *

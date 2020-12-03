@@ -15,6 +15,7 @@ import ch.epfl.cs107.play.game.tutosSolution.area.Tuto2Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -187,6 +188,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         public void interactWith(Door door) {
             setIsPassingADoor(door);
         }
+
 
         public void interactWith(AutomaticallyCollectableAreaEntity entity){
             entity.collect();

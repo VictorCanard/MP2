@@ -17,9 +17,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Gate extends AreaEntity {
-    Logic signal;
-    Sprite sprite;
-    Sprite[] sprites;
+    private Logic signal;
+    private Sprite sprite;
+
     /**
      * Default AreaEntity constructor
      *
@@ -40,6 +40,7 @@ public class Gate extends AreaEntity {
 
     @Override
     public void update(float deltaTime) {
+        takeCellSpace();
         super.update(deltaTime);
     }
 
@@ -56,8 +57,8 @@ public class Gate extends AreaEntity {
 
     @Override
     public boolean takeCellSpace() {
-        //return signal.isOff();
-        return false; //en attendant que la collecte d'objet marche
+        return signal.isOff();
+        //return false; //en attendant que la collecte d'objet marche
     }
 
     @Override

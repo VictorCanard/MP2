@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Cherry extends AutomaticallyCollectableAreaEntity implements Interactable {
-    Sprite sprite;
+    private Sprite sprite;
     /**
      * Default CollectableAreaEntity constructor
      *
