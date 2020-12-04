@@ -15,12 +15,13 @@ import ch.epfl.cs107.play.window.Window;
 public class SuperPacman extends RPG {
     private SuperPacmanPlayer player;
     private int areaIndex;
+    public static int numberOfAreas = 3;
     private final String[] areaNames = {"superpacman/Level0", "superpacman/Level1", "superpacman/Level2"};
     private final DiscreteCoordinates[] startingPositions = {Level0.PLAYER_SPAWN_POSTION,
             Level1.PLAYER_SPAWN_POSTION, Level2.PLAYER_SPAWN_POSTION};
 
-    private SuperPacmanArea[] areas = new SuperPacmanArea[areaNames.length];
-    private SuperPacmanBehavior[] behaviors = new SuperPacmanBehavior[areas.length];
+    private SuperPacmanArea[] areas = new SuperPacmanArea[numberOfAreas];
+    private SuperPacmanBehavior[] behaviors = new SuperPacmanBehavior[numberOfAreas];
 
 
 
@@ -51,14 +52,14 @@ public class SuperPacman extends RPG {
         if (super.begin(window, fileSystem)) {
 
             createAreas();
-            areaIndex = 0;
+            areaIndex = 2;
             areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
             areas[areaIndex].setBehaviour(behaviors[areaIndex]);
             areas[areaIndex].registerActors();
+
             player = new SuperPacmanPlayer(areas[areaIndex],startingPositions[areaIndex]);
-
-
             initPlayer(player);
+
             return true;
         }
         return false;

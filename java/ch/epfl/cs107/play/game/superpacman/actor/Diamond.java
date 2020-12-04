@@ -4,6 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
@@ -13,6 +14,8 @@ import java.util.List;
 
 public class Diamond extends AutomaticallyCollectableAreaEntity implements Interactable {
     private Sprite sprite;
+
+
 
     /**
      * Default CollectableAreaEntity constructor
@@ -30,6 +33,9 @@ public class Diamond extends AutomaticallyCollectableAreaEntity implements Inter
     public void draw(Canvas canvas) {
         if(sprite != null)
             sprite.draw(canvas);
+    }
+    public void updateDiamondAmount(){
+        ((SuperPacmanArea)getOwnerArea()).numberOfDiamonds --;
     }
 
     @Override

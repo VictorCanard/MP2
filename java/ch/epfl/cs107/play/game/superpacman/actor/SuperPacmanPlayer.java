@@ -192,6 +192,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         public void interactWith(AutomaticallyCollectableAreaEntity entity){
             entity.collect();
+            entity.updateDiamondAmount(); //Only activates for objects of type diamond
             score += entity.addScore();
         }
 

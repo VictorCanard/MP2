@@ -24,6 +24,8 @@ public abstract class AutomaticallyCollectableAreaEntity extends CollectableArea
        isCollected = true;
 
     }
+    public void updateDiamondAmount(){
+    }
 
     public boolean isCollected(){
 

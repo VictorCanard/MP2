@@ -7,15 +7,16 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.actor.*;
+import ch.epfl.cs107.play.game.superpacman.actor.Gates.DiamondGate;
+import ch.epfl.cs107.play.game.superpacman.actor.Gates.Gate;
+import ch.epfl.cs107.play.game.superpacman.actor.Gates.OneKeyGate;
+import ch.epfl.cs107.play.game.superpacman.actor.Gates.TwoKeysGate;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Window;
-
-
-import java.util.Arrays;
 
 public class SuperPacmanBehavior extends AreaBehavior {
     private boolean[][] neighborhood;
+
 
 
     protected void registerActors (Area area){
@@ -35,9 +36,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
                         break;
                     case FREE_WITH_CHERRY:
                         area.registerActor(new Cherry(area, Orientation.UP, position));
+
                         break;
                     case FREE_WITH_DIAMOND:
                         area.registerActor(new Diamond(area, Orientation.UP, position));
+                        ((SuperPacmanArea)area).numberOfDiamonds ++;
                         break;
                     case FREE_WITH_BONUS:
                         area.registerActor(new Bonus(area,Orientation.UP, position));
@@ -53,12 +56,12 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
                 area.registerActor(key);
 
-                area.registerActor(new Gate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key));
-                area.registerActor(new Gate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key));
+                area.registerActor(new OneKeyGate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key));
+                area.registerActor(new OneKeyGate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key));
                 break;
             case "superpacman/Level1":
-                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3),diamond1));
-                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3),diamond1));
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3)));
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3)));
                 break;
             case "superpacman/Level2":
                 Key key1 = new Key(area,Orientation.UP, new DiscreteCoordinates(3,16));
@@ -71,28 +74,28 @@ public class SuperPacmanBehavior extends AreaBehavior {
                 area.registerActor(key3);
                 area.registerActor(key4);
 
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,14), key1));
-                area.registerActor(new Gate(area, Orientation.DOWN, new DiscreteCoordinates(5,12), key1));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,10), key1));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(8,8), key1));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,14), key1));
+                area.registerActor(new OneKeyGate(area, Orientation.DOWN, new DiscreteCoordinates(5,12), key1));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,10), key1));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,8), key1));
 
-                /*
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,14), key2.getSignal()));
-                area.registerActor(new Gate(area, Orientation.DOWN, new DiscreteCoordinates(24,12), key2.getSignal()));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,10), key2.getSignal()));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(21,8), key2.getSignal()));
 
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(10,2), key3.getSignal()));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(19,2), key3.getSignal()));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(12,8), key3.getSignal()));
-                area.registerActor(new Gate(area, Orientation.RIGHT, new DiscreteCoordinates(17,8), key3.getSignal()));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,14), key2));
+                area.registerActor(new OneKeyGate(area, Orientation.DOWN, new DiscreteCoordinates(24,12), key2));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,10), key2));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,8), key2));
 
-                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3),diamond2));
-                //area.registerActor(new Gate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3),diamond2));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(10,2), key3, key4));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(19,2), key3, key4));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(12,8), key3, key4));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(17,8), key3, key4));
+
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3)));
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3)));
                 break;
 
 
-                 */
+
         }
 
     }

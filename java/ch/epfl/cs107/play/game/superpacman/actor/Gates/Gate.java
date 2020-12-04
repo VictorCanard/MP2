@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor;
+package ch.epfl.cs107.play.game.superpacman.actor.Gates;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
@@ -6,6 +6,8 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.superpacman.actor.Key;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
@@ -17,8 +19,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class Gate extends AreaEntity {
-    private Key key;
+    private Key key1;
+    private Key key2;
     private Sprite sprite;
+    private int numberDiamonds=0;
 
     /**
      * Default AreaEntity constructor
@@ -27,10 +31,13 @@ public class Gate extends AreaEntity {
      * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
-    public Gate(Area area, Orientation orientation, DiscreteCoordinates position, Key key) {
+    public Gate(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
+        createGateSprites(orientation);
+        System.out.println("HEY");
+    }
 
-        this.key = key;
+    public void createGateSprites(Orientation orientation){
         if (orientation == Orientation.UP || orientation == Orientation.DOWN){
             sprite = new RPGSprite("superpacman/gate",1,1,this, new RegionOfInterest(0,0,64,64));
         }
@@ -41,14 +48,12 @@ public class Gate extends AreaEntity {
 
     @Override
     public void update(float deltaTime) {
-        if(key.getSignal().isOn()){
-            getOwnerArea().unregisterActor(this);
-            System.out.println("HEY");
-        }
-
         super.update(deltaTime);
     }
 
+    public void unregisterActor(){
+        getOwnerArea().unregisterActor(this);
+    }
     @Override
     public void draw(Canvas canvas) {
         if(sprite != null)
@@ -62,8 +67,7 @@ public class Gate extends AreaEntity {
 
     @Override
     public boolean takeCellSpace() {
-        return key.getSignal().isOff();
-        //return false; //en attendant que la collecte d'objet marche
+        return false;
     }
 
     @Override
@@ -78,7 +82,7 @@ public class Gate extends AreaEntity {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        ((SuperPacmanInteractionVisitor)v).interactWith(this);
+        v.interactWith(this);
 
     }
 }
