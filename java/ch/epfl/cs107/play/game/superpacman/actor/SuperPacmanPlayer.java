@@ -28,7 +28,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private int MOVING_SPEED = 6;
     private int MAX_HP = 5;
     private int DEFAULT_HP = 3;
-    public static int score = 0;
+    private int score = 0;
     private final int ANIMATION_DURATION = 4;
     private boolean isPassingADoor;
     private Orientation desiredOrientation;
@@ -52,7 +52,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         playerHandler = new SuperPacmanPlayerHandler();
 
-        statusGUI = new SuperPacmanPlayerStatusGUI(DEFAULT_HP,MAX_HP);
+        statusGUI = new SuperPacmanPlayerStatusGUI(this, DEFAULT_HP,MAX_HP);
 
         sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 1, this , 64, 64, new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
 
@@ -105,9 +105,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         */
 
     }
-    public int getScore(){
-        return score;
-    }
+
     private void updateDesiredOrientation(Orientation orientation, Button b){
 
         if(b.isDown()) {
@@ -196,5 +194,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             score += entity.addScore();
         }
 
+    }
+    public int getScore(){
+        return score;
     }
 }

@@ -12,6 +12,8 @@ import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
+
+
 public class SuperPacman extends RPG {
     private SuperPacmanPlayer player;
     private int areaIndex;
@@ -32,6 +34,16 @@ public class SuperPacman extends RPG {
 
     @Override
     public void update(float deltaTime) {
+        if(!(((SuperPacmanArea)getCurrentArea()).isOff())){
+            getCurrentArea().unregisterActor(player);
+
+            areaIndex++;
+            initialiseLevel(areaIndex);
+
+            initialiserPlayer();
+
+        }
+
         super.update(deltaTime);
     }
 
@@ -46,23 +58,32 @@ public class SuperPacman extends RPG {
         }
 
     }
+
+    public void initialiseLevel(int areaIndex){
+        areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
+        areas[areaIndex].setBehaviour(behaviors[areaIndex]);
+        areas[areaIndex].registerActors();
+    }
+
+    public void initialiserPlayer(){
+        player = new SuperPacmanPlayer(areas[areaIndex],startingPositions[areaIndex]);
+        initPlayer(player);
+    }
+
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
 
         if (super.begin(window, fileSystem)) {
 
             createAreas();
-            areaIndex = 2;
-            areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
-            areas[areaIndex].setBehaviour(behaviors[areaIndex]);
-            areas[areaIndex].registerActors();
+            initialiseLevel(0);
 
-            player = new SuperPacmanPlayer(areas[areaIndex],startingPositions[areaIndex]);
-            initPlayer(player);
+            initialiserPlayer();
 
             return true;
         }
         return false;
     }
+
 
 }

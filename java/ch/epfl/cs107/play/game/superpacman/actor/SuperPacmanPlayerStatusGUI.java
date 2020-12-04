@@ -4,17 +4,20 @@ import ch.epfl.cs107.play.game.actor.Graphics;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
+import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.awt.*;
 
-import static ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer.score;
+
 
 class SuperPacmanPlayerStatusGUI implements Graphics {
     private int STARTING_HP;
     private  int MAX_HP;
+
+    private SuperPacmanPlayer player;
 
     private ImageGraphics[] life;
     private TextGraphics scoreGraphics;
@@ -24,11 +27,13 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
     private float height;
 
 
-    public SuperPacmanPlayerStatusGUI(int STARTING_HP, int MAX_HP){
+    public SuperPacmanPlayerStatusGUI(SuperPacmanPlayer player, int STARTING_HP, int MAX_HP){
         this.STARTING_HP = STARTING_HP;
         this.MAX_HP=MAX_HP;
 
         life = new ImageGraphics[MAX_HP];
+
+        this.player=player;
     }
     @Override
     public void draw(Canvas canvas) {
@@ -48,7 +53,7 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
             life[i].draw(canvas);
         }
 
-        scoreGraphics = new TextGraphics("SCORE : "+score,1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(6.5f, height - 1.375f)));
+        scoreGraphics = new TextGraphics("SCORE : "+ player.getScore(),1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(6.5f, height - 1.375f)));
         scoreGraphics.draw(canvas);
 
 

@@ -39,7 +39,7 @@ public abstract class SuperPacmanArea extends Area implements Logic {
     }
     @Override
     public boolean isOff() {
-        return false;
+        return numberOfDiamonds != 0;
     }
 
     @Override
