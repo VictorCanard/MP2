@@ -1,26 +1,17 @@
 package ch.epfl.cs107.play.game.superpacman.actor;
 
-import ch.epfl.cs107.play.game.actor.Graphics;
-import ch.epfl.cs107.play.game.actor.TextGraphics;
-import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
-import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
-import ch.epfl.cs107.play.game.tutosSolution.area.Tuto2Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.RegionOfInterest;
-import ch.epfl.cs107.play.math.Vector;
-import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,6 +28,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private Animation currentAnimation;
     private SuperPacmanPlayerStatusGUI statusGUI;
     private SuperPacmanPlayerHandler playerHandler;
+
+    private static boolean isInvulnerable = false;
+    private static float  invulnerableTimer = 0;
 
 
     /**
@@ -68,14 +62,21 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     public void update(float deltaTime) {
 
+        if(invulnerableTimer <=0){
+            isInvulnerable = false;
+        }
+
+        else{
+            invulnerableTimer -=deltaTime;
+        }
+
+
         Keyboard keyboard= getOwnerArea().getKeyboard();
 
         updateDesiredOrientation(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
         updateDesiredOrientation(Orientation.UP, keyboard.get(Keyboard.UP));
         updateDesiredOrientation(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         updateDesiredOrientation(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-
-
 
         if(!isDisplacementOccurs()){
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
@@ -95,16 +96,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
 
-        /*
-        List<DiscreteCoordinates> coords = getCurrentCells();
-        if (coords != null) {
-            for (DiscreteCoordinates c : coords) {
-                if (((Tuto2Area)getOwnerArea()).isDoor(c)) setIsPassingADoor();
-            }
-        }
-        */
-
     }
+
 
     private void updateDesiredOrientation(Orientation orientation, Button b){
 
@@ -113,6 +106,22 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         }
 
     }
+
+
+    public int getScore(){
+        return score;
+    }
+    public void scareGhosts(){
+
+    }
+    public static void setInvulnerable(float timer){
+        invulnerableTimer = timer;
+        isInvulnerable = true;
+    }
+    public static boolean isInvulnerable(){
+        return isInvulnerable;
+    }
+
     /**
      * Indicate the player just passed a door
      */
@@ -135,6 +144,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         statusGUI.draw(canvas);
 
     }
+
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
@@ -184,18 +194,17 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
         @Override
         public void interactWith(Door door) {
+            System.out.println("ICI methode door a ete activee");
             setIsPassingADoor(door);
         }
 
 
         public void interactWith(AutomaticallyCollectableAreaEntity entity){
             entity.collect();
-            entity.updateDiamondAmount(); //Only activates for objects of type diamond
+            entity.specialAttribute();
             score += entity.addScore();
         }
 
     }
-    public int getScore(){
-        return score;
-    }
+
 }

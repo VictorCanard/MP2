@@ -19,6 +19,7 @@ public class Level0 extends SuperPacmanArea {
 
     protected void createArea() {
         DiscreteCoordinates pos = Level1.PLAYER_SPAWN_POSTION;
+
         registerActor(new Door("superpacman/Level1", pos, Logic.TRUE, this, Orientation.UP,
                 new DiscreteCoordinates(5,9), new DiscreteCoordinates(6,9) ));
 

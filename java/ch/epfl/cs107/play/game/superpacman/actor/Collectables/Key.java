@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor;
+package ch.epfl.cs107.play.game.superpacman.actor.Collectables;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
@@ -6,13 +6,17 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.Signal;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Cherry extends AutomaticallyCollectableAreaEntity implements Interactable {
+public class Key extends AutomaticallyCollectableAreaEntity implements Interactable, Logic {
     private Sprite sprite;
+    private Logic signal = Logic.FALSE;
+
     /**
      * Default CollectableAreaEntity constructor
      *
@@ -20,9 +24,23 @@ public class Cherry extends AutomaticallyCollectableAreaEntity implements Intera
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public Cherry(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public Key(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-        sprite = new RPGSprite("superpacman/cherry",1,1,this);
+        sprite = new RPGSprite("superpacman/key",1,1,this);
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+    }
+
+    public Logic getSignal() {
+        return signal;
+    }
+
+    @Override
+    public int addScore() {
+        return 0;
     }
 
     @Override
@@ -54,10 +72,26 @@ public class Cherry extends AutomaticallyCollectableAreaEntity implements Intera
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         ((SuperPacmanInteractionVisitor)v).interactWith(this);
-
     }
 
-    public int addScore(){
-        return 200;
+    @Override
+    public void collect() {
+        signal = Logic.TRUE;
+        super.collect();
+    }
+
+    @Override
+    public boolean isOn() {
+        return signal == Logic.TRUE;
+    }
+
+    @Override
+    public boolean isOff() {
+        return signal == Logic.FALSE;
+    }
+
+    @Override
+    public float getIntensity() {
+        return 0;
     }
 }

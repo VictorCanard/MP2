@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor;
+package ch.epfl.cs107.play.game.superpacman.actor.Collectables;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
@@ -6,17 +6,19 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.Signal;
-import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Key extends AutomaticallyCollectableAreaEntity implements Interactable, Logic {
-    private Sprite sprite;
-    private Logic signal = Logic.FALSE;
+import static ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer.setInvulnerable;
 
+
+public class Bonus extends AutomaticallyCollectableAreaEntity implements Interactable {
+    private final int ANIMATION_DURATION = 4;
+    private final float INVULNERABLE_TIMER =  10f;
+    private Animation animations;
+    private Sprite[] sprites;
     /**
      * Default CollectableAreaEntity constructor
      *
@@ -24,34 +26,33 @@ public class Key extends AutomaticallyCollectableAreaEntity implements Interacta
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public Key(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public Bonus(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-        sprite = new RPGSprite("superpacman/key",1,1,this);
+
+        sprites = RPGSprite.extractSprites("superpacman/coin", 4, 1, 1, this, 16, 16);
+        animations = new Animation(ANIMATION_DURATION, sprites, true);
     }
 
     @Override
     public void update(float deltaTime) {
+        animations.update(deltaTime);
         super.update(deltaTime);
-    }
-
-    public Logic getSignal() {
-        return signal;
-    }
-
-    @Override
-    public int addScore() {
-        return 0;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if(sprite != null)
-            sprite.draw(canvas);
+        if(animations != null)
+            animations.draw(canvas);
     }
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
+    }
+
+
+    public void specialAttribute(){
+        setInvulnerable(INVULNERABLE_TIMER);
     }
 
     @Override
@@ -74,24 +75,7 @@ public class Key extends AutomaticallyCollectableAreaEntity implements Interacta
         ((SuperPacmanInteractionVisitor)v).interactWith(this);
     }
 
-    @Override
-    public void collect() {
-        signal = Logic.TRUE;
-        super.collect();
-    }
-
-    @Override
-    public boolean isOn() {
-        return signal == Logic.TRUE;
-    }
-
-    @Override
-    public boolean isOff() {
-        return signal == Logic.FALSE;
-    }
-
-    @Override
-    public float getIntensity() {
+    public int addScore(){
         return 0;
     }
 }

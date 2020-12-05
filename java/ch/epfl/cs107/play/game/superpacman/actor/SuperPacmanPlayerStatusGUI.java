@@ -4,7 +4,6 @@ import ch.epfl.cs107.play.game.actor.Graphics;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
-import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;

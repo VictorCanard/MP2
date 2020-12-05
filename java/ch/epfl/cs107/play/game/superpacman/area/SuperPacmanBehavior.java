@@ -7,10 +7,16 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.superpacman.actor.*;
+import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Bonus;
+import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Cherry;
+import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Diamond;
+import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Key;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.DiamondGate;
-import ch.epfl.cs107.play.game.superpacman.actor.Gates.Gate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.OneKeyGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.TwoKeysGate;
+import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Blinky;
+import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Inky;
+import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Pinky;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
@@ -44,6 +50,16 @@ public class SuperPacmanBehavior extends AreaBehavior {
                         break;
                     case FREE_WITH_BONUS:
                         area.registerActor(new Bonus(area,Orientation.UP, position));
+                        break;
+                    case FREE_WITH_BLINKY:
+                        area.registerActor(new Blinky(area, Orientation.UP,position));
+                        break;
+                    case FREE_WITH_INKY:
+                        area.registerActor(new Inky(area, Orientation.UP,position));
+                        break;
+                    case FREE_WITH_PINKY:
+                        area.registerActor(new Pinky(area, Orientation.UP,position));
+
                 }
 
 
