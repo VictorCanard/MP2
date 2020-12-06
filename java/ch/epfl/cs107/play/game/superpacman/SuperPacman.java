@@ -7,11 +7,13 @@ import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
+import java.util.Collection;
+import java.util.Collections;
 
 
 public class SuperPacman extends RPG {
     private SuperPacmanPlayer player;
-    private int areaIndex;
+    private int areaIndex =0;
     public static int numberOfAreas = 3;
     private final String[] areaNames = {"superpacman/Level0", "superpacman/Level1", "superpacman/Level2"};
     private final DiscreteCoordinates[] startingPositions = {Level0.PLAYER_SPAWN_POSTION,
@@ -29,14 +31,14 @@ public class SuperPacman extends RPG {
 
     @Override
     public void update(float deltaTime) {
-        if(!(((SuperPacmanArea)getCurrentArea()).isOff())){
-            getCurrentArea().unregisterActor(player);
+        if(((SuperPacmanArea)getCurrentArea()).isOn()){
+
+            getCurrentArea().leaveAreaCells(player,player.getCurrentCells());
 
             areaIndex++;
             initialiseLevel(areaIndex);
-            //initialisePlayer();
 
-            getCurrentArea().registerActor(player);
+            getCurrentArea().enterAreaCells(player, Collections.singletonList(startingPositions[areaIndex]));
 
         }
         if(player.isInvulnerable()){
@@ -75,8 +77,10 @@ public class SuperPacman extends RPG {
 
         if (super.begin(window, fileSystem)) {
 
+            areaIndex= 0;
+
             createAreas();
-            initialiseLevel(0);
+            initialiseLevel(areaIndex);
 
             initialisePlayer();
 

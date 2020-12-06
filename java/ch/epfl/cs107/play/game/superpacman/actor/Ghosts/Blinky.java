@@ -15,4 +15,9 @@ public class Blinky extends Ghost{
     public Blinky(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
     }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+    }
 }

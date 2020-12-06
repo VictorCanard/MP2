@@ -5,7 +5,10 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.superpacman.SuperPacman;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
+import ch.epfl.cs107.play.game.superpacman.handler.GhostInteractionVisitor;
+import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
@@ -19,6 +22,9 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
     private Sprite[] ghostSprite;
     private Animation ghostAnimation;
+    private DiscreteCoordinates positionRefuge;
+    private ghostHandler interactionHandler;
+    private SuperPacmanPlayer player;
 
     private final int ANIMATION_DURATION=8;
     private final int GHOST_SCORE = 500;
@@ -34,6 +40,8 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
      */
     public Ghost(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
+
+        interactionHandler = new ghostHandler();
 
 
     }
@@ -79,7 +87,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-
+        ((GhostInteractionVisitor)v).interactWith(this);
     }
 
     @Override
@@ -104,6 +112,15 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
     @Override
     public void interactWith(Interactable other) {
-
+        other.acceptInteraction(interactionHandler);
     }
+
+    public class ghostHandler implements GhostInteractionVisitor{
+        @Override
+        public void interactWith(SuperPacmanPlayer player) {
+            Ghost.this.player = player; //Le fantome se souvient du joueur Pacman
+
+        }
+    }
+
 }

@@ -5,6 +5,8 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.superpacman.SuperPacman;
+import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Ghost;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -198,13 +200,25 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             setIsPassingADoor(door);
         }
 
-
+        @Override
         public void interactWith(AutomaticallyCollectableAreaEntity entity){
             entity.collect();
             entity.specialAttribute();
             score += entity.addScore();
         }
 
+        @Override
+        public void interactWith(Ghost ghost) {
+            if(isInvulnerable){
+
+            }
+            else{
+                getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());
+                SuperPacmanPlayer.this.statusGUI.currentHp --;
+                getOwnerArea().enterAreaCells(SuperPacmanPlayer.this, getCurrentCells());
+
+            }
+        }
     }
 
 }

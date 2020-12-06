@@ -22,6 +22,10 @@ public abstract class SuperPacmanArea extends Area implements Logic {
         this.behaviour  =behaviour;
         super.setBehavior(behaviour);
     }
+
+    protected SuperPacmanBehavior getBehaviour(){
+        return behaviour;
+    }
     public void registerActors(){
         behaviour.registerActors(this);
     }
@@ -32,8 +36,13 @@ public abstract class SuperPacmanArea extends Area implements Logic {
         super.update(deltaTime);
     }
     @Override
-    public boolean isOff() {
-        return numberOfDiamonds != 0;
+    public boolean isOn() {
+        return numberOfDiamonds == 0;
+    }
+
+    @Override
+    public boolean isOff(){ //By default, unused
+        return false;
     }
 
     @Override

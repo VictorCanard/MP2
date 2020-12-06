@@ -42,7 +42,6 @@ public class SuperPacmanBehavior extends AreaBehavior {
                         break;
                     case FREE_WITH_CHERRY:
                         area.registerActor(new Cherry(area, Orientation.UP, position));
-
                         break;
                     case FREE_WITH_DIAMOND:
                         area.registerActor(new Diamond(area, Orientation.UP, position));
@@ -51,6 +50,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
                     case FREE_WITH_BONUS:
                         area.registerActor(new Bonus(area,Orientation.UP, position));
                         break;
+
+                    /*
                     case FREE_WITH_BLINKY:
                         area.registerActor(new Blinky(area, Orientation.UP,position));
                         break;
@@ -60,6 +61,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
                     case FREE_WITH_PINKY:
                         area.registerActor(new Pinky(area, Orientation.UP,position));
 
+
+                     */
                 }
 
 

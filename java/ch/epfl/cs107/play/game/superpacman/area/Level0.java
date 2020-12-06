@@ -27,7 +27,8 @@ public class Level0 extends SuperPacmanArea {
 
 
     @Override
-    public boolean isOn() {
+    public boolean isOn() { //REDEFINE THIS METHOD TO MAKE LEVEL0 LIGHTUP WHEN KEY IS COLLECTED
+
         return true;
     }
 }
