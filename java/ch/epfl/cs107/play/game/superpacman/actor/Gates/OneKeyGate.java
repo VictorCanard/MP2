@@ -20,13 +20,7 @@ public class OneKeyGate extends Gate{
         this.key = key1;
     }
 
-    @Override
-    public void update(float deltaTime) {
-        if(key.getSignal().isOn()){
-            unregisterActor();
-        }
-        super.update(deltaTime);
-    }
+
 
     @Override
     public boolean takeCellSpace() {

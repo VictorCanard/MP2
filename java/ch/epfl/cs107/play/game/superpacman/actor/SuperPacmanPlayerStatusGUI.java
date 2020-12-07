@@ -44,10 +44,12 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
         height = canvas.getScaledHeight();
         anchor = canvas.getTransform().getOrigin().sub(new Vector(width/2, height/2));
 
-        //N'initialise pas encore correctement les points de vie
-        if(STARTING_HP != currentHp){
-            drawHP(canvas);
-        }
+
+        drawHP(canvas);
+
+
+        //Maybe only when the score has changed
+        drawScore(canvas);
 
 
 

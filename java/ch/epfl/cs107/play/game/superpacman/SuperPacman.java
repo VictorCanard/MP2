@@ -36,6 +36,7 @@ public class SuperPacman extends RPG {
             getCurrentArea().leaveAreaCells(player,player.getCurrentCells());
 
             areaIndex++;
+
             initialiseLevel(areaIndex);
 
             getCurrentArea().enterAreaCells(player, Collections.singletonList(startingPositions[areaIndex]));
@@ -51,10 +52,12 @@ public class SuperPacman extends RPG {
 
     private void createAreas(){
         addArea(new Level0());
+
         addArea(new Level1());
         addArea(new Level2());
 
         for(int i=0;i<areas.length;i++){
+
             behaviors[i] = new SuperPacmanBehavior(getWindow(),areaNames[i]);
 
         }
@@ -65,6 +68,7 @@ public class SuperPacman extends RPG {
         areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
         areas[areaIndex].setBehaviour(behaviors[areaIndex]);
         areas[areaIndex].registerActors();
+        ((SuperPacmanArea)areas[areaIndex]).createArea();
     }
 
     public void initialisePlayer(){

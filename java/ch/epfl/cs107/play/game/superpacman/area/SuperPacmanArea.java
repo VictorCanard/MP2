@@ -23,8 +23,8 @@ public abstract class SuperPacmanArea extends Area implements Logic {
         super.setBehavior(behaviour);
     }
 
-    protected SuperPacmanBehavior getBehaviour(){
-        return behaviour;
+    public void createArea(){
+
     }
     public void registerActors(){
         behaviour.registerActors(this);
@@ -41,8 +41,8 @@ public abstract class SuperPacmanArea extends Area implements Logic {
     }
 
     @Override
-    public boolean isOff(){ //By default, unused
-        return false;
+    public boolean isOff(){
+        return numberOfDiamonds != 0;
     }
 
     @Override

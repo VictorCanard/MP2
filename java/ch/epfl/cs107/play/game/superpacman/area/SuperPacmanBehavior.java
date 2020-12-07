@@ -6,7 +6,7 @@ import ch.epfl.cs107.play.game.areagame.Cell;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.game.superpacman.actor.*;
+import ch.epfl.cs107.play.game.rpg.actor.Wall;
 import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Bonus;
 import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Cherry;
 import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Diamond;
@@ -14,9 +14,6 @@ import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Key;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.DiamondGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.OneKeyGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.TwoKeysGate;
-import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Blinky;
-import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Inky;
-import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Pinky;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
@@ -77,6 +74,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
                 area.registerActor(new OneKeyGate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key));
                 area.registerActor(new OneKeyGate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key));
+
+
                 break;
             case "superpacman/Level1":
                 area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3)));

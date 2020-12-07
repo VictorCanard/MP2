@@ -46,13 +46,13 @@ public class Gate extends AreaEntity {
         super.update(deltaTime);
     }
 
-    public void unregisterActor(){
-        getOwnerArea().unregisterActor(this);
-    }
+
     @Override
     public void draw(Canvas canvas) {
-        if(sprite != null)
+        if(sprite != null && this.takeCellSpace()){
             sprite.draw(canvas);
+        }
+
     }
 
     @Override

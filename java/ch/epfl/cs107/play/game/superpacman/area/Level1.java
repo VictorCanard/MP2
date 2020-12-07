@@ -13,20 +13,15 @@ public class Level1 extends SuperPacmanArea {
     public String getTitle() {
         return "superpacman/Level1";
     }
-    public final int NUMBER_OF_DIAMONDS = 10;
 
 
-    protected void createArea() {
+    public void createArea() {
         DiscreteCoordinates pos = Level2.PLAYER_SPAWN_POSTION;
         registerActor(new Door("superpacman/Level2", pos, Logic.TRUE, this, Orientation.DOWN,
                 new DiscreteCoordinates(14,0), new DiscreteCoordinates(15,0) ));
-        registerActor(new Background(this));
-        registerActor(new Foreground(this));
+
     }
 
 
-    @Override
-    public boolean isOn() {
-        return false;
-    }
+
 }

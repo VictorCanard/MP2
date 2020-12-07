@@ -10,14 +10,14 @@ import ch.epfl.cs107.play.signal.logic.Logic;
 
 public class Level0 extends SuperPacmanArea {
     public static final DiscreteCoordinates PLAYER_SPAWN_POSTION = new DiscreteCoordinates(10,1);
+
+
     public String getTitle() {
         return "superpacman/Level0";
     }
     
 
-
-
-    protected void createArea() {
+    public void createArea() {
         DiscreteCoordinates pos = Level1.PLAYER_SPAWN_POSTION;
 
         registerActor(new Door("superpacman/Level1", pos, Logic.TRUE, this, Orientation.UP,
@@ -26,9 +26,10 @@ public class Level0 extends SuperPacmanArea {
     }
 
 
-    @Override
-    public boolean isOn() { //REDEFINE THIS METHOD TO MAKE LEVEL0 LIGHTUP WHEN KEY IS COLLECTED
 
-        return true;
+    public boolean isOn() { //REDEFINE THIS METHOD TO MAKE LEVEL0 LIGHTUP WHEN KEY IS COLLECTED
+        return false;
     }
+
+
 }

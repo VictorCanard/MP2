@@ -27,7 +27,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     private SuperPacmanPlayer player;
 
     private final int ANIMATION_DURATION=8;
-    private final int GHOST_SCORE = 500;
+    public final int GHOST_SCORE = 500;
     private final int FIELD_OF_VIEW_RADIUS = 5;
     private boolean isAfraid=false;
 

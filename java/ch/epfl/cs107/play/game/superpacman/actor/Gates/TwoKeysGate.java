@@ -15,14 +15,7 @@ public class TwoKeysGate extends Gate {
         this.key2 = key2;
     }
 
-    @Override
-    public void update(float deltaTime) {
-        if(key1.getSignal().isOn() && key2.getSignal().isOn()){
-            unregisterActor();
-        }
 
-        super.update(deltaTime);
-    }
     @Override
     public boolean takeCellSpace() {
         return key1.getSignal().isOff() || key2.getSignal().isOff();

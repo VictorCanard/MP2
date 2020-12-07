@@ -50,6 +50,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         statusGUI = new SuperPacmanPlayerStatusGUI(this, DEFAULT_HP,MAX_HP);
 
+
         sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 1, this , 64, 64, new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
 
 
@@ -132,13 +133,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     }
 
     /**@return (boolean): true if the player is passing a door*/
-    public boolean isPassingADoor(){
-        return isPassingADoor;
-    }
 
-    public void resetDoorState() {
-        isPassingADoor = false;
-    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -210,7 +205,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         @Override
         public void interactWith(Ghost ghost) {
             if(isInvulnerable){
-
+                score += ghost.GHOST_SCORE;
             }
             else{
                 getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());

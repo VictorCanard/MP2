@@ -16,12 +16,9 @@ public class Level2 extends SuperPacmanArea {
 
 
 
-    protected void createArea() {
+    public void createArea() {
 
     }
 
-    @Override
-    public boolean isOn() {
-        return false;
-    }
+
 }

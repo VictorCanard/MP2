@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor;
+package ch.epfl.cs107.play.game.rpg.actor;
 
 import java.util.Collections;
 import java.util.List;

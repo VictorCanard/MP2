@@ -15,13 +15,6 @@ public class DiamondGate extends Gate {
     }
 
     @Override
-    public void update(float deltaTime) {
-        if(((SuperPacmanArea)getOwnerArea()).numberOfDiamonds ==0 ){
-            unregisterActor();
-        }
-        super.update(deltaTime);
-    }
-    @Override
     public boolean takeCellSpace() {
         return ((SuperPacmanArea)getOwnerArea()).numberOfDiamonds != 0;
     }

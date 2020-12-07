@@ -9,9 +9,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
 
 public interface SuperPacmanInteractionVisitor extends RPGInteractionVisitor {
 
-    default void interactWith(SuperPacmanPlayer superPacmanPlayer) {}
-
-    default void interactWith(AutomaticallyCollectableAreaEntity automaticallyCollectableAreaEntitycollectableAreaEntity){ }
+    default void interactWith(AutomaticallyCollectableAreaEntity automaticallyCollectableAreaEntity){ }
 
     default void interactWith(Ghost ghost) { }
 
