@@ -100,7 +100,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
 
-    }
+    } //TODO: Modulariser ce code
 
 
     private void updateDesiredOrientation(Orientation orientation, Button b){
@@ -111,13 +111,15 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     }
 
-
     public int getScore(){
         return score;
     }
+
     public void scareGhosts(){
 
     }
+
+    //Todo: Make these methods non static and the attribute as well
     public static void setInvulnerable(float timer){
         invulnerableTimer = timer;
         isInvulnerable = true;

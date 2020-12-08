@@ -34,8 +34,6 @@ public class SuperPacman extends RPG {
 
         if(player.isPassingADoor()){
             nextLevel();
-
-
         }
 
         if(((SuperPacmanArea)getCurrentArea()).isOn()){
@@ -81,8 +79,6 @@ public class SuperPacman extends RPG {
 
         initialiseBehaviours();
 
-
-
     }
 
 
@@ -118,7 +114,6 @@ public class SuperPacman extends RPG {
 
             setCurrentLevel(areaIndex);
             initialisePlayer();
-
 
             return true;
         }

@@ -6,7 +6,7 @@ import ch.epfl.cs107.play.signal.logic.Logic;
 public abstract class SuperPacmanArea extends Area implements Logic {
 
     private SuperPacmanBehavior behaviour;
-    public static int numberOfDiamonds = 0;
+    public int numberOfDiamonds = 0;
 
     @Override
     public float getCameraScaleFactor() {
@@ -35,6 +35,7 @@ public abstract class SuperPacmanArea extends Area implements Logic {
 
         super.update(deltaTime);
     }
+
     @Override
     public boolean isOn() {
         return numberOfDiamonds == 0;
