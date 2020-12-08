@@ -85,11 +85,12 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
 
                 orientate(desiredOrientation);
-                move(MOVING_SPEED);
+
 
                 currentAnimation.reset();
 
             }
+            move(MOVING_SPEED);
         }
         else{
             currentAnimation = animations[desiredOrientation.ordinal()];
@@ -191,8 +192,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
         @Override
         public void interactWith(Door door) {
-            System.out.println("ICI methode door a ete activee");
             setIsPassingADoor(door);
+
         }
 
         @Override

@@ -31,13 +31,18 @@ public class SuperPacman extends RPG {
 
     @Override
     public void update(float deltaTime) {
+
+        if(player.isPassingADoor()){
+            nextLevel();
+
+
+        }
+
         if(((SuperPacmanArea)getCurrentArea()).isOn()){
 
             getCurrentArea().leaveAreaCells(player,player.getCurrentCells());
 
-            areaIndex++;
-
-            initialiseLevel(areaIndex);
+            nextLevel();
 
             getCurrentArea().enterAreaCells(player, Collections.singletonList(startingPositions[areaIndex]));
 
@@ -49,27 +54,53 @@ public class SuperPacman extends RPG {
 
         super.update(deltaTime);
     }
+    public void nextLevel(){
+        areaIndex++;
+        setCurrentLevel(areaIndex);
+    }
+
+    public void setCurrentLevel(int areaIndex){
+
+        areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
+        areas[areaIndex].createArea();
+        initialiseActors(areaIndex);
+
+    }
 
     private void createAreas(){
-        addArea(new Level0());
 
-        addArea(new Level1());
-        addArea(new Level2());
+        areas[0] = new Level0();
+        areas[1] = new Level1();
+        areas[2] = new Level2();
+
+        for (int i = 0; i < areas.length; i++) {
+
+            addArea(areas[i]);
+
+        }
+
+        initialiseBehaviours();
+
+
+
+    }
+
+
+
+    public void initialiseBehaviours(){
 
         for(int i=0;i<areas.length;i++){
 
             behaviors[i] = new SuperPacmanBehavior(getWindow(),areaNames[i]);
+            areas[i].setBehaviour(behaviors[i]);
 
         }
-
     }
 
-    public void initialiseLevel(int areaIndex){
-        areas[areaIndex] = (SuperPacmanArea) setCurrentArea(areaNames[areaIndex], true);
-        areas[areaIndex].setBehaviour(behaviors[areaIndex]);
+    public void initialiseActors(int areaIndex){
         areas[areaIndex].registerActors();
-        ((SuperPacmanArea)areas[areaIndex]).createArea();
     }
+
 
     public void initialisePlayer(){
         player = new SuperPacmanPlayer(areas[areaIndex],startingPositions[areaIndex]);
@@ -81,12 +112,13 @@ public class SuperPacman extends RPG {
 
         if (super.begin(window, fileSystem)) {
 
+            createAreas();
+
             areaIndex= 0;
 
-            createAreas();
-            initialiseLevel(areaIndex);
-
+            setCurrentLevel(areaIndex);
             initialisePlayer();
+
 
             return true;
         }
