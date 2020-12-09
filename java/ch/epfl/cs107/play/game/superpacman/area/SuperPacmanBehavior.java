@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.superpacman.area;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
+import ch.epfl.cs107.play.game.areagame.AreaGraph;
 import ch.epfl.cs107.play.game.areagame.Cell;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
@@ -183,17 +184,38 @@ public class SuperPacmanBehavior extends AreaBehavior {
      */
     public SuperPacmanBehavior(Window window, String name){
         super(window, name);
+        AreaGraph graph = new AreaGraph();
         int height = getHeight();
         int width = getWidth();
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width ; x++) {
                 SuperPacmanCellType color = SuperPacmanCellType.toType(getRGB(height-1-y, x));
                 setCell(x,y, new SuperPacmanCell(x,y,color));
+                if (getType(getCell(x,y)) == SuperPacmanCellType.WALL){
+                    graph.addNode(new DiscreteCoordinates(x,y),hasLeftEdge(x,y),hasUpEdge(x,y),
+                            hasRightEdge(x,y), hasDownEdge(x,y));
+                }
             }
         }
 
 
 
+    }
+
+    public boolean hasLeftEdge(int x, int y){
+        return x > 0 && getType(getCell(x-1,y)) != SuperPacmanCellType.WALL;
+    }
+
+    public boolean hasRightEdge(int x, int y){
+        return x > 0 && getType(getCell(x+1,y)) != SuperPacmanCellType.WALL;
+    }
+
+    public boolean hasUpEdge(int x, int y){
+        return x > 0 && getType(getCell(x,y+1)) != SuperPacmanCellType.WALL;
+    }
+
+    public boolean hasDownEdge(int x, int y){
+        return x > 0 && getType(getCell(x,y-1)) != SuperPacmanCellType.WALL;
     }
 
 
