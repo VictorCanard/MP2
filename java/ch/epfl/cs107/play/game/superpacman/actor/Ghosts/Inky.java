@@ -5,6 +5,9 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Inky extends MovableGhost{
+    public static final int MAX_DISTANCE_WHEN_SCARED = 5;
+    public static final int MAX_DISTANCE_WHEN_NOT_SCARED = 10;
+
     /**
      * Default MovableAreaEntity constructor
      *
@@ -19,5 +22,14 @@ public class Inky extends MovableGhost{
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+    }
+
+    public void move(){
+        //recherche de case aléatoire
+        /*if (this.getIsAfraid()){
+            do {
+
+            }
+        }*/
     }
 }
