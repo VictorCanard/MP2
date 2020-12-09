@@ -6,6 +6,7 @@ public interface Game extends Playable{
      * @return (int): the desired number of frame per second
      */
     default int getFrameRate() {
-    	return 24;
+    	return 44;
     }
+    //Changed it for testing purposes
 }

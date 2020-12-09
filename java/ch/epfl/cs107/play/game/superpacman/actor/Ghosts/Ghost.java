@@ -14,22 +14,27 @@ import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
-import static ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer.isInvulnerable;
+
 
 import java.util.List;
 
 public class Ghost extends MovableAreaEntity implements  Interactor, Interactable {
 
-    private Sprite[] ghostSprite;
-    private Animation ghostAnimation;
-    private DiscreteCoordinates positionRefuge;
-    private ghostHandler interactionHandler;
-    private SuperPacmanPlayer player;
+    protected Sprite[] ghostSprite;
+    protected Animation ghostAnimation;
 
-    private final int ANIMATION_DURATION=8;
+    private Sprite[] scaredSprite;
+    private Animation scaredAnimation;
+
+    protected DiscreteCoordinates positionRefuge;
+    private ghostHandler interactionHandler;
+    protected SuperPacmanPlayer player;
+
+    protected final int ANIMATION_DURATION=8;
+    protected final int FRAME_FOR_MOVE = 6;
     public final int GHOST_SCORE = 500;
-    private final int FIELD_OF_VIEW_RADIUS = 5;
-    private boolean isAfraid=false;
+    protected final int FIELD_OF_VIEW_RADIUS = 5;
+    protected boolean isAfraid=false;
 
     /**
      * Default MovableAreaEntity constructor
@@ -43,6 +48,9 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
         interactionHandler = new ghostHandler();
 
+        scaredSprite = RPGSprite.extractSprites("superpacman/ghost.afraid", 2, 1, 1, this, 16, 16);
+        scaredAnimation = new Animation(ANIMATION_DURATION / 2, scaredSprite);
+
 
     }
 
@@ -50,18 +58,23 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
         return isAfraid;
     }
 
-    public void isAfraid(){
-        this.isAfraid = isInvulnerable();
+    public boolean isAfraid(){
+        return player.getIsInvulnerable();
 
     }
-    public void drawAfraid(){
-        ghostSprite = RPGSprite.extractSprites("superpacman/ghost.afraid", 2, 1, 1, this, 16, 16);
-        ghostAnimation = new Animation(ANIMATION_DURATION / 2, ghostSprite);
+
+
+    @Override
+    public void update(float deltaTime){
+
     }
+
 
     @Override
     public void draw(Canvas canvas) {
-
+        if(isAfraid()){
+            scaredAnimation.draw(canvas);
+        }
     }
 
     @Override

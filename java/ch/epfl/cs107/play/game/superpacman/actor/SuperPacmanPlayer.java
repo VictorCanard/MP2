@@ -5,7 +5,9 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.rpg.actor.Sign;
 import ch.epfl.cs107.play.game.superpacman.SuperPacman;
+import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Bonus;
 import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Ghost;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
@@ -31,8 +33,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private SuperPacmanPlayerStatusGUI statusGUI;
     private SuperPacmanPlayerHandler playerHandler;
 
-    private static boolean isInvulnerable = false;
-    private static float  invulnerableTimer = 0;
+    private boolean isInvulnerable = false;
+    private float  invulnerableTimer = 0;
 
 
     /**
@@ -65,14 +67,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     public void update(float deltaTime) {
 
-        if(invulnerableTimer <=0){
-            isInvulnerable = false;
-        }
-
-        else{
-            invulnerableTimer -=deltaTime;
-        }
-
+        invulnerabilityCheck(deltaTime);
 
         Keyboard keyboard= getOwnerArea().getKeyboard();
 
@@ -81,6 +76,32 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         updateDesiredOrientation(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         updateDesiredOrientation(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
 
+        getNewCurrentAnimation();
+
+        currentAnimation.update(deltaTime);
+        super.update(deltaTime);
+
+    }
+
+    private void invulnerabilityCheck(float deltaTime){
+        if(invulnerableTimer <=0){
+            isInvulnerable = false;
+        }
+
+        else{
+            invulnerableTimer -=deltaTime;
+        }
+    }
+
+    private void updateDesiredOrientation(Orientation orientation, Button b){
+
+        if(b.isDown()) {
+            desiredOrientation = orientation;
+        }
+
+    }
+
+    private void getNewCurrentAnimation(){
         if(!isDisplacementOccurs()){
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
 
@@ -96,20 +117,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             currentAnimation = animations[desiredOrientation.ordinal()];
 
         }
-
-        currentAnimation.update(deltaTime);
-        super.update(deltaTime);
-
-    } //TODO: Modulariser ce code
-
-
-    private void updateDesiredOrientation(Orientation orientation, Button b){
-
-        if(b.isDown()) {
-            desiredOrientation = orientation;
-        }
-
     }
+
 
     public int getScore(){
         return score;
@@ -119,12 +128,11 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     }
 
-    //Todo: Make these methods non static and the attribute as well
-    public static void setInvulnerable(float timer){
+    public void setInvulnerable(float timer){
         invulnerableTimer = timer;
         isInvulnerable = true;
     }
-    public static boolean isInvulnerable(){
+    public boolean getIsInvulnerable(){
         return isInvulnerable;
     }
 
@@ -204,6 +212,16 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             entity.specialAttribute();
             score += entity.addScore();
         }
+
+
+       @Override
+
+        public void interactWith(Bonus bonus) {
+            SuperPacmanPlayer.this.isInvulnerable = true;
+            interactWith((AutomaticallyCollectableAreaEntity)bonus);
+        }
+
+
 
         @Override
         public void interactWith(Ghost ghost) {

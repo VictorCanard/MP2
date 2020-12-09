@@ -11,7 +11,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-import static ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer.setInvulnerable;
+
 
 
 public class Bonus extends AutomaticallyCollectableAreaEntity implements Interactable {
@@ -51,9 +51,7 @@ public class Bonus extends AutomaticallyCollectableAreaEntity implements Interac
     }
 
 
-    public void specialAttribute(){
-        setInvulnerable(INVULNERABLE_TIMER);
-    }
+
 
     @Override
     public boolean takeCellSpace() {
