@@ -31,5 +31,13 @@ public class Level0 extends SuperPacmanArea {
         return false;
     }
 
+    @Override
+    public int getHeight() {
+        return super.getHeight();
+    }
 
+    @Override
+    public int getWidth() {
+        return super.getWidth();
+    }
 }

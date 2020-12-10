@@ -25,6 +25,7 @@ public class Inky extends MovableGhost{
     }
 
     public void move(){
+        //int height = getOwnerArea().getHeight();
         //recherche de case aléatoire
         /*if (this.getIsAfraid()){
             do {
