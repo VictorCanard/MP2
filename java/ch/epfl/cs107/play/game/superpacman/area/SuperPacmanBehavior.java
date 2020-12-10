@@ -19,9 +19,11 @@ import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Blinky;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
+import java.util.Queue;
+
 public class SuperPacmanBehavior extends AreaBehavior {
     private boolean[][] neighborhood;
-
+    AreaGraph graph;
 
 
     protected void registerActors (Area area){
@@ -186,7 +188,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
      */
     public SuperPacmanBehavior(Window window, String name){
         super(window, name);
-        AreaGraph graph = new AreaGraph();
+        graph = new AreaGraph();
         int height = getHeight();
         int width = getWidth();
         for(int y = 0; y < height; y++) {
@@ -203,8 +205,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
             }
         }
 
+    }
 
-
+    public  Queue<Orientation> getShortestPath(DiscreteCoordinates currentPos, DiscreteCoordinates targetPos){
+        Queue<Orientation> path = graph.shortestPath(currentPos, targetPos);
+        return path;
     }
 
     public boolean hasLeftEdge(int x, int y){

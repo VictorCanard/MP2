@@ -5,8 +5,6 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class MovableGhost extends Ghost{
-    public static final int MAX_DISTANCE_WHEN_SCARED = 5;
-    public static final int MAX_DISTANCE_WHEN_NOT_SCARED = 10;
 
     /**
      * Default MovableAreaEntity constructor
