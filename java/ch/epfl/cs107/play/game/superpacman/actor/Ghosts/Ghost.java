@@ -15,7 +15,7 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
 
-
+import java.util.Collections;
 import java.util.List;
 
 public class Ghost extends MovableAreaEntity implements  Interactor, Interactable {
@@ -64,7 +64,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
     @Override
     public void update(float deltaTime){
-
+        super.update(deltaTime);
     }
 
 
@@ -107,7 +107,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
-        return null;
+        return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
     @Override

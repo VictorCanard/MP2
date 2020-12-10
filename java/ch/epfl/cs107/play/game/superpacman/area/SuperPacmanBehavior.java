@@ -53,15 +53,16 @@ public class SuperPacmanBehavior extends AreaBehavior {
                         area.registerActor(new Bonus(area,Orientation.UP, position));
                         break;
 
-
+                        /*
                     case FREE_WITH_BLINKY:
                         area.registerActor(new Blinky(area, Orientation.UP,position));
                         break;
 
+
                     case FREE_WITH_INKY:
                         area.registerActor(new Inky(area, Orientation.UP,position));
                         break;
-                        /*
+
                     case FREE_WITH_PINKY:
                         area.registerActor(new Pinky(area, Orientation.UP,position));
 
@@ -81,7 +82,6 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
                 area.registerActor(new OneKeyGate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key));
                 area.registerActor(new OneKeyGate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key));
-
 
                 break;
             case "superpacman/Level1":
