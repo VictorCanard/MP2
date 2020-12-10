@@ -16,6 +16,6 @@ public class DiamondGate extends Gate {
 
     @Override
     public boolean takeCellSpace() {
-        return ((SuperPacmanArea)getOwnerArea()).numberOfDiamonds != 0;
+        return ((SuperPacmanArea)getOwnerArea()).isOff() ;
     }
 }

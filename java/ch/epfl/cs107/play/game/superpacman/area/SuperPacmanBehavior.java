@@ -15,6 +15,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Key;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.DiamondGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.OneKeyGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.TwoKeysGate;
+import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Blinky;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
@@ -49,10 +50,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
                         area.registerActor(new Bonus(area,Orientation.UP, position));
                         break;
 
-                    /*
+
                     case FREE_WITH_BLINKY:
                         area.registerActor(new Blinky(area, Orientation.UP,position));
                         break;
+                    /*
                     case FREE_WITH_INKY:
                         area.registerActor(new Inky(area, Orientation.UP,position));
                         break;
@@ -191,10 +193,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
             for (int x = 0; x < width ; x++) {
                 SuperPacmanCellType color = SuperPacmanCellType.toType(getRGB(height-1-y, x));
                 setCell(x,y, new SuperPacmanCell(x,y,color));
-                if (getType(getCell(x,y)) == SuperPacmanCellType.WALL){
+
+                /*if (getType(getCell(x,y)) == SuperPacmanCellType.WALL){
                     graph.addNode(new DiscreteCoordinates(x,y),hasLeftEdge(x,y),hasUpEdge(x,y),
                             hasRightEdge(x,y), hasDownEdge(x,y));
                 }
+
+                 */
             }
         }
 

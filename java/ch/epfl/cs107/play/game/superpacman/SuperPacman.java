@@ -2,13 +2,13 @@ package ch.epfl.cs107.play.game.superpacman;
 
 import ch.epfl.cs107.play.game.rpg.RPG;
 import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
+
 import ch.epfl.cs107.play.game.superpacman.area.*;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
-import java.util.Collection;
-import java.util.Collections;
+
 
 
 public class SuperPacman extends RPG {
@@ -16,8 +16,7 @@ public class SuperPacman extends RPG {
     private int areaIndex =0;
     public static int numberOfAreas = 3;
     private final String[] areaNames = {"superpacman/Level0", "superpacman/Level1", "superpacman/Level2"};
-    private final DiscreteCoordinates[] startingPositions = {Level0.PLAYER_SPAWN_POSTION,
-            Level1.PLAYER_SPAWN_POSTION, Level2.PLAYER_SPAWN_POSTION};
+    private DiscreteCoordinates[] startingPositions;
 
     private SuperPacmanArea[] areas = new SuperPacmanArea[numberOfAreas];
     private SuperPacmanBehavior[] behaviors = new SuperPacmanBehavior[numberOfAreas];
@@ -36,7 +35,7 @@ public class SuperPacman extends RPG {
             nextLevel();
         }
 
-        if(((SuperPacmanArea)getCurrentArea()).isOn()){
+        /*if(((SuperPacmanArea)getCurrentArea()).isOn()){
 
             getCurrentArea().leaveAreaCells(player,player.getCurrentCells());
 
@@ -44,10 +43,14 @@ public class SuperPacman extends RPG {
 
             getCurrentArea().enterAreaCells(player, Collections.singletonList(startingPositions[areaIndex]));
 
-        }
-        if(player.isInvulnerable()){
+        }*/
+
+        if(player.getIsInvulnerable()){
+
             player.scareGhosts();
         }
+
+
 
 
         super.update(deltaTime);
@@ -81,7 +84,11 @@ public class SuperPacman extends RPG {
 
     }
 
+    public void initialiseStartingPositions(){
 
+        startingPositions = new DiscreteCoordinates[]{Level0.PLAYER_SPAWN_POSTION, Level1.PLAYER_SPAWN_POSTION, Level2.PLAYER_SPAWN_POSTION};
+
+    }
 
     public void initialiseBehaviours(){
 
@@ -103,12 +110,15 @@ public class SuperPacman extends RPG {
         initPlayer(player);
     }
 
+
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
 
         if (super.begin(window, fileSystem)) {
 
             createAreas();
+
+            initialiseStartingPositions();
 
             areaIndex= 0;
 
