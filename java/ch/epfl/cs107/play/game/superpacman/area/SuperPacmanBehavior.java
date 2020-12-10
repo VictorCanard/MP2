@@ -16,6 +16,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.Gates.DiamondGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.OneKeyGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Gates.TwoKeysGate;
 import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Blinky;
+import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Inky;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
@@ -56,10 +57,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
                     case FREE_WITH_BLINKY:
                         area.registerActor(new Blinky(area, Orientation.UP,position));
                         break;
-                    /*
+
                     case FREE_WITH_INKY:
                         area.registerActor(new Inky(area, Orientation.UP,position));
                         break;
+                        /*
                     case FREE_WITH_PINKY:
                         area.registerActor(new Pinky(area, Orientation.UP,position));
 
