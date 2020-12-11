@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor.Collectables;
+package ch.epfl.cs107.play.game.superpacman.actor.collectables;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;

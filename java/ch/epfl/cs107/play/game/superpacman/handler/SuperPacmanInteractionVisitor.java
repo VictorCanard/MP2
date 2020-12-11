@@ -1,12 +1,10 @@
 package ch.epfl.cs107.play.game.superpacman.handler;
 
 import ch.epfl.cs107.play.game.areagame.actor.AutomaticallyCollectableAreaEntity;
-import ch.epfl.cs107.play.game.areagame.actor.CollectableAreaEntity;
-import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.handler.RPGInteractionVisitor;
-import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Bonus;
-import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Ghost;
-import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
+import ch.epfl.cs107.play.game.superpacman.actor.collectables.Bonus;
+import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Ghost;
+import ch.epfl.cs107.play.game.superpacman.actor.player.SuperPacmanPlayer;
 
 public interface SuperPacmanInteractionVisitor extends RPGInteractionVisitor {
 

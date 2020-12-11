@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor.Collectables;
+package ch.epfl.cs107.play.game.superpacman.actor.collectables;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Bonus extends AutomaticallyCollectableAreaEntity implements Interactable {
     private final int ANIMATION_DURATION = 4;
-    private final float INVULNERABLE_TIMER =  10f;
+    public final  float INVULNERABLE_TIMER =  10f;
     private Animation animations;
     private Sprite[] sprites;
     /**

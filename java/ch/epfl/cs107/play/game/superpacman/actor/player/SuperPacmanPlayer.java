@@ -1,14 +1,12 @@
-package ch.epfl.cs107.play.game.superpacman.actor;
+package ch.epfl.cs107.play.game.superpacman.actor.player;
 
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.Door;
 import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
-import ch.epfl.cs107.play.game.rpg.actor.Sign;
-import ch.epfl.cs107.play.game.superpacman.SuperPacman;
-import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Bonus;
-import ch.epfl.cs107.play.game.superpacman.actor.Ghosts.Ghost;
+import ch.epfl.cs107.play.game.superpacman.actor.collectables.Bonus;
+import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Ghost;
 import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -25,9 +23,11 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private int DEFAULT_HP = 3;
     private int score = 0;
     private final int ANIMATION_DURATION = 4;
+
     private boolean isPassingADoor;
     private Orientation desiredOrientation;
     private Animation[] animations;
+
     private Sprite[][] sprites ;
     private Animation currentAnimation;
     private SuperPacmanPlayerStatusGUI statusGUI;
@@ -35,6 +35,8 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     private boolean isInvulnerable = false;
     private float  invulnerableTimer = 0;
+
+    private DiscreteCoordinates spawnPosition;
 
 
     /**
@@ -44,9 +46,11 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
      */
 
     public SuperPacmanPlayer(SuperPacmanArea area, DiscreteCoordinates startingPos) {
-        super(area, Orientation.RIGHT, startingPos);
+        super(area, Orientation.UP, startingPos);
 
         setOwnerArea(area);
+
+        spawnPosition = startingPos;
 
         playerHandler = new SuperPacmanPlayerHandler();
 
@@ -57,10 +61,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
 
         animations = Animation.createAnimations(ANIMATION_DURATION/4, sprites);
+
         currentAnimation = animations[1];//Initializes the first animation to the upward direction
         desiredOrientation = Orientation.UP;
-
-
 
         resetMotion();
     }
@@ -108,15 +111,27 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
                 orientate(desiredOrientation);
 
 
-                currentAnimation.reset();
+
 
             }
             move(MOVING_SPEED);
+            currentAnimation.reset();
         }
         else{
             currentAnimation = animations[desiredOrientation.ordinal()];
 
         }
+    }
+
+    private void respawnPacman(){
+        getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());
+        this.abortCurrentMove();
+        this.resetMotion();
+
+        this.statusGUI.currentHp--;
+
+        this.setCurrentPosition(spawnPosition.toVector());
+        getOwnerArea().enterAreaCells(SuperPacmanPlayer.this, Collections.singletonList(spawnPosition));
     }
 
 
@@ -127,6 +142,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
 
     public void setInvulnerable(float timer){
+
         invulnerableTimer = timer;
         isInvulnerable = true;
     }
@@ -215,7 +231,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
        @Override
 
         public void interactWith(Bonus bonus) {
-            SuperPacmanPlayer.this.isInvulnerable = true;
+            SuperPacmanPlayer.this.setInvulnerable(bonus.INVULNERABLE_TIMER);
             interactWith((AutomaticallyCollectableAreaEntity)bonus);
         }
 
@@ -224,19 +240,17 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         @Override
         public void interactWith(Ghost ghost) {
             System.out.println("HELLO");
-            if(isInvulnerable){
+            if(getIsInvulnerable()){
+
+                ghost.respawnGhost();
 
                 score += ghost.GHOST_SCORE;
 
-                getOwnerArea().leaveAreaCells(ghost , getEnteredCells());
-
-                getOwnerArea().enterAreaCells(ghost, ghost.GHOST_SPAWN_POSITION);
 
             }
             else{
-                getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());
-                SuperPacmanPlayer.this.statusGUI.currentHp --;
-                //getOwnerArea().enterAreaCells(SuperPacmanPlayer.this, ((SuperPacmanArea)getOwnerArea()).PLAYER_SPAWN_POSITION);
+
+                SuperPacmanPlayer.this.respawnPacman();
 
             }
         }

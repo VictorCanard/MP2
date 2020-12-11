@@ -1,21 +1,21 @@
-package ch.epfl.cs107.play.game.superpacman.actor.Collectables;
+package ch.epfl.cs107.play.game.superpacman.actor.collectables;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanArea;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.Signal;
-import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Key extends AutomaticallyCollectableAreaEntity implements  Logic {
+public class Diamond extends AutomaticallyCollectableAreaEntity implements Interactable {
     private Sprite sprite;
-    private Logic signal = Logic.FALSE;
+
+
 
     /**
      * Default CollectableAreaEntity constructor
@@ -24,29 +24,18 @@ public class Key extends AutomaticallyCollectableAreaEntity implements  Logic {
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public Key(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public Diamond(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-        sprite = new RPGSprite("superpacman/key",1,1,this);
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
-    }
-
-    public Logic getSignal() {
-        return signal;
-    }
-
-    @Override
-    public int addScore() {
-        return 0;
+        sprite = new RPGSprite("superpacman/diamond",1,1,this);
     }
 
     @Override
     public void draw(Canvas canvas) {
         if(sprite != null)
             sprite.draw(canvas);
+    }
+    public void specialAttribute(){
+        ((SuperPacmanArea)getOwnerArea()).numberOfDiamonds --;
     }
 
     @Override
@@ -72,26 +61,11 @@ public class Key extends AutomaticallyCollectableAreaEntity implements  Logic {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         ((SuperPacmanInteractionVisitor)v).interactWith(this);
+
     }
 
     @Override
-    public void collect() {
-        signal = Logic.TRUE;
-        super.collect();
-    }
-
-    @Override
-    public boolean isOn() {
-        return signal == Logic.TRUE;
-    }
-
-    @Override
-    public boolean isOff() {
-        return signal == Logic.FALSE;
-    }
-
-    @Override
-    public float getIntensity() {
-        return 0;
+    public int addScore(){
+        return 10;
     }
 }

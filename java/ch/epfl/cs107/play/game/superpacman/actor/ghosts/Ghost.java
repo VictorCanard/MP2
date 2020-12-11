@@ -1,18 +1,12 @@
-package ch.epfl.cs107.play.game.superpacman.actor.Ghosts;
+package ch.epfl.cs107.play.game.superpacman.actor.ghosts;
 
-import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
-import ch.epfl.cs107.play.game.superpacman.SuperPacman;
-import ch.epfl.cs107.play.game.superpacman.actor.SuperPacmanPlayer;
-import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanBehavior;
-import ch.epfl.cs107.play.game.superpacman.handler.GhostInteractionVisitor;
+import ch.epfl.cs107.play.game.superpacman.actor.player.SuperPacmanPlayer;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.Transform;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
 
@@ -39,7 +33,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     protected final int FRAME_FOR_MOVE = 16;
     public final int GHOST_SCORE = 500;
     protected final int FIELD_OF_VIEW_RADIUS = 5;
-    public  List<DiscreteCoordinates> GHOST_SPAWN_POSITION;
+    public  DiscreteCoordinates GHOST_SPAWN_POSITION;
 
     protected List<DiscreteCoordinates> fieldOfView;
     protected int width;
@@ -59,7 +53,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     public Ghost(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
 
-        GHOST_SPAWN_POSITION = Collections.singletonList(position);
+        GHOST_SPAWN_POSITION = position;
 
         interactionHandler = new ghostHandler();
 
@@ -84,10 +78,12 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
                 orientate(desiredOrientation);
 
 
-                currentAnimation.reset();
+
 
             }
+            currentAnimation.reset();
             move(FRAME_FOR_MOVE);
+
         }
         else{
             currentAnimation = currentAnimationTable[desiredOrientation.ordinal()];
@@ -109,6 +105,17 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
+    }
+
+    public void respawnGhost(){
+        getOwnerArea().leaveAreaCells(this , getEnteredCells());
+        this.abortCurrentMove();
+        this.resetMotion();
+
+        //Todo Ghost forgets the player
+
+        this.setCurrentPosition(GHOST_SPAWN_POSITION.toVector());
+        getOwnerArea().enterAreaCells(this, Collections.singletonList(GHOST_SPAWN_POSITION));
     }
 
 

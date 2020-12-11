@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor;
+package ch.epfl.cs107.play.game.superpacman.actor.player;
 
 import ch.epfl.cs107.play.game.actor.Graphics;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
@@ -63,7 +63,7 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
     public void drawHP(Canvas canvas){
         for(int i =0; i<MAX_HP;i++){
 
-            if(i<STARTING_HP){
+            if(i<currentHp){
                 drawRedHP(canvas, i);
             }
             else{

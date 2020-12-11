@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.superpacman.actor.Gates;
+package ch.epfl.cs107.play.game.superpacman.actor.gates;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;

@@ -1,8 +1,8 @@
-package ch.epfl.cs107.play.game.superpacman.actor.Gates;
+package ch.epfl.cs107.play.game.superpacman.actor.gates;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.superpacman.actor.Collectables.Key;
+import ch.epfl.cs107.play.game.superpacman.actor.collectables.Key;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class TwoKeysGate extends Gate {
