@@ -1,10 +1,12 @@
 package ch.epfl.cs107.play.game.superpacman.area;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
 public abstract class SuperPacmanArea extends Area implements Logic {
 
+    public static DiscreteCoordinates PLAYER_SPAWN_POSITION;
     private SuperPacmanBehavior behaviour;
     public int numberOfDiamonds = 0;
 

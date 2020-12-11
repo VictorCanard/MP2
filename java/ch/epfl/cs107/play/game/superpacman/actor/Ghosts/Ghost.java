@@ -36,9 +36,10 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     protected SuperPacmanPlayer player;
 
     protected final int ANIMATION_DURATION=8;
-    protected final int FRAME_FOR_MOVE = 6;
+    protected final int FRAME_FOR_MOVE = 16;
     public final int GHOST_SCORE = 500;
     protected final int FIELD_OF_VIEW_RADIUS = 5;
+    public  List<DiscreteCoordinates> GHOST_SPAWN_POSITION;
 
     protected List<DiscreteCoordinates> fieldOfView;
     protected int width;
@@ -58,7 +59,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     public Ghost(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
 
-
+        GHOST_SPAWN_POSITION = Collections.singletonList(position);
 
         interactionHandler = new ghostHandler();
 
@@ -114,36 +115,6 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
 
     @Override
-    public Transform getTransform() {
-        return null;
-    }
-
-    @Override
-    public Vector getVelocity() {
-        return null;
-    }
-
-    @Override
-    public boolean takeCellSpace() {
-        return false;
-    }
-
-    @Override
-    public boolean isCellInteractable() {
-        return true;
-    }
-
-    @Override
-    public boolean isViewInteractable() {
-        return false;
-    }
-
-    @Override
-    public void acceptInteraction(AreaInteractionVisitor v) {
-        ((GhostInteractionVisitor)v).interactWith(this);
-    }
-
-    @Override
     public List<DiscreteCoordinates> getCurrentCells() {
 
         return Collections.singletonList(getCurrentMainCellCoordinates());
@@ -162,7 +133,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
         width = getOwnerArea().getWidth();
         height = getOwnerArea().getHeight();
 
-        fieldOfView.add(getCurrentMainCellCoordinates());
+        fieldOfView.add(getCurrentMainCellCoordinates()); //The first item in the list is the ghost's position
 
 
         for (int i = -FIELD_OF_VIEW_RADIUS; i < FIELD_OF_VIEW_RADIUS; ++i) {
@@ -170,7 +141,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
                 if(!(i+x<0 || i+x>=width || j+y<0 || j+y>=height)){
 
-                    fieldOfView.add(new DiscreteCoordinates(x,y));
+                    fieldOfView.add(new DiscreteCoordinates(i+x,j+y));
 
                 }
 
@@ -178,6 +149,28 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
         }
         return fieldOfView;
     }
+
+
+    @Override
+    public boolean takeCellSpace() {
+        return false;
+    }
+
+    @Override
+    public boolean isCellInteractable() {
+        return true;
+    }
+
+    @Override
+    public boolean isViewInteractable() {
+        return false;
+    }
+
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v) {
+        ((SuperPacmanInteractionVisitor)v).interactWith(this);
+    }
+
 
 
     @Override
@@ -196,10 +189,11 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     }
 
 
-    public class ghostHandler implements GhostInteractionVisitor{
+    public class ghostHandler implements SuperPacmanInteractionVisitor{
         @Override
         public void interactWith(SuperPacmanPlayer player) {
-            Ghost.this.player = player; //Le fantome se souvient du joueur Pacman
+            Ghost.this.player = player; //Le fantome se souvient du joueur Pacman$
+
 
         }
     }

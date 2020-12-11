@@ -80,9 +80,9 @@ public class Inky extends Ghost{
             }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),targetPos) > MAX_DISTANCE_WHEN_NOT_SCARED);
         }
 
-       /* path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),tragetPos); //pk contexte static ??
+       // path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
 
-        return path.poll();*/
+        //return path.poll();
 
         return Orientation.DOWN; // en attendant de résoudre l'erreur de shortestPath
     }

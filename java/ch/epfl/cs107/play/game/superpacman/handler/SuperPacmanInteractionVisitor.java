@@ -18,4 +18,6 @@ public interface SuperPacmanInteractionVisitor extends RPGInteractionVisitor {
     default void interactWith(Bonus bonus) {
 
     }
+
+    default void interactWith(SuperPacmanPlayer player){}
 }

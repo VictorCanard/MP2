@@ -223,17 +223,20 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         @Override
         public void interactWith(Ghost ghost) {
+            System.out.println("HELLO");
             if(isInvulnerable){
+
                 score += ghost.GHOST_SCORE;
+
                 getOwnerArea().leaveAreaCells(ghost , getEnteredCells());
 
-                getOwnerArea().enterAreaCells(ghost, getCurrentCells());
+                getOwnerArea().enterAreaCells(ghost, ghost.GHOST_SPAWN_POSITION);
 
             }
             else{
                 getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());
                 SuperPacmanPlayer.this.statusGUI.currentHp --;
-                getOwnerArea().enterAreaCells(SuperPacmanPlayer.this, getCurrentCells());
+                //getOwnerArea().enterAreaCells(SuperPacmanPlayer.this, ((SuperPacmanArea)getOwnerArea()).PLAYER_SPAWN_POSITION);
 
             }
         }
