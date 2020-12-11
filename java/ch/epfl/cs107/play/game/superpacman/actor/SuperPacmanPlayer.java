@@ -124,9 +124,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         return score;
     }
 
-    public void scareGhosts(){
 
-    }
 
     public void setInvulnerable(float timer){
         invulnerableTimer = timer;
@@ -227,6 +225,10 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         public void interactWith(Ghost ghost) {
             if(isInvulnerable){
                 score += ghost.GHOST_SCORE;
+                getOwnerArea().leaveAreaCells(ghost , getEnteredCells());
+
+                getOwnerArea().enterAreaCells(ghost, getCurrentCells());
+
             }
             else{
                 getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());

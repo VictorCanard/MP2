@@ -18,6 +18,6 @@ public class TwoKeysGate extends Gate {
 
     @Override
     public boolean takeCellSpace() {
-        return key1.getSignal().isOff() || key2.getSignal().isOff();
+        return key1.isOff() || key2.isOff();
     }
 }

@@ -9,11 +9,14 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RandomGenerator;
 import ch.epfl.cs107.play.window.Canvas;
 
+import java.util.Collections;
+
 public class Blinky extends Ghost{
     private final int MAX = 4;
 
     private int randomInt;
-    private Orientation nextOrientation;
+
+
 
     /**
      * Default MovableAreaEntity constructor
@@ -25,20 +28,25 @@ public class Blinky extends Ghost{
     public Blinky(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
 
-        ghostSprite = RPGSprite.extractSprites("superpacman/ghost.afraid", 2, 1, 1, this, 16, 16);
-        ghostAnimation = new Animation(ANIMATION_DURATION / 2, ghostSprite);
+        ghostSprite = RPGSprite.extractSprites("superpacman/ghost.blinky", 2, 1, 1, this, 16, 16, new Orientation[] {Orientation.UP , Orientation.RIGHT , Orientation.DOWN, Orientation.LEFT});
+        ghostAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, ghostSprite);
+
+        currentAnimation = ghostAnimation[0];
+
     }
 
     @Override
     public void update(float deltaTime) {
 
-        nextOrientation = getNextOrientation();
+        desiredOrientation = getNextOrientation();
 
-        orientate(nextOrientation);
-        move(FRAME_FOR_MOVE);
+        currentAnimation =getNewCurrentAnimation(desiredOrientation, ghostAnimation);
+
+        currentAnimation.update(deltaTime);
 
         super.update(deltaTime);
     }
+
 
     private Orientation getNextOrientation(){
         randomInt = RandomGenerator.getInstance().nextInt(MAX);
@@ -48,6 +56,22 @@ public class Blinky extends Ghost{
     }
 
     public void draw(Canvas canvas){
+
+        if(player != null){
+            if(isAfraid()){
+                super.draw(canvas);
+            }
+            else{
+                currentAnimation.draw(canvas);
+            }
+        }
+
+        else{
+            currentAnimation.draw(canvas);
+        }
+
+
+
 
 
     }

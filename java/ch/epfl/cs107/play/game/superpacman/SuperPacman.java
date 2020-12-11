@@ -45,10 +45,7 @@ public class SuperPacman extends RPG {
 
         }*/
 
-        if(player.getIsInvulnerable()){
 
-            player.scareGhosts();
-        }
 
 
 
@@ -120,7 +117,7 @@ public class SuperPacman extends RPG {
 
             initialiseStartingPositions();
 
-            areaIndex= 0;
+            areaIndex= 1;
 
             setCurrentLevel(areaIndex);
             initialisePlayer();

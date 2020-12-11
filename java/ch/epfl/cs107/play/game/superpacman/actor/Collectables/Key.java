@@ -13,7 +13,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-public class Key extends AutomaticallyCollectableAreaEntity implements Interactable, Logic {
+public class Key extends AutomaticallyCollectableAreaEntity implements  Logic {
     private Sprite sprite;
     private Logic signal = Logic.FALSE;
 

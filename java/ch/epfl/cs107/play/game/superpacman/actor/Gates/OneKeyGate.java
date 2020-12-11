@@ -24,6 +24,6 @@ public class OneKeyGate extends Gate{
 
     @Override
     public boolean takeCellSpace() {
-        return key.getSignal().isOff();
+        return key.isOff();
     }
 }

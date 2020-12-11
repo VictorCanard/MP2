@@ -4,7 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public class Pinky extends MovableGhost{
+public class Pinky extends Ghost{
     /**
      * Default MovableAreaEntity constructor
      *

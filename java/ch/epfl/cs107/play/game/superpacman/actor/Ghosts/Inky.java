@@ -15,7 +15,7 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Queue;
 
-public class Inky extends MovableGhost{
+public class Inky extends Ghost{
     public static final int MAX_DISTANCE_WHEN_SCARED = 5;
     public static final int MAX_DISTANCE_WHEN_NOT_SCARED = 10;
     //private Sprite sprite;
@@ -29,8 +29,8 @@ public class Inky extends MovableGhost{
      */
     public Inky(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-        ghostSprite = RPGSprite.extractSprites("superpacman/ghost.inky", 8, 1, 1, this, 16, 16);
-        ghostAnimation = new Animation(ANIMATION_DURATION / 2, ghostSprite);
+        ghostSprite = RPGSprite.extractSprites("superpacman/ghost.inky", 8, 1, 1, this, 16, 16,new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
+        ghostAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, ghostSprite);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Inky extends MovableGhost{
         super.draw(canvas);
         if (!isAfraid()){
             if(ghostAnimation != null)
-                ghostAnimation.draw(canvas);
+                ghostAnimation[0].draw(canvas);
         }
     }
 
@@ -59,25 +59,25 @@ public class Inky extends MovableGhost{
     public Orientation getNextOrientation(){
         int height = getOwnerArea().getHeight();
         int width = getOwnerArea().getWidth();
-        DiscreteCoordinates tragetPos = null;
+        DiscreteCoordinates targetPos = null;
         Queue<Orientation> path;
         //recherche de case aléatoire
         if (isAfraid()) {
             do {
                 int randomX = RandomGenerator.getInstance().nextInt(width);
                 int randomY = RandomGenerator.getInstance().nextInt(height);
-                tragetPos = new DiscreteCoordinates(randomX, randomY);
+                targetPos = new DiscreteCoordinates(randomX, randomY);
 
-            }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),tragetPos) > MAX_DISTANCE_WHEN_SCARED);
+            }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),targetPos) > MAX_DISTANCE_WHEN_SCARED);
         }
 
         if (!isAfraid()) {
             do {
                 int randomX = RandomGenerator.getInstance().nextInt(width);
                 int randomY = RandomGenerator.getInstance().nextInt(height);
-                tragetPos = new DiscreteCoordinates(randomX, randomY);
+                targetPos = new DiscreteCoordinates(randomX, randomY);
 
-            }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),tragetPos) > MAX_DISTANCE_WHEN_NOT_SCARED);
+            }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),targetPos) > MAX_DISTANCE_WHEN_NOT_SCARED);
         }
 
        /* path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),tragetPos); //pk contexte static ??

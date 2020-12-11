@@ -22,6 +22,7 @@ public class Cherry extends AutomaticallyCollectableAreaEntity implements Intera
      */
     public Cherry(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
+
         sprite = new RPGSprite("superpacman/cherry",1,1,this);
     }
 
