@@ -6,6 +6,8 @@ import ch.epfl.cs107.play.game.superpacman.actor.player.SuperPacmanPlayer;
 import ch.epfl.cs107.play.game.superpacman.area.*;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.window.Button;
+import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
 
@@ -13,8 +15,15 @@ import ch.epfl.cs107.play.window.Window;
 
 public class SuperPacman extends RPG {
     private SuperPacmanPlayer player;
+
+    private Keyboard keyboard;
+    private Button button;
+    private boolean suspended = false;
+    private Window pauseWindow;
+
     private int areaIndex =0;
     public static int numberOfAreas = 3;
+
     private final String[] areaNames = {"superpacman/Level0", "superpacman/Level1", "superpacman/Level2"};
     private DiscreteCoordinates[] startingPositions;
 
@@ -31,6 +40,8 @@ public class SuperPacman extends RPG {
     @Override
     public void update(float deltaTime) {
 
+        keyboard= getCurrentArea().getKeyboard();
+
         if(player.isPassingADoor()){
             nextLevel();
         }
@@ -45,14 +56,27 @@ public class SuperPacman extends RPG {
 
         }*/
 
+        if(player.hasNoHp()){
 
+            endGame();
+        }
 
+        //When tab is pressed the game pauses completely (Basically all updates are blocked by SuperPacman.java)
 
+        if(keyboard.get(Keyboard.TAB).isPressed()){
 
+            pauseGame();
 
-        super.update(deltaTime);
+        }
+
+        if(!suspended){
+
+            super.update(deltaTime);
+        }
+
     }
     public void nextLevel(){
+
         areaIndex++;
         setCurrentLevel(areaIndex);
     }
@@ -81,13 +105,13 @@ public class SuperPacman extends RPG {
 
     }
 
-    public void initialiseStartingPositions(){
+    private void initialiseStartingPositions(){
 
         startingPositions = new DiscreteCoordinates[]{Level0.PLAYER_SPAWN_POSTION, Level1.PLAYER_SPAWN_POSTION, Level2.PLAYER_SPAWN_POSTION};
 
     }
 
-    public void initialiseBehaviours(){
+    private void initialiseBehaviours(){
 
         for(int i=0;i<areas.length;i++){
 
@@ -97,14 +121,18 @@ public class SuperPacman extends RPG {
         }
     }
 
-    public void initialiseActors(int areaIndex){
+    private void initialiseActors(int areaIndex){
         areas[areaIndex].registerActors();
     }
 
 
-    public void initialisePlayer(){
+    private void initialisePlayer(){
         player = new SuperPacmanPlayer(areas[areaIndex],startingPositions[areaIndex]);
         initPlayer(player);
+    }
+
+    private void initialisePauseGraphics(){
+
     }
 
 
@@ -122,10 +150,36 @@ public class SuperPacman extends RPG {
             setCurrentLevel(areaIndex);
             initialisePlayer();
 
+            initialisePauseGraphics();
+
             return true;
         }
         return false;
     }
+
+    private void pauseGame(){
+        toggleSuspend();
+        displayPauseGraphics();
+    }
+
+    private boolean toggleSuspend(){
+        suspended = !suspended;
+        return suspended ;
+    }
+
+    private void displayPauseGraphics(){
+        //Resume
+        //Try again
+        //Quit Game which will call endGame();
+    }
+
+    private void endGame(){
+        //Maybe add some graphics such as score...
+        this.end(); //This end() doesnt do anything yet
+    }
+
+
+
 
 
 }

@@ -37,10 +37,8 @@ public class Blinky extends Ghost{
 
         desiredOrientation = getNextOrientation();
 
-        currentAnimation =getNewCurrentAnimation(desiredOrientation, ghostAnimation);
 
         currentAnimation.update(deltaTime);
-
         super.update(deltaTime);
     }
 
@@ -52,24 +50,5 @@ public class Blinky extends Ghost{
 
     }
 
-    public void draw(Canvas canvas){
 
-        if(player != null){
-            if(isAfraid()){
-                super.draw(canvas);
-            }
-            else{
-                currentAnimation.draw(canvas);
-            }
-        }
-
-        else{
-            currentAnimation.draw(canvas);
-        }
-
-
-
-
-
-    }
 }

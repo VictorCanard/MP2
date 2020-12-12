@@ -139,7 +139,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         return score;
     }
 
-
+    public boolean hasNoHp(){
+        return statusGUI.getCurrentHp() <= 0;
+    }
 
     public void setInvulnerable(float timer){
 
@@ -236,10 +238,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         }
 
 
-
         @Override
         public void interactWith(Ghost ghost) {
-            System.out.println("HELLO");
+
             if(getIsInvulnerable()){
 
                 ghost.respawnGhost();

@@ -72,15 +72,15 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
 
     protected Animation getNewCurrentAnimation(Orientation desiredOrientation, Animation[] currentAnimationTable){
+
         if(!isDisplacementOccurs()){
-            if(getOwnerArea().canEnterAreaCells(this, Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
+
+            if(fieldOfViewNotObstructed()){
 
                 orientate(desiredOrientation);
 
-
-
-
             }
+
             currentAnimation.reset();
             move(FRAME_FOR_MOVE);
 
@@ -95,8 +95,20 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     @Override
     public void draw(Canvas canvas) {
 
-        getNewCurrentAnimation(desiredOrientation,scaredAnimation);
-        currentAnimation.draw(canvas);
+        if(player != null){
+            if(isAfraid()){
+                getNewCurrentAnimation(desiredOrientation,scaredAnimation).draw(canvas);
+            }
+            else{
+                getNewCurrentAnimation(desiredOrientation,ghostAnimation).draw(canvas);
+            }
+        }
+
+        else{
+            getNewCurrentAnimation(desiredOrientation,ghostAnimation).draw(canvas);
+        }
+
+
 
     }
 
@@ -106,6 +118,12 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
     }
+
+
+    private boolean fieldOfViewNotObstructed(){
+        return getOwnerArea().canEnterAreaCells(this, Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())));
+    }
+    //Si un fantôme connait Pacman et a peur doivent ils tous avoir peur?
 
     public void respawnGhost(){
         getOwnerArea().leaveAreaCells(this , getEnteredCells());

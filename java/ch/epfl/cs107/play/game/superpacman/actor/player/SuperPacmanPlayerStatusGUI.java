@@ -37,6 +37,10 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
         this.player=player;
     }
 
+    public int getCurrentHp(){
+        return currentHp;
+    }
+
     @Override
     public void draw(Canvas canvas) {
 
