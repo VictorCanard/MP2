@@ -8,5 +8,5 @@ public interface Game extends Playable{
     default int getFrameRate() {
     	return 44;
     }
-    //Changed it for testing purposes
+
 }

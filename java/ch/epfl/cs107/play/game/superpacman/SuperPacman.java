@@ -1,31 +1,47 @@
 package ch.epfl.cs107.play.game.superpacman;
 
+import ch.epfl.cs107.play.game.actor.ImageGraphics;
+import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.rpg.RPG;
 import ch.epfl.cs107.play.game.superpacman.actor.player.SuperPacmanPlayer;
 
 import ch.epfl.cs107.play.game.superpacman.area.*;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.TextAlign;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
+import ch.epfl.cs107.play.window.swing.SwingWindow;
 
-
+import java.awt.*;
 
 
 public class SuperPacman extends RPG {
-    private SuperPacmanPlayer player;
+    private SuperPacmanPlayer[] players;
+
+    private int[] player1Touchpad;
+    private int[] player2Touchpad;
+
+    private String player1Image;
+    private String player2Image;
+
+    private PauseGraphics pauseGraphics;
+
+    private int numberOfPlayers;
 
     private Keyboard keyboard;
     private Button button;
     private boolean suspended = false;
-    private Window pauseWindow;
+    private Window window;
+
 
     private int areaIndex =0;
     public static int numberOfAreas = 3;
 
     private final String[] areaNames = {"superpacman/Level0", "superpacman/Level1", "superpacman/Level2"};
-    private DiscreteCoordinates[] startingPositions;
+    private DiscreteCoordinates[][] startingPositions;
 
     private SuperPacmanArea[] areas = new SuperPacmanArea[numberOfAreas];
     private SuperPacmanBehavior[] behaviors = new SuperPacmanBehavior[numberOfAreas];
@@ -42,9 +58,17 @@ public class SuperPacman extends RPG {
 
         keyboard= getCurrentArea().getKeyboard();
 
-        if(player.isPassingADoor()){
-            nextLevel();
+        for (int i = 0; i < numberOfPlayers; i++) {
+
+            if(players[i].isPassingADoor()){
+                nextLevel();
+            }
+            if(players[i].hasNoHp()){
+
+                endGame();
+            }
         }
+
 
         /*if(((SuperPacmanArea)getCurrentArea()).isOn()){
 
@@ -56,10 +80,6 @@ public class SuperPacman extends RPG {
 
         }*/
 
-        if(player.hasNoHp()){
-
-            endGame();
-        }
 
         //When tab is pressed the game pauses completely (Basically all updates are blocked by SuperPacman.java)
 
@@ -107,7 +127,14 @@ public class SuperPacman extends RPG {
 
     private void initialiseStartingPositions(){
 
-        startingPositions = new DiscreteCoordinates[]{Level0.PLAYER_SPAWN_POSTION, Level1.PLAYER_SPAWN_POSTION, Level2.PLAYER_SPAWN_POSTION};
+        startingPositions = new DiscreteCoordinates[][]
+                {{Level0.PLAYER1_SPAWN_POSTION,
+                Level1.PLAYER1_SPAWN_POSTION,
+                Level2.PLAYER1_SPAWN_POSTION},
+
+                {Level0.PLAYER2_SPAWN_POSTION,
+                Level1.PLAYER2_SPAWN_POSTION,
+                Level2.PLAYER2_SPAWN_POSTION}};
 
     }
 
@@ -126,20 +153,43 @@ public class SuperPacman extends RPG {
     }
 
 
-    private void initialisePlayer(){
-        player = new SuperPacmanPlayer(areas[areaIndex],startingPositions[areaIndex]);
-        initPlayer(player);
+    private void initialisePlayers(){
+        players = new SuperPacmanPlayer[numberOfPlayers];
+
+        player1Touchpad = new int[]{keyboard.DOWN, keyboard.LEFT,keyboard.UP, keyboard.RIGHT};
+        player1Image = "superpacman/pacman";
+        players[0] = new SuperPacmanPlayer(areas[areaIndex], 0,startingPositions[areaIndex][0], player1Touchpad, player1Image);
+        initPlayer(players[0]);
+
+
+
+        player2Touchpad = new int[]{keyboard.S, keyboard.A,keyboard.W, keyboard.D};
+        //player2Image = "superpaman/pacmanSilver";
+        player2Image= "superpacman/pacman";
+        players[1] = new SuperPacmanPlayer(areas[areaIndex], 1, startingPositions[areaIndex][1], player2Touchpad, player2Image);
+        initPlayer(players[1]);
+
+
+
     }
 
     private void initialisePauseGraphics(){
+
+
+        pauseGraphics = new PauseGraphics(window);
+
+
+
 
     }
 
 
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
+        //Todo: reset frameRate to original
 
         if (super.begin(window, fileSystem)) {
+
 
             createAreas();
 
@@ -148,8 +198,11 @@ public class SuperPacman extends RPG {
             areaIndex= 1;
 
             setCurrentLevel(areaIndex);
-            initialisePlayer();
 
+            numberOfPlayers = 2;
+            initialisePlayers();
+
+            this.window = window;
             initialisePauseGraphics();
 
             return true;
@@ -168,6 +221,8 @@ public class SuperPacman extends RPG {
     }
 
     private void displayPauseGraphics(){
+        //Todo call the pauseGraphics draw method on the canvas?
+
         //Resume
         //Try again
         //Quit Game which will call endGame();

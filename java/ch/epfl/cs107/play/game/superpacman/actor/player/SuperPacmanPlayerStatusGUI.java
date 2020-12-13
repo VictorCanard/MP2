@@ -18,6 +18,7 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
     protected int currentHp;
 
     private SuperPacmanPlayer player;
+    private int playerNumber;
 
     private ImageGraphics[] life;
     private TextGraphics scoreGraphics;
@@ -26,8 +27,11 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
     private float width;
     private float height;
 
+    private final float[] scorePositionsX = new float[]{6.5f, 18f};
+    private final float[] hpPositionsX = new float[]{0f, 24f};
 
-    public SuperPacmanPlayerStatusGUI(SuperPacmanPlayer player, int STARTING_HP, int MAX_HP){
+
+    public SuperPacmanPlayerStatusGUI(SuperPacmanPlayer player, int playerNumber, int STARTING_HP, int MAX_HP){
         this.STARTING_HP = STARTING_HP;
         currentHp = STARTING_HP;
         this.MAX_HP=MAX_HP;
@@ -35,6 +39,7 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
         life = new ImageGraphics[MAX_HP];
 
         this.player=player;
+        this.playerNumber = playerNumber;
     }
 
     public int getCurrentHp(){
@@ -51,8 +56,6 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
 
         drawHP(canvas);
 
-
-        //Maybe only when the score has changed
         drawScore(canvas);
 
 
@@ -60,7 +63,7 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
     }
 
     public void drawScore(Canvas canvas){
-        scoreGraphics = new TextGraphics("SCORE : "+ player.getScore(),1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(6.5f, height - 1.375f)));
+        scoreGraphics = new TextGraphics("SCORE : "+ player.getScore(),1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(scorePositionsX[playerNumber],height - 1.375f)));
         scoreGraphics.draw(canvas);
     }
 
@@ -68,21 +71,21 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
         for(int i =0; i<MAX_HP;i++){
 
             if(i<currentHp){
-                drawRedHP(canvas, i);
+                drawRedHP(i);
             }
             else{
-                drawGrayHP(canvas,i);
+                drawGrayHP(i);
             }
 
             life[i].draw(canvas);
         }
     }
-    public void drawRedHP(Canvas canvas, int displacement){
-        life[displacement] = new ImageGraphics(ResourcePath.getSprite("superpacman/lifeDisplay"), 1.f, 1.f, new RegionOfInterest(0, 0, 64, 64), anchor.add(new Vector(displacement+0.5f, height - 1.375f)), 1, DEPTH);
+    public void drawRedHP(int displacement){
+        life[displacement] = new ImageGraphics(ResourcePath.getSprite("superpacman/lifeDisplay"), 1.f, 1.f, new RegionOfInterest(0, 0, 64, 64), anchor.add(new Vector(hpPositionsX[playerNumber]+displacement+0.5f, height - 1.375f)), 1, DEPTH);
     }
 
-    public void drawGrayHP(Canvas canvas, int displacement){
-        life[displacement] = new ImageGraphics(ResourcePath.getSprite("superpacman/lifeDisplay"), 1.f, 1.f, new RegionOfInterest(64, 0, 64, 64), anchor.add(new Vector(displacement+0.5f, height - 1.375f)), 1, DEPTH);
+    public void drawGrayHP(int displacement){
+        life[displacement] = new ImageGraphics(ResourcePath.getSprite("superpacman/lifeDisplay"), 1.f, 1.f, new RegionOfInterest(64, 0, 64, 64), anchor.add(new Vector(hpPositionsX[playerNumber]+displacement+0.5f, height - 1.375f)), 1, DEPTH);
     }
 
 }

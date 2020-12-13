@@ -22,7 +22,11 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private int MAX_HP = 5;
     private int DEFAULT_HP = 3;
     private int score = 0;
+    private boolean speedBoost=false;
     private final int ANIMATION_DURATION = 4;
+
+    private Keyboard keyboard;
+    private int[]  keyboardButtons;
 
     private boolean isPassingADoor;
     private Orientation desiredOrientation;
@@ -45,7 +49,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
      * @param area        (Area): Owner Area, not null
      */
 
-    public SuperPacmanPlayer(SuperPacmanArea area, DiscreteCoordinates startingPos) {
+    public SuperPacmanPlayer(SuperPacmanArea area, int playerNumber, DiscreteCoordinates startingPos, int[] keyboardButtons, String playerImage) {
         super(area, Orientation.UP, startingPos);
 
         setOwnerArea(area);
@@ -54,15 +58,14 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         playerHandler = new SuperPacmanPlayerHandler();
 
-        statusGUI = new SuperPacmanPlayerStatusGUI(this, DEFAULT_HP,MAX_HP);
+        statusGUI = new SuperPacmanPlayerStatusGUI(this, playerNumber,DEFAULT_HP,MAX_HP);
 
+        this.keyboardButtons = keyboardButtons;
 
-        sprites = RPGSprite.extractSprites("superpacman/pacman", 4, 1, 1, this , 64, 64, new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
-
-
+        sprites = RPGSprite.extractSprites(playerImage, 4, 1, 1, this , 64, 64, new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
         animations = Animation.createAnimations(ANIMATION_DURATION/4, sprites);
-
         currentAnimation = animations[1];//Initializes the first animation to the upward direction
+
         desiredOrientation = Orientation.UP;
 
         resetMotion();
@@ -72,22 +75,30 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         invulnerabilityCheck(deltaTime);
 
-        Keyboard keyboard= getOwnerArea().getKeyboard();
 
-        updateDesiredOrientation(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
-        updateDesiredOrientation(Orientation.UP, keyboard.get(Keyboard.UP));
-        updateDesiredOrientation(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
-        updateDesiredOrientation(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
 
-        getNewCurrentAnimation();
+        updateDesiredOrientations();
+
+        setNewCurrentAnimation();
 
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
 
     }
 
+    private void updateDesiredOrientations(){
+        keyboard= getOwnerArea().getKeyboard();
+
+        updateDesiredOrientation(Orientation.DOWN, keyboard.get(keyboardButtons[0]));
+        updateDesiredOrientation(Orientation.LEFT, keyboard.get(keyboardButtons[1]));
+        updateDesiredOrientation(Orientation.UP, keyboard.get(keyboardButtons[2]));
+        updateDesiredOrientation(Orientation.RIGHT, keyboard.get(keyboardButtons[3]));
+
+    }
+
     private void invulnerabilityCheck(float deltaTime){
         if(invulnerableTimer <=0){
+            speedBoost = false;
             isInvulnerable = false;
         }
 
@@ -104,7 +115,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     }
 
-    private void getNewCurrentAnimation(){
+    private void setNewCurrentAnimation(){
         if(!isDisplacementOccurs()){
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
 
@@ -114,7 +125,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
 
             }
-            move(MOVING_SPEED);
+
+            movePacman(speedBoost);
+
             currentAnimation.reset();
         }
         else{
@@ -123,6 +136,14 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         }
     }
 
+    private void movePacman(boolean speedBoost){
+        if(speedBoost){
+            move(MOVING_SPEED/2);
+        }
+        else{
+            move(MOVING_SPEED);
+        }
+    }
     private void respawnPacman(){
         getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());
         this.abortCurrentMove();
@@ -147,6 +168,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         invulnerableTimer = timer;
         isInvulnerable = true;
+        speedBoost=true;
     }
     public boolean getIsInvulnerable(){
         return isInvulnerable;

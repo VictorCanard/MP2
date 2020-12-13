@@ -9,14 +9,16 @@ import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
 public class Level1 extends SuperPacmanArea {
-    public static final DiscreteCoordinates PLAYER_SPAWN_POSTION =new DiscreteCoordinates(15,6);
+    public static final DiscreteCoordinates PLAYER1_SPAWN_POSTION =new DiscreteCoordinates(15,6);
+    public static final DiscreteCoordinates PLAYER2_SPAWN_POSTION = new DiscreteCoordinates(13,6);
+
     public String getTitle() {
         return "superpacman/Level1";
     }
 
 
     public void createArea() {
-        DiscreteCoordinates pos = Level2.PLAYER_SPAWN_POSTION;
+        DiscreteCoordinates pos = Level2.PLAYER1_SPAWN_POSTION;
         registerActor(new Door("superpacman/Level2", pos, Logic.TRUE, this, Orientation.DOWN,
                 new DiscreteCoordinates(14,0), new DiscreteCoordinates(15,0) ));
 

@@ -25,7 +25,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     protected Sprite[][] scaredSprite;
     protected Animation[] scaredAnimation;
 
-    protected DiscreteCoordinates positionRefuge;
+
     private ghostHandler interactionHandler;
     protected SuperPacmanPlayer player;
 
@@ -130,7 +130,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
         this.abortCurrentMove();
         this.resetMotion();
 
-        //Todo Ghost forgets the player
+        this.player=null; //Ghost forgets the player
 
         this.setCurrentPosition(GHOST_SPAWN_POSITION.toVector());
         getOwnerArea().enterAreaCells(this, Collections.singletonList(GHOST_SPAWN_POSITION));

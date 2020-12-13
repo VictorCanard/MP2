@@ -39,6 +39,7 @@ public class Play {
        
         final Game game = new SuperPacman();
 
+
 		// Use Swing display
 
 		//final AreaGame game = new Tuto1();
