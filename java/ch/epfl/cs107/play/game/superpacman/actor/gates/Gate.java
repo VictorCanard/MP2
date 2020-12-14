@@ -32,9 +32,9 @@ public class Gate extends AreaEntity {
     public Gate(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         createGateSprites(orientation);
-        if (this.takeCellSpace()){
+       /* if (this.takeCellSpace()){
             //AreaGraph.setSignal(position, Logic.FALSE); //même problème qu'avec getShortestPath
-        }
+        }*/
     }
 
     public void createGateSprites(Orientation orientation){
