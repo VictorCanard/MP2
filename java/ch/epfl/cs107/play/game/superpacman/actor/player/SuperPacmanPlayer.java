@@ -28,7 +28,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private Keyboard keyboard;
     private int[]  keyboardButtons;
 
-    private boolean isPassingADoor;
+    public boolean isPassingADoor;
     private Orientation desiredOrientation;
     private Animation[] animations;
 
@@ -179,14 +179,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         return isInvulnerable;
     }
 
-    /**
-     * Indicate the player just passed a door
-     */
-    protected void setIsPassingADoor(){ //
-        isPassingADoor = true;
-    }
 
-    /**@return (boolean): true if the player is passing a door*/
 
 
     @Override

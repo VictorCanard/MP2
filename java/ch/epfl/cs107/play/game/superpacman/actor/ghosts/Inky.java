@@ -27,6 +27,8 @@ public class Inky extends MovableGhost{
         super(area, orientation, position);
         ghostSprite = RPGSprite.extractSprites("superpacman/ghost.inky", 8, 1, 1, this, 16, 16,new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
         ghostAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, ghostSprite);
+
+        currentAnimation = ghostAnimation[0];
     }
 
     @Override

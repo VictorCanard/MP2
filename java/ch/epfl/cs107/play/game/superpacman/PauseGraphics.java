@@ -28,4 +28,5 @@ class PauseGraphics implements Graphics {
         pauseText.draw(canvas);
     }
 
+
 }

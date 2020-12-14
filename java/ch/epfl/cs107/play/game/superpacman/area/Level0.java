@@ -10,7 +10,8 @@ import ch.epfl.cs107.play.signal.logic.Logic;
 
 public class Level0 extends SuperPacmanArea {
     public static final DiscreteCoordinates PLAYER1_SPAWN_POSTION = new DiscreteCoordinates(10,1);
-    public static final DiscreteCoordinates PLAYER2_SPAWN_POSTION = new DiscreteCoordinates(12,1);
+
+    public static final DiscreteCoordinates PLAYER2_SPAWN_POSTION = new DiscreteCoordinates(8,1);
 
 
     public String getTitle() {

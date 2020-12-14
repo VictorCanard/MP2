@@ -65,8 +65,13 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
 
     public boolean isAfraid(){
+        if(player != null){
+            return player.getIsInvulnerable();
+        }
+        else{
+            return false;
+        }
 
-        return player.getIsInvulnerable();
 
     }
 

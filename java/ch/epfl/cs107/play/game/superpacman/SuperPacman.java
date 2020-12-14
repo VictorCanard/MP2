@@ -36,6 +36,8 @@ public class SuperPacman extends RPG {
     private boolean suspended = false;
     private Window window;
 
+    private int playersPassingDoor;
+
 
     private int areaIndex =0;
     public static int numberOfAreas = 3;
@@ -61,13 +63,18 @@ public class SuperPacman extends RPG {
         for (int i = 0; i < numberOfPlayers; i++) {
 
             if(players[i].isPassingADoor()){
-                nextLevel();
+
             }
             if(players[i].hasNoHp()){
 
                 endGame();
             }
         }
+        if(players[0].isPassingADoor() && players[1].isPassingADoor()){
+            nextLevel();
+
+        }
+
 
 
         /*if(((SuperPacmanArea)getCurrentArea()).isOn()){
@@ -93,12 +100,16 @@ public class SuperPacman extends RPG {
 
             super.update(deltaTime);
         }
+        else{
+            //PauseGraphics need to be updated here to be visible
+        }
 
     }
     public void nextLevel(){
 
         areaIndex++;
         setCurrentLevel(areaIndex);
+
     }
 
     public void setCurrentLevel(int areaIndex){
@@ -158,7 +169,7 @@ public class SuperPacman extends RPG {
 
         player1Touchpad = new int[]{keyboard.DOWN, keyboard.LEFT,keyboard.UP, keyboard.RIGHT};
         player1Image = "superpacman/pacman";
-        players[0] = new SuperPacmanPlayer(areas[areaIndex], 0,startingPositions[areaIndex][0], player1Touchpad, player1Image);
+        players[0] = new SuperPacmanPlayer(areas[areaIndex], 0,startingPositions[0][areaIndex], player1Touchpad, player1Image);
         initPlayer(players[0]);
 
 
@@ -166,7 +177,7 @@ public class SuperPacman extends RPG {
         player2Touchpad = new int[]{keyboard.S, keyboard.A,keyboard.W, keyboard.D};
         //player2Image = "superpaman/pacmanSilver";
         player2Image= "superpacman/pacman";
-        players[1] = new SuperPacmanPlayer(areas[areaIndex], 1, startingPositions[areaIndex][1], player2Touchpad, player2Image);
+        players[1] = new SuperPacmanPlayer(areas[areaIndex], 1, startingPositions[1][areaIndex], player2Touchpad, player2Image);
         initPlayer(players[1]);
 
 
@@ -223,6 +234,10 @@ public class SuperPacman extends RPG {
     private void displayPauseGraphics(){
         //Todo call the pauseGraphics draw method on the canvas?
 
+        if(suspended){
+            pauseGraphics.draw(window);
+        }
+
         //Resume
         //Try again
         //Quit Game which will call endGame();
@@ -231,6 +246,11 @@ public class SuperPacman extends RPG {
     private void endGame(){
         //Maybe add some graphics such as score...
         this.end(); //This end() doesnt do anything yet
+    }
+
+    @Override
+    public void end(){
+        
     }
 
 
