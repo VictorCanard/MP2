@@ -43,7 +43,7 @@ public class Inky extends MovableGhost{
     @Override
     public void update(float deltaTime) {
 
-        orientate(getNextOrientation());
+        desiredOrientation = getNextOrientation();
         if (isAfraid()){
             move(FRAME_FOR_MOVE*2);
         }
@@ -51,6 +51,7 @@ public class Inky extends MovableGhost{
             move(FRAME_FOR_MOVE);
         }
 
+        currentAnimation.update(deltaTime);
         super.update(deltaTime);
     }
 
@@ -83,10 +84,9 @@ public class Inky extends MovableGhost{
             }
         }
 
-            //path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
+        //path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
 
-            //return path.poll();
-
+        //return path.poll();
 
         return Orientation.DOWN; // en attendant de résoudre l'erreur de shortestPath
     }

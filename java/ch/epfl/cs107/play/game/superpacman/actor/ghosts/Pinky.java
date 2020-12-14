@@ -23,7 +23,7 @@ public class Pinky extends MovableGhost{
      */
     public Pinky(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-        ghostSprite = RPGSprite.extractSprites("superpacman/ghost.inky", 8, 1, 1, this, 16, 16,new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
+        ghostSprite = RPGSprite.extractSprites("superpacman/ghost.pinky", 8, 1, 1, this, 16, 16,new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
         ghostAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, ghostSprite);
 
         currentAnimation = ghostAnimation[0];
@@ -41,14 +41,14 @@ public class Pinky extends MovableGhost{
     @Override
     public void update(float deltaTime) {
 
-        orientate(getNextOrientation());
+        desiredOrientation = getNextOrientation();
         if (isAfraid()){
             move(FRAME_FOR_MOVE*2);
         }
         else {
             move(FRAME_FOR_MOVE);
         }
-
+        currentAnimation.update(deltaTime);
         super.update(deltaTime);
     }
 

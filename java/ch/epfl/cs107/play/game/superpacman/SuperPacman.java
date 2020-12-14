@@ -206,7 +206,7 @@ public class SuperPacman extends RPG {
 
             initialiseStartingPositions();
 
-            areaIndex= 0;
+            areaIndex= 2;
 
             setCurrentLevel(areaIndex);
 
