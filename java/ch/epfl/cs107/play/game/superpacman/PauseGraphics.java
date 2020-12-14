@@ -20,7 +20,10 @@ class PauseGraphics implements Graphics {
         height = gameWindow.getScaledHeight();
         anchor = gameWindow.getTransform().getOrigin().sub(new Vector(width/2, height/2));
 
-        pauseText = new TextGraphics(" PAUSED ",1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(6.5f, height - 1.375f)));
+        pauseText = new TextGraphics("GAME IS PAUSED ",1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(0, 0)));
+
+
+
     }
     @Override
     public void draw(Canvas canvas) {

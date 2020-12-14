@@ -3,6 +3,7 @@ package ch.epfl.cs107.play.game.superpacman;
 import ch.epfl.cs107.play.game.actor.ImageGraphics;
 import ch.epfl.cs107.play.game.actor.TextGraphics;
 import ch.epfl.cs107.play.game.rpg.RPG;
+import ch.epfl.cs107.play.game.rpg.actor.Player;
 import ch.epfl.cs107.play.game.superpacman.actor.player.SuperPacmanPlayer;
 
 import ch.epfl.cs107.play.game.superpacman.area.*;
@@ -31,12 +32,23 @@ public class SuperPacman extends RPG {
 
     private int numberOfPlayers;
 
+    private int counter = 0;
+    private boolean gameEnded = false;
+
     private Keyboard keyboard;
     private Button button;
     private boolean suspended = false;
     private Window window;
 
-    private int playersPassingDoor;
+
+
+    private boolean isFirstTime = true;
+
+    private float width;
+    private float height;
+    private int totalScore=0;
+    private TextGraphics totalScoreText;
+    private Vector anchor;
 
 
     private int areaIndex =0;
@@ -58,22 +70,47 @@ public class SuperPacman extends RPG {
     @Override
     public void update(float deltaTime) {
 
-        keyboard= getCurrentArea().getKeyboard();
+        if(gameEnded){
+            if(isFirstTime){
+                initialiseEndOfGameGraphics();
+                isFirstTime=false;
+            }
 
-        for (int i = 0; i < numberOfPlayers; i++) {
 
-            if(players[i].isPassingADoor()){
+            drawEndOfGameGraphics();
+        }
+        else{
+            keyboard= getCurrentArea().getKeyboard();
+
+            for (int i = 0; i < numberOfPlayers; i++) {
+
+                if(players[i].hasNoHp()){
+
+                    endGame();
+                }
+            }
+
+            if((players[0].isPassingADoor())) {
+
+                players[1].leaveArea();
+
+                nextLevel();
+
+                players[1].enterArea(getCurrentArea(),startingPositions[1][areaIndex]);
+
 
             }
-            if(players[i].hasNoHp()){
+            if(players[1].isPassingADoor()){
 
-                endGame();
+                players[0].leaveArea();
+
+                nextLevel();
+
+                players[0].enterArea(getCurrentArea(),startingPositions[1][areaIndex]);
+
             }
-        }
-        if(players[0].isPassingADoor() && players[1].isPassingADoor()){
-            nextLevel();
 
-        }
+
 
 
 
@@ -88,27 +125,40 @@ public class SuperPacman extends RPG {
         }*/
 
 
-        //When tab is pressed the game pauses completely (Basically all updates are blocked by SuperPacman.java)
+            //When tab is pressed the game pauses completely (Basically all updates are blocked by SuperPacman.java)
 
-        if(keyboard.get(Keyboard.TAB).isPressed()){
+            if(keyboard.get(Keyboard.TAB).isPressed()){
 
-            pauseGame();
+                pauseGame();
+
+            }
+            if(!suspended){
+
+                super.update(deltaTime);
+            }
+            else{
+
+                pauseGraphics.draw(window);
+
+            }
+        }
+
+
+
+
 
         }
 
-        if(!suspended){
 
-            super.update(deltaTime);
-        }
-        else{
-            //PauseGraphics need to be updated here to be visible
-        }
 
-    }
     public void nextLevel(){
 
         areaIndex++;
         setCurrentLevel(areaIndex);
+
+        for (int i = 0; i <numberOfPlayers ; i++) {
+            players[i].resetInvulnerable();
+        }
 
     }
 
@@ -173,10 +223,8 @@ public class SuperPacman extends RPG {
         initPlayer(players[0]);
 
 
-
         player2Touchpad = new int[]{keyboard.S, keyboard.A,keyboard.W, keyboard.D};
-        //player2Image = "superpaman/pacmanSilver";
-        player2Image= "superpacman/pacman";
+        player2Image = "superpacman/pacmanSilver";
         players[1] = new SuperPacmanPlayer(areas[areaIndex], 1, startingPositions[1][areaIndex], player2Touchpad, player2Image);
         initPlayer(players[1]);
 
@@ -188,8 +236,6 @@ public class SuperPacman extends RPG {
 
 
         pauseGraphics = new PauseGraphics(window);
-
-
 
 
     }
@@ -206,7 +252,7 @@ public class SuperPacman extends RPG {
 
             initialiseStartingPositions();
 
-            areaIndex= 2;
+            areaIndex= 1;
 
             setCurrentLevel(areaIndex);
 
@@ -223,7 +269,7 @@ public class SuperPacman extends RPG {
 
     private void pauseGame(){
         toggleSuspend();
-        displayPauseGraphics();
+
     }
 
     private boolean toggleSuspend(){
@@ -231,27 +277,32 @@ public class SuperPacman extends RPG {
         return suspended ;
     }
 
-    private void displayPauseGraphics(){
-        //Todo call the pauseGraphics draw method on the canvas?
-
-        if(suspended){
-            pauseGraphics.draw(window);
-        }
-
-        //Resume
-        //Try again
-        //Quit Game which will call endGame();
-    }
 
     private void endGame(){
         //Maybe add some graphics such as score...
-        this.end(); //This end() doesnt do anything yet
+        gameEnded = true;
+
+    }
+    private void initialiseEndOfGameGraphics(){
+        width = window.getScaledWidth();
+        height = window.getScaledHeight();
+        anchor = window.getTransform().getOrigin().sub(new Vector(width/2, height/2));
+
+        for (int i = 0; i < numberOfPlayers; i++) {
+            totalScore+= players[i].getScore();
+        }
+
+        totalScoreText = new TextGraphics("TOTAL SCORE:  \n"+totalScore,1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(6.5f, height - 1.375f)));
+    }
+    private void drawEndOfGameGraphics(){
+
+
+        totalScoreText.draw(window);
+
     }
 
-    @Override
-    public void end(){
-        
-    }
+
+
 
 
 
