@@ -25,6 +25,10 @@ public class SuperPacmanBehavior extends AreaBehavior {
     private boolean[][] neighborhood;
     AreaGraph graph;
 
+    public  Queue<Orientation> getShortestPath(DiscreteCoordinates currentPos, DiscreteCoordinates targetPos){
+        Queue<Orientation> path = graph.shortestPath(currentPos, targetPos);
+        return path;
+    }
 
     protected void registerActors (Area area){
 
@@ -52,12 +56,12 @@ public class SuperPacmanBehavior extends AreaBehavior {
                         area.registerActor(new Bonus(area,Orientation.UP, position));
                         break;
 
+                        /*
 
                     case FREE_WITH_BLINKY:
                         area.registerActor(new Blinky(area, Orientation.UP,position));
                         break;
 
-                    /*
                     case FREE_WITH_INKY:
                         area.registerActor(new Inky(area, Orientation.UP,position));
                         break;
@@ -208,10 +212,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
     }
 
-    public  Queue<Orientation> getShortestPath(DiscreteCoordinates currentPos, DiscreteCoordinates targetPos){
-        Queue<Orientation> path = graph.shortestPath(currentPos, targetPos);
-        return path;
-    }
+
 
     public boolean hasLeftEdge(int x, int y){
         return x > 0 && getType(getCell(x-1,y)) != SuperPacmanCellType.WALL;

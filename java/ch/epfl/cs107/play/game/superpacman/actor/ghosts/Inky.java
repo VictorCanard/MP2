@@ -4,13 +4,14 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Animation;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanBehavior;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RandomGenerator;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Queue;
 
-public class Inky extends Ghost{
+public class Inky extends MovableGhost{
     public static final int MAX_DISTANCE_WHEN_SCARED = 5;
     public static final int MAX_DISTANCE_WHEN_NOT_SCARED = 10;
     //private Sprite sprite;
@@ -67,17 +68,23 @@ public class Inky extends Ghost{
         }
 
         if (!isAfraid()) {
-            do {
-                int randomX = RandomGenerator.getInstance().nextInt(width);
-                int randomY = RandomGenerator.getInstance().nextInt(height);
-                targetPos = new DiscreteCoordinates(randomX, randomY);
+            if (player == null) {
+                do {
+                    int randomX = RandomGenerator.getInstance().nextInt(width);
+                    int randomY = RandomGenerator.getInstance().nextInt(height);
+                    targetPos = new DiscreteCoordinates(randomX, randomY);
 
-            }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),targetPos) > MAX_DISTANCE_WHEN_NOT_SCARED);
+                } while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(), targetPos) > MAX_DISTANCE_WHEN_NOT_SCARED);
+            }
+            else {
+                targetPos = player.getCurrentMainCellCoordinates();
+            }
         }
 
-       // path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
+            //path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
 
-        //return path.poll();
+            //return path.poll();
+
 
         return Orientation.DOWN; // en attendant de résoudre l'erreur de shortestPath
     }

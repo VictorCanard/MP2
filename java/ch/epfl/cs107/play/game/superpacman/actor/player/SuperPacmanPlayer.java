@@ -136,6 +136,11 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         }
     }
 
+    @Override
+    public DiscreteCoordinates getCurrentMainCellCoordinates() {
+        return super.getCurrentMainCellCoordinates();
+    }
+
     private void movePacman(boolean speedBoost){
         if(speedBoost){
             move(MOVING_SPEED/2);
