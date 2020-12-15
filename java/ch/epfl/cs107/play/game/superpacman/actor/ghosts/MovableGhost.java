@@ -24,10 +24,7 @@ public class MovableGhost extends Ghost {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (!isAfraid()){
-            if(ghostAnimation != null)
-                ghostAnimation[0].draw(canvas);
-        }
+
     }
 
 

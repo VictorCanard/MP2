@@ -30,19 +30,15 @@ public class SuperPacman extends RPG {
 
     private PauseGraphics pauseGraphics;
 
-    private int numberOfPlayers;
-
-    private int counter = 0;
-    private boolean gameEnded = false;
-
+    private int numberOfPlayers = 1;
+    private boolean isMultiplayer = false;
     private Keyboard keyboard;
-    private Button button;
-    private boolean suspended = false;
-    private Window window;
 
-
-
+    private boolean gameEnded = false;
     private boolean isFirstTime = true;
+    private boolean suspended = false;
+
+    private Window window;
 
     private float width;
     private float height;
@@ -89,26 +85,28 @@ public class SuperPacman extends RPG {
                     endGame();
                 }
             }
+            if(isMultiplayer){
+                if((players[0].isPassingADoor())) {
 
-            if((players[0].isPassingADoor())) {
+                    players[1].leaveArea();
 
-                players[1].leaveArea();
+                    nextLevel();
 
-                nextLevel();
-
-                players[1].enterArea(getCurrentArea(),startingPositions[1][areaIndex]);
+                    players[1].enterArea(getCurrentArea(),startingPositions[1][areaIndex]);
 
 
+                }
+                if(players[1].isPassingADoor()){
+
+                    players[0].leaveArea();
+
+                    nextLevel();
+
+                    players[0].enterArea(getCurrentArea(),startingPositions[1][areaIndex]);
+
+                }
             }
-            if(players[1].isPassingADoor()){
 
-                players[0].leaveArea();
-
-                nextLevel();
-
-                players[0].enterArea(getCurrentArea(),startingPositions[1][areaIndex]);
-
-            }
 
 
 
@@ -224,10 +222,15 @@ public class SuperPacman extends RPG {
         initPlayer(players[0]);
 
 
-        player2Touchpad = new int[]{keyboard.S, keyboard.A,keyboard.W, keyboard.D};
-        player2Image = "superpacman/pacmanSilver";
-        players[1] = new SuperPacmanPlayer(areas[areaIndex], 1, startingPositions[1][areaIndex], player2Touchpad, player2Image);
-        initPlayer(players[1]);
+        if(isMultiplayer){
+            player2Touchpad = new int[]{keyboard.S, keyboard.A,keyboard.W, keyboard.D};
+            player2Image = "superpacman/pacmanSilver";
+            players[1] = new SuperPacmanPlayer(areas[areaIndex], 1, startingPositions[1][areaIndex], player2Touchpad, player2Image);
+            initPlayer(players[1]);
+
+            numberOfPlayers=2;
+        }
+
 
 
 
@@ -257,7 +260,10 @@ public class SuperPacman extends RPG {
 
             setCurrentLevel(areaIndex);
 
-            numberOfPlayers = 2;
+            isMultiplayer= false;
+
+
+
             initialisePlayers();
 
             this.window = window;

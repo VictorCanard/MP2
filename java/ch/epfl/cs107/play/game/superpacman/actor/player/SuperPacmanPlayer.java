@@ -76,7 +76,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         invulnerabilityCheck(deltaTime);
 
 
-
         updateDesiredOrientations();
 
         setNewCurrentAnimation();
@@ -120,9 +119,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             if(getOwnerArea().canEnterAreaCells(this,Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())))){
 
                 orientate(desiredOrientation);
-
-
-
 
             }
 
