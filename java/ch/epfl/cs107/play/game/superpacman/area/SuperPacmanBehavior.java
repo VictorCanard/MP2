@@ -19,6 +19,8 @@ import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Blinky;
 import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Inky;
 import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Pinky;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.Signal;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Window;
 
 import java.util.Queue;
@@ -30,6 +32,10 @@ public class SuperPacmanBehavior extends AreaBehavior {
     public  Queue<Orientation> getShortestPath(DiscreteCoordinates currentPos, DiscreteCoordinates targetPos){
         Queue<Orientation> path = graph.shortestPath(currentPos, targetPos);
         return path;
+    }
+
+    public void setSignalFalse(DiscreteCoordinates position){
+        graph.setSignal(position, Logic.FALSE);
     }
 
     protected void registerActors (Area area){

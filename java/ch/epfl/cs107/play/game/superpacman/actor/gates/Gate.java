@@ -8,6 +8,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.actor.collectables.Key;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanBehavior;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.signal.logic.Logic;
@@ -21,6 +22,7 @@ public class Gate extends AreaEntity {
     private Key key2;
     private Sprite sprite;
     private int numberDiamonds=0;
+    protected SuperPacmanBehavior behavior;
 
     /**
      * Default AreaEntity constructor
@@ -32,10 +34,8 @@ public class Gate extends AreaEntity {
     public Gate(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         createGateSprites(orientation);
-
-
-       if (this.takeCellSpace()){
-            //AreaGraph.setSignal(position, Logic.FALSE); //même problème qu'avec getShortestPath
+        if (this.takeCellSpace()){
+            behavior.setSignalFalse(position);
         }
     }
 
