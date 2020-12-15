@@ -19,6 +19,10 @@ public abstract class AutomaticallyCollectableAreaEntity extends CollectableArea
             super(area, orientation, position);
         }
 
+
+    /**
+     * Method called when the entity is collected, it unregister the entity
+     */
     public void collect(){
        getOwnerArea().unregisterActor(this);
        isCollected = true;

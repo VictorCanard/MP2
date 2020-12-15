@@ -239,8 +239,10 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        ((SuperPacmanInteractionVisitor)v).interactWith(this); }
+        ((SuperPacmanInteractionVisitor)v).interactWith(this);
+    }
 
+    //Handler d'intercation
     public class SuperPacmanPlayerHandler implements SuperPacmanInteractionVisitor {
         @Override
         public void interactWith(Door door) {
@@ -260,7 +262,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
        @Override
 
         public void interactWith(Bonus bonus) {
-            SuperPacmanPlayer.this.setInvulnerable(bonus.INVULNERABLE_TIMER);
+            SuperPacmanPlayer.this.setInvulnerable(bonus.INVULNERABLE_TIMER); //rend le player invulnérable
             interactWith((AutomaticallyCollectableAreaEntity)bonus);
         }
 
