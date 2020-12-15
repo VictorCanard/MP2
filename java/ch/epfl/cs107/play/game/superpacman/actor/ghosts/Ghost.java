@@ -80,7 +80,6 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
             return false;
         }
 
-
     }
 
 

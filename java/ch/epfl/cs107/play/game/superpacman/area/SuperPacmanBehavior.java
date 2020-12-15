@@ -19,6 +19,7 @@ import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Blinky;
 import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Inky;
 import ch.epfl.cs107.play.game.superpacman.actor.ghosts.Pinky;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Window;
 
 import java.util.Queue;
@@ -26,10 +27,16 @@ import java.util.Queue;
 public class SuperPacmanBehavior extends AreaBehavior {
     private boolean[][] neighborhood;
     AreaGraph graph;
+    private int height = getHeight();
+    private int width = getWidth();
 
     public  Queue<Orientation> getShortestPath(DiscreteCoordinates currentPos, DiscreteCoordinates targetPos){
         Queue<Orientation> path = graph.shortestPath(currentPos, targetPos);
         return path;
+    }
+
+    public void signal(DiscreteCoordinates position){
+        graph.setSignal(position, Logic.FALSE);
     }
 
     protected void registerActors (Area area){
@@ -88,13 +95,13 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
                 area.registerActor(key);
 
-                area.registerActor(new OneKeyGate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key));
-                area.registerActor(new OneKeyGate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key));
+                area.registerActor(new OneKeyGate(area,Orientation.RIGHT,new DiscreteCoordinates(5,8), key, this));
+                area.registerActor(new OneKeyGate(area,Orientation.LEFT,new DiscreteCoordinates(6,8),key, this));
 
                 break;
             case "superpacman/Level1":
-                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3)));
-                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3)));
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3), this));
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3), this));
                 break;
             case "superpacman/Level2":
                 Key key1 = new Key(area,Orientation.UP, new DiscreteCoordinates(3,16));
@@ -107,24 +114,24 @@ public class SuperPacmanBehavior extends AreaBehavior {
                 area.registerActor(key3);
                 area.registerActor(key4);
 
-                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,14), key1));
-                area.registerActor(new OneKeyGate(area, Orientation.DOWN, new DiscreteCoordinates(5,12), key1));
-                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,10), key1));
-                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,8), key1));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,14), key1, this));
+                area.registerActor(new OneKeyGate(area, Orientation.DOWN, new DiscreteCoordinates(5,12), key1, this));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,10), key1, this));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(8,8), key1, this));
 
 
-                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,14), key2));
-                area.registerActor(new OneKeyGate(area, Orientation.DOWN, new DiscreteCoordinates(24,12), key2));
-                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,10), key2));
-                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,8), key2));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,14), key2, this));
+                area.registerActor(new OneKeyGate(area, Orientation.DOWN, new DiscreteCoordinates(24,12), key2, this));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,10), key2, this));
+                area.registerActor(new OneKeyGate(area, Orientation.RIGHT, new DiscreteCoordinates(21,8), key2, this));
 
-                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(10,2), key3, key4));
-                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(19,2), key3, key4));
-                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(12,8), key3, key4));
-                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(17,8), key3, key4));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(10,2), key3, key4, this));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(19,2), key3, key4, this));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(12,8), key3, key4, this));
+                area.registerActor(new TwoKeysGate(area, Orientation.RIGHT, new DiscreteCoordinates(17,8), key3, key4, this));
 
-                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3)));
-                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3)));
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(14,3), this));
+                area.registerActor(new DiamondGate(area,Orientation.RIGHT, new DiscreteCoordinates(15,3), this));
                 break;
 
 
@@ -157,7 +164,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
         return neighborhood;
     }
     protected SuperPacmanCellType getType (Cell cell){
-        return ((SuperPacmanCell)cell).getCellType(); //J'ai ajoute des -1 ici car ArrayOutOfBounds exception
+        return ((SuperPacmanCell)cell).getCellType();
 
     }
 
@@ -198,41 +205,53 @@ public class SuperPacmanBehavior extends AreaBehavior {
      */
     public SuperPacmanBehavior(Window window, String name){
         super(window, name);
+
         graph = new AreaGraph();
-        int height = getHeight();
-        int width = getWidth();
+
+
+
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width ; x++) {
+
                 SuperPacmanCellType color = SuperPacmanCellType.toType(getRGB(height-1-y, x));
                 setCell(x,y, new SuperPacmanCell(x,y,color));
 
-                /*if (getType(getCell(x,y)) == SuperPacmanCellType.WALL){
+            }
+        }
+        for(int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int newy = height-1-y;
+
+                if (getType(getCell(x,y)) != SuperPacmanCellType.WALL){
                     graph.addNode(new DiscreteCoordinates(x,y),hasLeftEdge(x,y),hasUpEdge(x,y),
                             hasRightEdge(x,y), hasDownEdge(x,y));
                 }
-
-                 */
             }
         }
+
 
     }
 
 
 
     public boolean hasLeftEdge(int x, int y){
+
+
         return x > 0 && getType(getCell(x-1,y)) != SuperPacmanCellType.WALL;
     }
 
     public boolean hasRightEdge(int x, int y){
-        return x > 0 && getType(getCell(x+1,y)) != SuperPacmanCellType.WALL;
+
+        return x < getWidth() && getType(getCell(x+1,y)) != SuperPacmanCellType.WALL;
     }
 
     public boolean hasUpEdge(int x, int y){
-        return x > 0 && getType(getCell(x,y+1)) != SuperPacmanCellType.WALL;
+        return y<getHeight()-1 && getType(getCell(x,y+1)) != SuperPacmanCellType.WALL;
     }
 
     public boolean hasDownEdge(int x, int y){
-        return x > 0 && getType(getCell(x,y-1)) != SuperPacmanCellType.WALL;
+
+        return y>0 && getType(getCell(x,y-1)) != SuperPacmanCellType.WALL;
     }
 
 
