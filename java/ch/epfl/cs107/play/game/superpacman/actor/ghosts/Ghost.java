@@ -7,6 +7,7 @@ import ch.epfl.cs107.play.game.rpg.actor.RPGSprite;
 import ch.epfl.cs107.play.game.superpacman.actor.player.SuperPacmanPlayer;
 import ch.epfl.cs107.play.game.superpacman.handler.SuperPacmanInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.RandomGenerator;
 import ch.epfl.cs107.play.window.Canvas;
 
 
@@ -62,6 +63,13 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
     }
 
+
+    public Orientation getRandomOrientation(){
+        int randomInt = RandomGenerator.getInstance().nextInt(4);
+
+        return Orientation.fromInt(randomInt);
+
+    }
 
 
     public boolean isAfraid(){

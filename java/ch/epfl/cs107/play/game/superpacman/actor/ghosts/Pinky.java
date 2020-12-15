@@ -14,6 +14,8 @@ import java.util.Queue;
 public class Pinky extends MovableGhost{
     public static final int MIN_WHEN_SCARED = 5;
     public static final int MAX_RANDOM_ATTEMPT = 200;
+
+
     /**
      * Default MovableAreaEntity constructor
      *
@@ -21,12 +23,14 @@ public class Pinky extends MovableGhost{
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public Pinky(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public Pinky(Area area, Orientation orientation, DiscreteCoordinates position, SuperPacmanBehavior behavior) {
         super(area, orientation, position);
         ghostSprite = RPGSprite.extractSprites("superpacman/ghost.pinky", 8, 1, 1, this, 16, 16,new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
         ghostAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, ghostSprite);
 
         currentAnimation = ghostAnimation[0];
+
+        this.behavior = behavior;
     }
 
     @Override
@@ -71,9 +75,13 @@ public class Pinky extends MovableGhost{
 
         if (!isAfraid()) {
             if (player == null) {
-                    int randomX = RandomGenerator.getInstance().nextInt(width);
+                    return getRandomOrientation();
+
+                    /*int randomX = RandomGenerator.getInstance().nextInt(width);
                     int randomY = RandomGenerator.getInstance().nextInt(height);
                     targetPos = new DiscreteCoordinates(randomX, randomY);
+
+                     */
 
             }
             else {
@@ -81,11 +89,11 @@ public class Pinky extends MovableGhost{
             }
         }
 
-        //path = SuperPacmanBehavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
+        path = behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
 
-        //return path.poll();
+        return path.poll();
 
 
-        return Orientation.DOWN; // en attendant de résoudre l'erreur de shortestPath
+
     }
 }

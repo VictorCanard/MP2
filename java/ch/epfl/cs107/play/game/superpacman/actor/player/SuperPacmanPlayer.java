@@ -138,6 +138,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
     @Override
     public DiscreteCoordinates getCurrentMainCellCoordinates() {
+
         return super.getCurrentMainCellCoordinates();
     }
 

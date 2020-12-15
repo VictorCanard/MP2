@@ -2,9 +2,11 @@ package ch.epfl.cs107.play.game.superpacman.actor.ghosts;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
+import ch.epfl.cs107.play.game.superpacman.area.SuperPacmanBehavior;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class MovableGhost extends Ghost {
+    protected SuperPacmanBehavior behavior;
     /**
      * Default MovableAreaEntity constructor
      *

@@ -66,11 +66,11 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
 
                     case FREE_WITH_INKY:
-                        area.registerActor(new Inky(area, Orientation.UP,position));
+                        area.registerActor(new Inky(area, Orientation.UP,position, this));
                         break;
 
                     case FREE_WITH_PINKY:
-                        area.registerActor(new Pinky(area, Orientation.UP,position));
+                        area.registerActor(new Pinky(area, Orientation.UP,position, this));
 
 
 

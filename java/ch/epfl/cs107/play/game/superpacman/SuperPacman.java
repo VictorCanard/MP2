@@ -132,6 +132,7 @@ public class SuperPacman extends RPG {
                 pauseGame();
 
             }
+
             if(!suspended){
 
                 super.update(deltaTime);
@@ -272,9 +273,8 @@ public class SuperPacman extends RPG {
 
     }
 
-    private boolean toggleSuspend(){
+    private void toggleSuspend(){
         suspended = !suspended;
-        return suspended ;
     }
 
 
