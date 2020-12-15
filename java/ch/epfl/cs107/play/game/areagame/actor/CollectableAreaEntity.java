@@ -15,6 +15,10 @@ public abstract class CollectableAreaEntity extends AreaEntity {
         super(area, orientation, position);
     }
 
+    /** Method that return the score added when the player collects the entity
+     *
+     * @return the score
+     */
     public abstract int addScore();
 
 }

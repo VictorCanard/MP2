@@ -58,6 +58,11 @@ public class Inky extends MovableGhost{
         super.update(deltaTime);
     }
 
+    /** Method that calculate the target position of the ghost and its shortest path
+     *
+     * @return the orientation needed to go to the target position
+     */
+
     public Orientation getNextOrientation(){
         int height = getOwnerArea().getHeight();
         int width = getOwnerArea().getWidth();

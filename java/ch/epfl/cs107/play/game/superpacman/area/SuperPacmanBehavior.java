@@ -29,11 +29,21 @@ public class SuperPacmanBehavior extends AreaBehavior {
     private boolean[][] neighborhood;
     AreaGraph graph;
 
+    /**
+     * Methode that generate the shortest path to a target position
+     * @param currentPos current position of the entity
+     * @param targetPos target position
+     * @return the shortest path
+     */
     public  Queue<Orientation> getShortestPath(DiscreteCoordinates currentPos, DiscreteCoordinates targetPos){
         Queue<Orientation> path = graph.shortestPath(currentPos, targetPos);
         return path;
     }
 
+    /**
+     * Method that desactivade nod
+     * @param position position of the nod
+     */
     public void setSignalFalse(DiscreteCoordinates position){
         graph.setSignal(position, Logic.FALSE);
     }
@@ -210,14 +220,14 @@ public class SuperPacmanBehavior extends AreaBehavior {
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width ; x++) {
                 SuperPacmanCellType color = SuperPacmanCellType.toType(getRGB(height-1-y, x));
-                setCell(x,y, new SuperPacmanCell(x,y,color));
+                setCell(x,y, new SuperPacmanCell(x, y, color));
 
-                /*if (getType(getCell(x,y)) == SuperPacmanCellType.WALL){
+                if (getType(getCell(x,y)) == SuperPacmanCellType.WALL){
                     graph.addNode(new DiscreteCoordinates(x,y),hasLeftEdge(x,y),hasUpEdge(x,y),
                             hasRightEdge(x,y), hasDownEdge(x,y));
                 }
 
-                 */
+
             }
         }
 
@@ -242,7 +252,7 @@ public class SuperPacmanBehavior extends AreaBehavior {
     }
 
 
-    public class SuperPacmanCell extends Cell {
+    public static class SuperPacmanCell extends Cell {
         /// Type of the cell following the enum
         private final SuperPacmanBehavior.SuperPacmanCellType type;
 
