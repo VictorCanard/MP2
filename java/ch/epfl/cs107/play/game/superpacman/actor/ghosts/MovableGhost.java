@@ -11,11 +11,14 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.LinkedList;
 import java.util.Queue;
 
-abstract class MovableGhost extends Ghost {
+class MovableGhost extends Ghost {
     protected SuperPacmanBehavior behavior;
     protected Path graphicPath;
     protected Queue<Orientation> path;
     protected DiscreteCoordinates targetPos;
+
+    protected int randomX;
+    protected int randomY;
 
 
     /**
@@ -40,6 +43,7 @@ abstract class MovableGhost extends Ghost {
             graphicPath = new Path(this.getPosition(), new LinkedList<Orientation>(path));
             graphicPath.draw(canvas);
         }
+
         super.draw(canvas);
 
     }
@@ -47,12 +51,21 @@ abstract class MovableGhost extends Ghost {
     public void update(float deltaTime) {
 
         desiredOrientation = getNextOrientation();
-
+        currentAnimation.update(deltaTime);
 
         super.update(deltaTime);
     }
 
-    abstract protected Orientation getNextOrientation();
+    protected Orientation getNextOrientation(){
+        path = behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos);
+
+        if(path != null){
+            return path.poll();
+        }
+        else{
+            return getRandomOrientation();
+        }
+    }
 
 
 }

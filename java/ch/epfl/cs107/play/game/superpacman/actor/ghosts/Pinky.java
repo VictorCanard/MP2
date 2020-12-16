@@ -18,6 +18,9 @@ public class Pinky extends MovableGhost{
     public static final int MAX_RANDOM_ATTEMPT = 200;
 
 
+    private int randomAttempts =0;
+
+
 
     /**
      * Default MovableAreaEntity constructor
@@ -41,11 +44,7 @@ public class Pinky extends MovableGhost{
 
     @Override
     protected Orientation getNextOrientation(){
-        int randomAttempts = 0;
-        int height = getOwnerArea().getHeight();
-        int width = getOwnerArea().getWidth();
-        DiscreteCoordinates targetPos = null;
-        Queue<Orientation> path;
+
         //recherche de case aléatoire
 
         if(player == null){
@@ -58,26 +57,17 @@ public class Pinky extends MovableGhost{
                     int randomX = RandomGenerator.getInstance().nextInt(width);
                     int randomY = RandomGenerator.getInstance().nextInt(height);
                     targetPos = new DiscreteCoordinates(randomX, randomY);
-                    ++randomAttempts;
+                    randomAttempts++;
 
                 }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),targetPos) < MIN_WHEN_SCARED
-                        || randomAttempts < MAX_RANDOM_ATTEMPT);
+                        && randomAttempts < MAX_RANDOM_ATTEMPT);
             }
             else{
                 targetPos = player.getCurrentMainCellCoordinates();
             }
         }
 
-        path = super.behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos);
-
-
-
-        if(path != null){
-            return path.poll();
-        }
-        else{
-            return getRandomOrientation();
-        }
+        return super.getNextOrientation();
 
     }
 }

@@ -48,20 +48,20 @@ public class Inky extends MovableGhost{
         if(player == null){
             do {
 
+                    randomX = RandomGenerator.getInstance().nextInt(width);
+                    randomY = RandomGenerator.getInstance().nextInt(height);
 
-                    int randomX = RandomGenerator.getInstance().nextInt(width);
-                    int randomY = RandomGenerator.getInstance().nextInt(height);
                     targetPos = new DiscreteCoordinates(randomX, randomY);
-
-
 
             } while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(), targetPos) > MAX_DISTANCE_WHEN_NOT_SCARED);
         }
         else{
             if (isAfraid()) {
                 do {
-                    int randomX = RandomGenerator.getInstance().nextInt(width);
-                    int randomY = RandomGenerator.getInstance().nextInt(height);
+
+                    randomX = RandomGenerator.getInstance().nextInt(width);
+                    randomY = RandomGenerator.getInstance().nextInt(height);
+
                     targetPos = new DiscreteCoordinates(randomX, randomY);
 
                 }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),targetPos) > MAX_DISTANCE_WHEN_SCARED);
@@ -71,14 +71,7 @@ public class Inky extends MovableGhost{
             }
         }
 
-        path = super.behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos);
-
-        if(path != null){
-            return path.poll();
-        }
-        else{
-            return getRandomOrientation();
-        }
+        return super.getNextOrientation();
 
 
 

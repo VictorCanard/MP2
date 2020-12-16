@@ -163,12 +163,6 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
         y = getCurrentMainCellCoordinates().y;
 
 
-        width = getOwnerArea().getWidth();
-        height = getOwnerArea().getHeight();
-
-        fieldOfView.add(getCurrentMainCellCoordinates()); //The first item in the list is the ghost's position
-
-
         for (int i = -FIELD_OF_VIEW_RADIUS; i < FIELD_OF_VIEW_RADIUS; ++i) {
             for (int j = -FIELD_OF_VIEW_RADIUS; j < FIELD_OF_VIEW_RADIUS; ++j) {
 

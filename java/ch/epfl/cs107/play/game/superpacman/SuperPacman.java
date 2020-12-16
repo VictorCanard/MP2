@@ -28,7 +28,9 @@ public class SuperPacman extends RPG {
     private String player1Image;
     private String player2Image;
 
-    private PauseGraphics pauseGraphics;
+    private TextGraphics pauseGraphics;
+    private TextGraphics startingGraphics;
+    private Vector startingButtonPosition;
 
     private int numberOfPlayers = 1;
     private boolean isMultiplayer = false;
@@ -44,6 +46,7 @@ public class SuperPacman extends RPG {
     private float height;
     private int totalScore=0;
     private TextGraphics totalScoreText;
+    private TextGraphics gameOverText;
     private Vector anchor;
 
 
@@ -76,7 +79,7 @@ public class SuperPacman extends RPG {
             drawEndOfGameGraphics();
         }
         else{
-            keyboard= getCurrentArea().getKeyboard();
+            keyboard = getCurrentArea().getKeyboard();
 
             for (int i = 0; i < numberOfPlayers; i++) {
 
@@ -109,18 +112,6 @@ public class SuperPacman extends RPG {
 
 
 
-
-
-
-        /*if(((SuperPacmanArea)getCurrentArea()).isOn()){
-
-            getCurrentArea().leaveAreaCells(player,player.getCurrentCells());
-
-            nextLevel();
-
-            getCurrentArea().enterAreaCells(player, Collections.singletonList(startingPositions[areaIndex]));
-
-        }*/
 
 
             //When tab is pressed the game pauses completely (Basically all updates are blocked by SuperPacman.java)
@@ -228,7 +219,7 @@ public class SuperPacman extends RPG {
             players[1] = new SuperPacmanPlayer(areas[areaIndex], 1, startingPositions[1][areaIndex], player2Touchpad, player2Image);
             initPlayer(players[1]);
 
-            numberOfPlayers=2;
+
         }
 
 
@@ -236,21 +227,44 @@ public class SuperPacman extends RPG {
 
     }
 
+
+    private void initialiseGraphics(){
+        width = window.getScaledWidth();
+        height = window.getScaledHeight();
+        anchor = window.getTransform().getOrigin().sub(new Vector(width/2, height/2));
+
+        initialisePauseGraphics();
+    }
+
     private void initialisePauseGraphics(){
-
-
-        pauseGraphics = new PauseGraphics(window);
-
+        pauseGraphics = new TextGraphics("GAME IS PAUSED ",1f, Color.BLACK, Color.BLUE,0.04f,false,false, anchor.add(new Vector(7.5f, height - 1.375f)));
 
     }
 
 
+    private void startingWindow(){
+        startingButtonPosition = anchor.add(new Vector(7.5f, height - 1.375f));
+        startingGraphics =  new TextGraphics("PRESS ENTER TO START",1f, Color.BLACK, Color.BLUE,0.04f,false,false,startingButtonPosition );
+
+        do{
+            keyboard= window.getKeyboard();
+            startingGraphics.draw(window);
+
+        }while((keyboard.get(Keyboard.ENTER).isUp()));
+    }
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
         //Todo: reset frameRate to original
 
         if (super.begin(window, fileSystem)) {
 
+            this.window = window;
+
+            initialiseGraphics();
+
+            //startingWindow();
+            // Extension to greet the player before starting the game:
+            // unfortunately the while loop lasts forever
 
             createAreas();
 
@@ -260,14 +274,13 @@ public class SuperPacman extends RPG {
 
             setCurrentLevel(areaIndex);
 
-            isMultiplayer= false;
+            isMultiplayer= true; //Change this attribute to False to deactivate Multiplayer mode
 
-
+            if(isMultiplayer){
+                numberOfPlayers = 2;
+            }
 
             initialisePlayers();
-
-            this.window = window;
-            initialisePauseGraphics();
 
             return true;
         }
@@ -289,20 +302,22 @@ public class SuperPacman extends RPG {
         gameEnded = true;
 
     }
+
+
     private void initialiseEndOfGameGraphics(){
-        width = window.getScaledWidth();
-        height = window.getScaledHeight();
-        anchor = window.getTransform().getOrigin().sub(new Vector(width/2, height/2));
+
 
         for (int i = 0; i < numberOfPlayers; i++) {
             totalScore+= players[i].getScore();
         }
+        gameOverText = new TextGraphics("GAME OVER",1f, Color.BLUE, Color.YELLOW,0.01f,true,false, anchor.add(new Vector(7.5f, height - 5f)));
 
-        totalScoreText = new TextGraphics("TOTAL SCORE:  \n"+totalScore,1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(6.5f, height - 1.375f)));
+        totalScoreText = new TextGraphics("TOTAL SCORE:  \n"+totalScore,1f, Color.YELLOW, Color.BLUE,0.04f,false,false, anchor.add(new Vector(7.5f, height - 1.375f)));
+
     }
     private void drawEndOfGameGraphics(){
 
-
+        gameOverText.draw(window);
         totalScoreText.draw(window);
 
     }
