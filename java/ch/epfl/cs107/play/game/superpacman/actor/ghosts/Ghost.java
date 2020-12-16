@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Ghost extends MovableAreaEntity implements  Interactor, Interactable {
+abstract public class Ghost extends MovableAreaEntity implements  Interactor, Interactable {
 
     protected Sprite[][] ghostSprite;
     protected Animation[] ghostAnimation;
@@ -74,7 +74,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     }
 
 
-    public boolean isAfraid(){
+    protected boolean isAfraid(){
         if(player != null){
             return player.getIsInvulnerable();
         }
@@ -125,6 +125,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
 
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
+
     }
 
 

@@ -11,7 +11,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class MovableGhost extends Ghost {
+abstract class MovableGhost extends Ghost {
     protected SuperPacmanBehavior behavior;
     protected Path graphicPath;
     protected Queue<Orientation> path;

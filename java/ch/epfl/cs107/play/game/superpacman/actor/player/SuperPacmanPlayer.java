@@ -48,6 +48,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
      * Default Player constructor
      *
      * @param area        (Area): Owner Area, not null
+     *
      */
 
     public SuperPacmanPlayer(SuperPacmanArea area, int playerNumber, DiscreteCoordinates startingPos, int[] keyboardButtons, String playerImage) {

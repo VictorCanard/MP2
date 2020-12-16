@@ -17,7 +17,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-public class Gate extends AreaEntity {
+abstract class Gate extends AreaEntity {
     private Key key1;
     private Key key2;
     private Sprite sprite;

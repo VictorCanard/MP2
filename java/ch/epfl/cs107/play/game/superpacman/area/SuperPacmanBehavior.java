@@ -81,8 +81,6 @@ public class SuperPacmanBehavior extends AreaBehavior {
 
 
 
-
-
                 }
 
 
@@ -220,7 +218,6 @@ public class SuperPacmanBehavior extends AreaBehavior {
         }
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                int newy = height-1-y;
 
                 if (getType(getCell(x,y)) != SuperPacmanCellType.WALL){
                     graph.addNode(new DiscreteCoordinates(x,y),hasLeftEdge(x,y),hasUpEdge(x,y),
