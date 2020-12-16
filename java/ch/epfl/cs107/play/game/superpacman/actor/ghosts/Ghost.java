@@ -42,7 +42,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     protected int x;
     protected int y;
 
-    protected boolean isAfraid=false;
+
 
     /**
      * Default MovableAreaEntity constructor
@@ -61,10 +61,12 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
         scaredSprite = RPGSprite.extractSprites("superpacman/ghost.afraid", 2, 1, 1, this, 16, 16, new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
         scaredAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, scaredSprite);
 
+        width = area.getWidth();
+        height = area.getHeight();
     }
 
 
-    public Orientation getRandomOrientation(){
+    protected Orientation getRandomOrientation(){
         int randomInt = RandomGenerator.getInstance().nextInt(4);
 
         return Orientation.fromInt(randomInt);
@@ -107,19 +109,13 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     @Override
     public void draw(Canvas canvas) {
 
-        if(player != null){
-            if(isAfraid()){
-                getNewCurrentAnimation(desiredOrientation,scaredAnimation).draw(canvas);
-            }
-            else{
-                getNewCurrentAnimation(desiredOrientation,ghostAnimation).draw(canvas);
-            }
-        }
 
+        if(isAfraid()){
+            getNewCurrentAnimation(desiredOrientation,scaredAnimation).draw(canvas);
+        }
         else{
             getNewCurrentAnimation(desiredOrientation,ghostAnimation).draw(canvas);
         }
-
 
 
     }
@@ -135,7 +131,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     private boolean fieldOfViewNotObstructed(){
         return getOwnerArea().canEnterAreaCells(this, Collections.singletonList(getCurrentMainCellCoordinates().jump(desiredOrientation.toVector())));
     }
-    //Si un fantôme connait Pacman et a peur doivent ils tous avoir peur?
+
 
     public void respawnGhost(){
         getOwnerArea().leaveAreaCells(this , getEnteredCells());
@@ -229,7 +225,7 @@ public class Ghost extends MovableAreaEntity implements  Interactor, Interactabl
     public class ghostHandler implements SuperPacmanInteractionVisitor{
         @Override
         public void interactWith(SuperPacmanPlayer player) {
-            Ghost.this.player = player; //Le fantome se souvient du joueur Pacman$
+            Ghost.this.player = player; //The ghost remembers Pacman
 
 
         }

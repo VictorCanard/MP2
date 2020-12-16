@@ -21,7 +21,6 @@ public class Inky extends MovableGhost{
 
 
 
-
     /**
      * Default MovableAreaEntity constructor
      *
@@ -30,50 +29,31 @@ public class Inky extends MovableGhost{
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
     public Inky(Area area, Orientation orientation, DiscreteCoordinates position, SuperPacmanBehavior behavior) {
-        super(area, orientation, position);
+        super(area, orientation, position, behavior);
 
         ghostSprite = RPGSprite.extractSprites("superpacman/ghost.inky", 2, 1, 1, this, 16, 16,new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
+
         ghostAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, ghostSprite);
 
         currentAnimation = ghostAnimation[0];
-
-        this.behavior = behavior;
     }
+
+
+
 
     @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-
-        if(graphicPath != null){
-            graphicPath.draw(canvas);
-        }
-    }
-
-    @Override
-    public void update(float deltaTime) {
-
-
-        desiredOrientation = getNextOrientation();
-
-
-        currentAnimation.update(deltaTime);
-        super.update(deltaTime);
-    }
-
     public Orientation getNextOrientation(){
-        int height = getOwnerArea().getHeight();
-        int width = getOwnerArea().getWidth();
-        DiscreteCoordinates targetPos = null;
-        Queue<Orientation> path;
+
         //recherche de case aléatoire
         if(player == null){
             do {
-                return getRandomOrientation();
-                    /*int randomX = RandomGenerator.getInstance().nextInt(width);
+
+
+                    int randomX = RandomGenerator.getInstance().nextInt(width);
                     int randomY = RandomGenerator.getInstance().nextInt(height);
                     targetPos = new DiscreteCoordinates(randomX, randomY);
 
-                     */
+
 
             } while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(), targetPos) > MAX_DISTANCE_WHEN_NOT_SCARED);
         }
@@ -91,11 +71,15 @@ public class Inky extends MovableGhost{
             }
         }
 
-        path = behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
+        path = super.behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos);
 
-        graphicPath = new Path(this.getPosition(), new LinkedList<Orientation>(path));
+        if(path != null){
+            return path.poll();
+        }
+        else{
+            return getRandomOrientation();
+        }
 
-        return path.poll();
 
 
     }
