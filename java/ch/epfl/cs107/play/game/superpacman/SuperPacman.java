@@ -250,7 +250,7 @@ public class SuperPacman extends RPG {
             keyboard= window.getKeyboard();
             startingGraphics.draw(window);
 
-        }while((keyboard.get(Keyboard.ENTER).isUp()));
+        }while(!(keyboard.get(Keyboard.ENTER).isPressed()));
     }
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
@@ -266,12 +266,13 @@ public class SuperPacman extends RPG {
             // Extension to greet the player before starting the game:
             // unfortunately the while loop lasts forever
 
-            createAreas();
+
 
             initialiseStartingPositions();
 
             areaIndex= 0; //Level 0
 
+            createAreas();
             setCurrentLevel(areaIndex);
 
             isMultiplayer= true; //Change this attribute to False to deactivate Multiplayer mode

@@ -19,6 +19,8 @@ public class OneKeyGate extends Gate{
     public OneKeyGate(Area area, Orientation orientation, DiscreteCoordinates position, Key key1, SuperPacmanBehavior behavior) {
         super(area, orientation, position, behavior);
         this.key = key1;
+
+        setNode();
     }
 
 

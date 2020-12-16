@@ -28,7 +28,9 @@ public abstract class SuperPacmanArea extends Area implements Logic {
         super.setBehavior(behaviour);
     }
 
-    abstract public void createArea();
+    public void createArea(){
+
+    }
 
     public void registerActors(){
         behaviour.registerActors(this);

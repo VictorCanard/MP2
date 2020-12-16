@@ -14,6 +14,8 @@ public class TwoKeysGate extends Gate {
         super(area, orientation, position, behavior);
         this.key1 = key1;
         this.key2 = key2;
+
+        setNode();
     }
 
 

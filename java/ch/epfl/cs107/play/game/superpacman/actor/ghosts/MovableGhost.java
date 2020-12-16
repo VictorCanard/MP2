@@ -31,14 +31,13 @@ abstract class MovableGhost extends Ghost {
     public MovableGhost(Area area, Orientation orientation, DiscreteCoordinates position, SuperPacmanBehavior behavior) {
         super(area, orientation, position);
 
-
-
         this.behavior = behavior;
         targetPos= GHOST_SPAWN_POSITION;
     }
 
     @Override
     public void draw(Canvas canvas) {
+
         if(path != null){
             graphicPath = new Path(this.getPosition(), new LinkedList<Orientation>(path));
             graphicPath.draw(canvas);
@@ -47,6 +46,7 @@ abstract class MovableGhost extends Ghost {
         super.draw(canvas);
 
     }
+
     @Override
     public void update(float deltaTime) {
 
@@ -56,6 +56,11 @@ abstract class MovableGhost extends Ghost {
         super.update(deltaTime);
     }
 
+
+    /**
+     *
+     * @returns randomOrientation if the path is null, else the new direction polled by the path
+     */
     protected Orientation getNextOrientation(){
         path = behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos);
 
@@ -65,6 +70,7 @@ abstract class MovableGhost extends Ghost {
         else{
             return getRandomOrientation();
         }
+
     }
 
 

@@ -96,7 +96,14 @@ abstract public class Ghost extends MovableAreaEntity implements  Interactor, In
             }
 
             currentAnimation.reset();
-            move(FRAME_FOR_MOVE);
+
+            if(isAfraid()){
+                move(FRAME_FOR_MOVE*2);
+            }
+            else{
+                move(FRAME_FOR_MOVE);
+            }
+
 
         }
         else{

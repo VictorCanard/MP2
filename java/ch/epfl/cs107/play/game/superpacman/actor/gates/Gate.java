@@ -17,11 +17,12 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-abstract class Gate extends AreaEntity {
+class Gate extends AreaEntity {
     private Key key1;
     private Key key2;
     private Sprite sprite;
     protected SuperPacmanBehavior behavior;
+    protected DiscreteCoordinates position;
 
     /**
      * Default AreaEntity constructor
@@ -32,10 +33,16 @@ abstract class Gate extends AreaEntity {
      */
     public Gate(Area area, Orientation orientation, DiscreteCoordinates position, SuperPacmanBehavior behavior) {
         super(area, orientation, position);
+
+        this.position=position;
+        this.behavior = behavior;
+
         createGateSprites(orientation);
 
 
-       if (this.takeCellSpace()){
+    }
+    protected void setNode(){
+        if (this.takeCellSpace()){
             behavior.signal(position);
         }
     }
