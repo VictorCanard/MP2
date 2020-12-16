@@ -41,9 +41,9 @@ class Gate extends AreaEntity {
 
 
     }
-    protected void setNode(){
+    protected void setSignalOff(){
         if (this.takeCellSpace()){
-            behavior.signal(position);
+            behavior.setSignalOff(position);
         }
     }
 

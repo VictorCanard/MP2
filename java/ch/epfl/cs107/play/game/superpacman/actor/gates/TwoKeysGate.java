@@ -15,7 +15,7 @@ public class TwoKeysGate extends Gate {
         this.key1 = key1;
         this.key2 = key2;
 
-        setNode();
+        setSignalOff();
     }
 
 

@@ -13,7 +13,7 @@ public class DiamondGate extends Gate {
 
         createGateSprites(orientation);
 
-        setNode();
+        setSignalOff();
 
 
     }

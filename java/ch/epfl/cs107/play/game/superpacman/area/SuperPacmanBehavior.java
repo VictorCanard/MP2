@@ -35,7 +35,8 @@ public class SuperPacmanBehavior extends AreaBehavior {
         return path;
     }
 
-    public void signal(DiscreteCoordinates position){
+    public void setSignalOff(DiscreteCoordinates position){
+
         graph.setSignal(position, Logic.FALSE);
     }
 

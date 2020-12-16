@@ -20,7 +20,7 @@ public class OneKeyGate extends Gate{
         super(area, orientation, position, behavior);
         this.key = key1;
 
-        setNode();
+        setSignalOff();
     }
 
 
