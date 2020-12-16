@@ -23,17 +23,18 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     private int DEFAULT_HP = 3;
     private int score = 0;
     private boolean speedBoost=false;
+
     private final int ANIMATION_DURATION = 4;
 
     private Keyboard keyboard;
     private int[]  keyboardButtons;
 
-    public boolean isPassingADoor;
+
     private Orientation desiredOrientation;
     private Animation[] animations;
-
     private Sprite[][] sprites ;
     private Animation currentAnimation;
+
     private SuperPacmanPlayerStatusGUI statusGUI;
     private SuperPacmanPlayerHandler playerHandler;
 
@@ -75,7 +76,6 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
 
         invulnerabilityCheck(deltaTime);
 
-
         updateDesiredOrientations();
 
         setNewCurrentAnimation();
@@ -96,7 +96,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
     }
 
     private void invulnerabilityCheck(float deltaTime){
-        if(invulnerableTimer <=0){
+        if(invulnerableTimer <=0){ //If the timer has run out reset Pacman's speed attributes
             speedBoost = false;
             isInvulnerable = false;
         }
@@ -147,7 +147,14 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         }
     }
     private void respawnPacman(){
-        getOwnerArea().leaveAreaCells(this , getEnteredCells());
+
+        if(getEnteredCells()==null){
+            getOwnerArea().leaveAreaCells(this, Collections.singletonList(spawnPosition));
+        }
+        else{
+            getOwnerArea().leaveAreaCells(this , getEnteredCells());
+        }
+
         this.abortCurrentMove();
         this.resetMotion();
 
@@ -166,7 +173,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         return statusGUI.getCurrentHp() <= 0;
     }
 
-    public void setInvulnerable(float timer){
+    private void setInvulnerable(float timer){
 
         invulnerableTimer = timer;
         isInvulnerable = true;
@@ -258,8 +265,9 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
        @Override
 
         public void interactWith(Bonus bonus) {
-            SuperPacmanPlayer.this.setInvulnerable(bonus.INVULNERABLE_TIMER); //rend le player invulnérable
-            interactWith((AutomaticallyCollectableAreaEntity)bonus);
+            SuperPacmanPlayer.this.setInvulnerable(bonus.INVULNERABLE_TIMER); //Makes the player invulnerable
+            interactWith((AutomaticallyCollectableAreaEntity)bonus); //Collects the bonus as a normal AutomaticallCollectableAreaEntity
+
         }
 
 

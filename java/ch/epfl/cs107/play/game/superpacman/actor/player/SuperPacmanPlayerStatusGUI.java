@@ -70,12 +70,15 @@ class SuperPacmanPlayerStatusGUI implements Graphics {
     public void drawHP(Canvas canvas){
         for(int i =0; i<MAX_HP;i++){
 
+
             if(i<currentHp){
                 drawRedHP(i);
             }
             else{
                 drawGrayHP(i);
             }
+
+
 
             life[i].draw(canvas);
         }

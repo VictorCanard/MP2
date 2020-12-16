@@ -35,20 +35,13 @@ public class Blinky extends Ghost{
     @Override
     public void update(float deltaTime) {
 
-        desiredOrientation = getNextOrientation();
+        desiredOrientation = getRandomOrientation();
 
 
         currentAnimation.update(deltaTime);
         super.update(deltaTime);
     }
 
-
-    private Orientation getNextOrientation(){
-        randomInt = RandomGenerator.getInstance().nextInt(MAX);
-
-        return Orientation.fromInt(randomInt);
-
-    }
 
 
 }

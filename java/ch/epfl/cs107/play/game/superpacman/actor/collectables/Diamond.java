@@ -34,6 +34,9 @@ public class Diamond extends AutomaticallyCollectableAreaEntity implements Inter
         if(sprite != null)
             sprite.draw(canvas);
     }
+
+    //Decreases the number of diamonds
+    //When the
     public void specialAttribute(){
         ((SuperPacmanArea)getOwnerArea()).numberOfDiamonds --;
     }

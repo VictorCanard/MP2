@@ -17,7 +17,9 @@ public class Pinky extends MovableGhost{
     public static final int MIN_WHEN_SCARED = 5;
     public static final int MAX_RANDOM_ATTEMPT = 200;
 
-    private Path graphicPath;
+
+    private int randomAttempts =0;
+
 
 
     /**
@@ -28,39 +30,21 @@ public class Pinky extends MovableGhost{
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
     public Pinky(Area area, Orientation orientation, DiscreteCoordinates position, SuperPacmanBehavior behavior) {
-        super(area, orientation, position);
+        super(area, orientation, position, behavior);
         ghostSprite = RPGSprite.extractSprites("superpacman/ghost.pinky", 2, 1, 1, this, 16, 16,new Orientation[] {Orientation.DOWN , Orientation.LEFT , Orientation.UP, Orientation.RIGHT});
+
         ghostAnimation = Animation.createAnimations(ANIMATION_DURATION / 2, ghostSprite);
 
         currentAnimation = ghostAnimation[0];
-
-        this.behavior = behavior;
     }
+
+
+
+
 
     @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
+    protected Orientation getNextOrientation(){
 
-        if(graphicPath != null){
-            graphicPath.draw(canvas);
-        }
-    }
-
-    @Override
-    public void update(float deltaTime) {
-
-        desiredOrientation = getNextOrientation();
-
-        currentAnimation.update(deltaTime);
-        super.update(deltaTime);
-    }
-
-    public Orientation getNextOrientation(){
-        int randomAttempts = 0;
-        int height = getOwnerArea().getHeight();
-        int width = getOwnerArea().getWidth();
-        DiscreteCoordinates targetPos = null;
-        Queue<Orientation> path;
         //recherche de case aléatoire
 
         if(player == null){
@@ -73,23 +57,17 @@ public class Pinky extends MovableGhost{
                     int randomX = RandomGenerator.getInstance().nextInt(width);
                     int randomY = RandomGenerator.getInstance().nextInt(height);
                     targetPos = new DiscreteCoordinates(randomX, randomY);
-                    ++randomAttempts;
+                    randomAttempts++;
 
                 }while (DiscreteCoordinates.distanceBetween(getCurrentMainCellCoordinates(),targetPos) < MIN_WHEN_SCARED
-                        || randomAttempts < MAX_RANDOM_ATTEMPT);
+                        && randomAttempts < MAX_RANDOM_ATTEMPT);
             }
             else{
                 targetPos = player.getCurrentMainCellCoordinates();
             }
         }
 
-        path = behavior.getShortestPath(getCurrentMainCellCoordinates(),targetPos); //pk contexte static ??
-
-        graphicPath = new Path(this.getPosition(), new LinkedList<Orientation>(path));
-
-        return path.poll();
-
-
+        return super.getNextOrientation();
 
     }
 }
