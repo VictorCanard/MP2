@@ -41,23 +41,38 @@
 
 	2c. ch/epfl/cs107/play/game/superpacman/actor/gates
 
-		- [class] Gate
+		- [abstract class] Gate
+			* extends AreaEntity
+			* Describes the behavior of a gate that opens when the signal(s) attached to it turns ON
 
 		- [class] DiamondGate
+			* extends Gate
+			* Opens when the corresponding area lights up: i.e. when all the diamonds have been collected
 
 		- [class] OneKeyGate
+			* extends Gate
+			* Opens when the key associated with it is collected
 
 		- [class] TwoKeyGate
+			* extends Gate
+			* opens when the two keys associated to it are collected
 
 	2d. ch/epfl/cs107/play/game/superpacman/actor/ghosts
 
 		- [class] Blinky
-
-		- [class] Ghost
-		
-		- [class] MovableGhost
 			* extends Ghost
-			* has the common draw() method of Pinky and Inky
+			* describes the given behavior of the Blinky ghost, who picks random orientations
+
+		- [abstract class] Ghost
+			* extends MoveableAreaentity
+			* has the method getRandomOrientation() used by all ghosts
+			* has the draw() method common to all ghosts which picks the afraid or normal ghost sprite
+			* has the respawnGhost() method invoked when Pacman eats a ghost
+		
+		- [abstract class] MovableGhost
+			* extends Ghost
+			* has the common draw(), update(), and a common part of the getNextOrientation() method of Pinky and Inky
+			* also possesses Pinky and Inky's common attributes
 
 		- [class] Inky
 			* extends MovableGhost
@@ -71,6 +86,7 @@
 
 		- [class] SuperPacmanPlayer
 			* extends Player
+			* has a SuperPacmanPlayerStatusGui
 			* moves in straight line
 			* can collect all collectables entities
 			* gets eaten by ghosts when vulnerable
@@ -79,6 +95,8 @@
 				* handle the interactions between pacman and collectables/ghosts/doors
 
 		- [class] SuperPacmanPlayerStatusGUI
+			* implements graphics
+			* draws the score and hp of the pacman
 
 
 	2f. ch/epfl/cs107/play/game/superpacman/area
@@ -100,6 +118,11 @@
 			* needs to collect all diamonds to go to next level
 
 		- [abstract class] SuperPacmanArea
+			*extends Area
+			* implements Logic
+			* registers actors
+			* Asks its descendants to redefine createArea()
+			* has an attribute numberOfDiamonds and lights up when  that attribute has a value of 0
 		
 		- [class] SuperPacmanBehavior
 			* extends AreaBehavior
@@ -117,8 +140,6 @@
 			* contain default methods of interactions
 
 	2h. ch/epfl/cs107/play/game/superpacman
-		
-		- [class] PauseGraphics
 
 		- [class] SuperPacman
 
