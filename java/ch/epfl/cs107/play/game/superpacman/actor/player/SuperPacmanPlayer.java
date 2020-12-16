@@ -147,7 +147,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
         }
     }
     private void respawnPacman(){
-        getOwnerArea().leaveAreaCells(SuperPacmanPlayer.this , getEnteredCells());
+        getOwnerArea().leaveAreaCells(this , getEnteredCells());
         this.abortCurrentMove();
         this.resetMotion();
 
@@ -276,7 +276,7 @@ public class SuperPacmanPlayer extends Player implements Interactable, Interacto
             }
             else{
 
-                SuperPacmanPlayer.this.respawnPacman();
+                respawnPacman();
 
             }
         }
