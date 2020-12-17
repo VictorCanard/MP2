@@ -1,14 +1,13 @@
-Mode multi-joueur: par défaut le mode multijoueur est activé,
-ceci s'enlève avec la modification du boolean isMultiplayer dans
-la classe SuperPacman.java. Les deux joueurs s'entraident et ont
-chacun une barre de vie et un score ( le score affiché à la fin du
-jeu et la somme de ces deux scores ); ils peuvent traverser les
-portes ensemble ou séparément. L'un se contrôle avec les touches
-WSAD, l'autre avec les flèches du clavier.
+MultiplayerMode: By default the multiplayer mode is activated; this can be changed by affecting the value false to the boolean isMultiplayer.
+The two players help each other, can pass doors together or alone and both have a status GUI.
+The final score displayed at the end is the sum of both of the players's scores.
+One is controlled with WSAD keys while the other uses the keyboard's arrows.
 
-Pause et fin de jeu: le jeu se met en pause avec l'appui de la touche tab
-qui en fait stoppe les super.update de la classe Superpacman.java;
-quand un des joueurs n'a plus de vie, le jeu s'arrête et le score total s'affiche.
-Un écran d'accueil a été élaboré mais à cause d'un problème de boucle infinie
-la ligne initialisant cet écran a été mise en commentaire
-( elle se trouve dans la methode begin() de SuperPacman.java)
+Start of Game was attempted but the while loop lasts forever as it can't detect the player pressing enter to start the game.
+Pause of game is toggled through the use of the TAB key; this stops the super.update(deltaTime) and effectively freezes the game.
+End of Game when one of the players has no more life; total score is displayed as well as gameover.
+
+Pacman moves quicker when invulnerable and even quicker when he persists in a given direction (same key pressed continuously).
+The ghosts move quicker as well when they are afraid.
+
+Teleporters are located in some corners of Level1 and Level2 and they simply bring the player who walks onto them to another corner of the map.
