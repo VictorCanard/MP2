@@ -148,7 +148,9 @@
 			* Controls the multiplyer, pause of the game and end of game.
 
 3. List of all extensions
-	* Pause of Game and End of Game
+	* Pause of Game and End of Game (Attempt of Start Of Game)
+	
+	* New teleporter actors that teleport Pacman to another spot in the map
 	
 	* Speed boost given to Pacman when he eats a bonus
 	* Speed boost given to Pacman when he persists in a direction 
