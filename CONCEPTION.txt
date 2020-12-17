@@ -142,8 +142,15 @@
 	2h. ch/epfl/cs107/play/game/superpacman
 
 		- [class] SuperPacman
+			* extends RPG
+			* Contains the redefinitions of begin(), update(), getTitle() that are part of what constitutes a game
+			* Knows its areas, behaviors, actors and players and initialises all of them 
+			* Controls the multiplyer, pause of the game and end of game.
 
 3. List of all extensions
+	* Pause of Game and End of Game
+	* Speed boost given to Pacman when he eats a bonus
+	* Multiplayer mode with Golden Pacman and Silver Pacman
 
 
 
