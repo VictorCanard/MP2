@@ -149,8 +149,11 @@
 
 3. List of all extensions
 	* Pause of Game and End of Game
+	
 	* Speed boost given to Pacman when he eats a bonus
+	* Speed boost given to Pacman when he persists in a direction 
 	* Speed boost given to the ghosts when Pacman is vulnerable
+	
 	* Multiplayer mode with Golden Pacman and Silver Pacman
 	
 
